@@ -4,8 +4,8 @@
 When pulling from the remote:
 
 - npm ci
-- ./gradlew clean
-- pod install
+- cd android && ./gradlew clean
+- cd ios && pod install
 - react-native link
 
 To update the pods: pod update 
