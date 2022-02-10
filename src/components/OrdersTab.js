@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
+import {Dimensions, Platform, PixelRatio} from 'react-native';
 import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
+
 const OrdersTab = ({SECTIONS}) => {
-  const [index, setIndex] = useState(0);
+
+  const [index, setIndex] = useState(0)
+
   return (
     <SegmentedControlTab
       values={SECTIONS}
@@ -14,30 +18,49 @@ const OrdersTab = ({SECTIONS}) => {
       firstTabStyle={styles.firstTab}
       lastTabStyle={styles.lastTab}
       tabTextStyle={styles.tabText}
-      borderRadius={10}
+      borderRadius={20}
       activeTabStyle={styles.activeTab}
     />
   );
 };
 
+
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+const scale = SCREEN_WIDTH / 300;
+
+export function normalize(size) {
+  const newSize = size * scale
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
+
 const styles = StyleSheet.create({
   tabContainer: {
     marginHorizontal: '5%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: "flex-start",
   },
 
   tab: {
-    flex: 1,
-    borderRadius: 10,
+    flex: 0,
+    paddingHorizontal: '3%',
+    borderRadius: 20,
     borderWidth: 0,
-    marginHorizontal: '2%',
+    marginHorizontal: '1%',
     backgroundColor: '#E1E1E1',
+    alignSelf: 'baseline',
+    alignItems: 'baseline'
   },
 
   firstTab: {
-    marginRight: '2%',
+    marginRight: '1%',
   },
 
   lastTab: {
@@ -45,10 +68,10 @@ const styles = StyleSheet.create({
   },
 
   tabText: {
-    textAlign: 'center',
     color: 'black',
-    fontSize: 12,
+    fontSize: normalize(7),
     fontFamily: 'Montserrat-Bold',
+
   },
 
   activeTab: {

@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {SafeAreaView} from 'react-native';
-import OrdersTab from './components/OrdersTab';
-import OrderTabSectionsData from './fake-data/OrderTabSectionsData';
+import SECTIONS from "./fake-data/OrderTabSectionsData";
+import OrdersTab from "./components/OrdersTab";
+
 
 const OrdersTabTester = () => {
   return (
-    <SafeAreaView>
-      <OrdersTab SECTIONS={OrderTabSectionsData} />
+    <SafeAreaView style={{marginTop: '40%'}}>
+      <OrdersTab SECTIONS={SECTIONS}/>
     </SafeAreaView>
   );
 };
