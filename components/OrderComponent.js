@@ -69,18 +69,20 @@ const OrderComponent = (props) => {
                     <View style={styles.list_of_orders}>
                         <ScrollView>
                             <FlatList
-                                style={styles.horizontalList}
                                 data={Orders}
                                 renderItem={({item}) => (
-                                    <View style={styles.order}>
+                                    <View style={[styles.order, styles.expandedOrder]}>
                                         <Text style={styles.amount}>{item.amount}</Text>
                                         <Text style={styles.item_name}>{item.name}</Text>
                                     </View>
                                 )}/>
                         </ScrollView>
                     </View>
-                    <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
-                    <Pressable style={[styles.rejectButton, styles.button]}
+                    <View style={styles.total}>
+                        <Text style={styles.total_text}>Total</Text>
+                        <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
+                    </View>
+                    <Pressable style={[styles.acceptButton, styles.button]}
                                onPress={() => setOrderType('rejected')}>
                         <Text style={styles.button_text}>Accept Order</Text>
                     </Pressable>
@@ -90,9 +92,9 @@ const OrderComponent = (props) => {
                         <Text style={styles.c}>Icon!!!</Text>
                         <Text style={styles.clock_number}>6</Text>
                     </View>
-                    <Pressable style={[styles.acceptButton,styles.button]}
+                    <Pressable style={[styles.rejectButton,styles.button]}
                                onPress={() => setOrderType('accepted')}>
-                        <Text style={styles.button_text}>Accept Order</Text>
+                        <Text style={styles.button_text}>Reject Order</Text>
                     </Pressable>
                 </View>
             </View>
@@ -185,6 +187,11 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'row'
     },
+    expandedOrder:{
+      borderColor: '#DEDEDE',
+      borderStyle: 'solid',
+      borderBottomWidth: 1,
+    },
     order: {
         paddingVertical: 5,
         paddingRight: 14,
@@ -223,10 +230,21 @@ const styles = StyleSheet.create({
     },
     total_price: {
         fontFamily: 'Montserrat',
+        fontSize: 25,
+        color: '#000000',
+        marginLeft: '5%',
+    },
+    total_text: {
+        fontFamily: 'Montserrat',
         fontWeight: '700',
         fontSize: 25,
         color: '#000000',
         marginLeft: '5%',
+    },
+    total: {
+      display: 'flex',
+      flexDirection: 'row',
+        marginBottom: '20%',
     },
     header: {
         display: 'flex',
@@ -265,10 +283,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     acceptButton:{
-
+        backgroundColor: '#4273D3',
     },
     rejectButton:{
-
+        backgroundColor: 'red'
     },
     incomingButton:{
         backgroundColor: '#D2AD2B',
