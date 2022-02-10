@@ -21,17 +21,6 @@ const OrderComponent = (props) => {
 
     const [orderType, setOrderType] = useState(props.orderType)
 
-    // calcTotal()
-    //
-    // function calcTotal(){
-    //     let total = 0;
-    //     for(let order of Order)
-    //     {
-    //         total += order.price * order.amount;
-    //     }
-    //     setTotal(total);
-    // }
-
     const [Orders] = useState([
         {
             key: 1,
@@ -58,96 +47,100 @@ const OrderComponent = (props) => {
 
     return (
         <View>
-        {orderType == 'expanded' ?
-            <View style={styles.rectangle}>
-                <View style={styles.left_side}>
-                    <View style={styles.header}>
-                        <Text style={styles.name}>Mike Myers</Text>
+            {orderType == 'rejected' || orderType == 'finished' ? null :
+                <View>
+                {orderType == 'expanded' ?
+                    <View style={styles.rectangle}>
+                        <View style={styles.left_side}>
+                            <View style={styles.header}>
+                                <Text style={styles.name}>Mike Myers</Text>
+                            </View>
+                            <Text style={styles.order_number}>#53441</Text>
+                            <Text style={styles.order_size}>4 items</Text>
+                            <View style={styles.list_of_orders}>
+                                <ScrollView>
+                                    <FlatList
+                                        data={Orders}
+                                        renderItem={({item}) => (
+                                            <View style={[styles.order, styles.expandedOrder]}>
+                                                <Text style={styles.amount}>{item.amount}</Text>
+                                                <Text style={styles.item_name}>{item.name}</Text>
+                                            </View>
+                                        )}/>
+                                </ScrollView>
+                            </View>
+                            <View style={styles.total}>
+                                <Text style={styles.total_text}>Total</Text>
+                                <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
+                            </View>
+                            <Pressable style={[styles.acceptButton, styles.button]}
+                                       onPress={() => setOrderType('accepted')}>
+                                <Text style={styles.button_text}>Accept Order</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.right_side}>
+                            <View style={styles.time}>
+                                <Text style={styles.c}>Icon!!!</Text>
+                                <Text style={styles.clock_number}>6</Text>
+                            </View>
+                            <Pressable style={[styles.rejectButton, styles.button]}
+                                       onPress={() => setOrderType('rejected')}>
+                                <Text style={styles.button_text}>Reject Order</Text>
+                            </Pressable>
+                        </View>
                     </View>
-                    <Text style={styles.order_number}>#53441</Text>
-                    <Text style={styles.order_size}>4 items</Text>
-                    <View style={styles.list_of_orders}>
-                        <ScrollView>
-                            <FlatList
-                                data={Orders}
-                                renderItem={({item}) => (
-                                    <View style={[styles.order, styles.expandedOrder]}>
-                                        <Text style={styles.amount}>{item.amount}</Text>
-                                        <Text style={styles.item_name}>{item.name}</Text>
-                                    </View>
-                                )}/>
-                        </ScrollView>
-                    </View>
-                    <View style={styles.total}>
-                        <Text style={styles.total_text}>Total</Text>
-                        <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
-                    </View>
-                    <Pressable style={[styles.acceptButton, styles.button]}
-                               onPress={() => setOrderType('rejected')}>
-                        <Text style={styles.button_text}>Accept Order</Text>
-                    </Pressable>
-                </View>
-                <View style={styles.right_side}>
-                    <View style={styles.time}>
-                        <Text style={styles.c}>Icon!!!</Text>
-                        <Text style={styles.clock_number}>6</Text>
-                    </View>
-                    <Pressable style={[styles.rejectButton,styles.button]}
-                               onPress={() => setOrderType('accepted')}>
-                        <Text style={styles.button_text}>Reject Order</Text>
-                    </Pressable>
-                </View>
-            </View>
-            :
-            <View style={styles.rectangle}>
-                <View style={styles.left_side}>
-                    <View style={styles.header}>
-                        <Text style={styles.name}>Mike Myers</Text>
-                        <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
-                    </View>
-                    <Text style={styles.order_number}>#53441</Text>
-                    <Text style={styles.order_size}>4 items</Text>
-                    <View style={styles.list_of_orders}>
-                        <FlatList
-                            style={styles.list}
-                            data={Orders.slice(0, 2)}
-                            horizontal={true}
-                            renderItem={({item}) => (
-                                <View style={styles.order}>
-                                    <Text style={styles.amount}>{item.amount}</Text>
-                                    <Text style={styles.item_name}>{item.name}</Text>
-                                </View>
-                            )}/>
+                    :
+                    <View style={styles.rectangle}>
+                        <View style={styles.left_side}>
+                            <View style={styles.header}>
+                                <Text style={styles.name}>Mike Myers</Text>
+                                <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
+                            </View>
+                            <Text style={styles.order_number}>#53441</Text>
+                            <Text style={styles.order_size}>4 items</Text>
+                            <View style={styles.list_of_orders}>
+                                <FlatList
+                                    style={styles.list}
+                                    data={Orders.slice(0, 2)}
+                                    horizontal={true}
+                                    renderItem={({item}) => (
+                                        <View style={styles.order}>
+                                            <Text style={styles.amount}>{item.amount}</Text>
+                                            <Text style={styles.item_name}>{item.name}</Text>
+                                        </View>
+                                    )}/>
 
-                        {Orders.length > 2 ? <Text style={styles.dots}>...</Text> : null}
+                                {Orders.length > 2 ? <Text style={styles.dots}>...</Text> : null}
+                            </View>
+                        </View>
+                        <View style={styles.right_side}>
+                            <View style={styles.time}>
+                                <Text style={styles.c}>Icon!!!</Text>
+                                <Text style={styles.clock_number}>6</Text>
+                            </View>
+                            {orderType == 'incoming' ?
+                                <Pressable style={[styles.incomingButton, styles.button]}
+                                           onPress={() => setOrderType('expanded')}>
+                                    <Text style={styles.button_text}>View order</Text>
+                                </Pressable>
+                                : null}
+                            {orderType == 'accepted' ?
+                                <Pressable style={[styles.acceptedButton, styles.button]}
+                                           onPress={() => setOrderType('ready')}>
+                                    <Text style={styles.button_text}>Mark as ready</Text>
+                                </Pressable>
+                                : null}
+                            {orderType == 'ready' ?
+                                <Pressable style={[styles.readyButton, styles.button]}
+                                           onPress={() => setOrderType('finished')}>
+                                    <Text style={styles.button_text}>Mark as collected</Text>
+                                </Pressable>
+                                : null}
+                        </View>
                     </View>
+            }
                 </View>
-                <View style={styles.right_side}>
-                    <View style={styles.time}>
-                        <Text style={styles.c}>Icon!!!</Text>
-                        <Text style={styles.clock_number}>6</Text>
-                    </View>
-                    {orderType == 'incoming' ?
-                        <Pressable style={[styles.incomingButton, styles.button]}
-                                   onPress={() => setOrderType('expanded')}>
-                            <Text style={styles.button_text}>View order</Text>
-                        </Pressable>
-                        : null}
-                    {orderType == 'accepted' ?
-                        <Pressable style={[styles.acceptedButton, styles.button]}
-                                   onPress={() => setOrderType('ready')}>
-                            <Text style={styles.button_text}>Mark as ready</Text>
-                        </Pressable>
-                        : null}
-                    {orderType == 'ready' ?
-                        <Pressable style={[styles.readyButton, styles.button]}
-                                   onPress={() => setOrderType('finished')}>
-                            <Text style={styles.button_text}>Mark as collected</Text>
-                        </Pressable>
-                        : null}
-                </View>
-            </View>
-        }
+            }
         </View>
     );
 };
