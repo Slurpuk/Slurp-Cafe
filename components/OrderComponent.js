@@ -7,17 +7,32 @@
  */
 
 import React, {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
     FlatList, Pressable,
-    SafeAreaView,
+    SafeAreaView, ScrollView,
     StyleSheet,
     Text, View,
 } from 'react-native';
 
-const OrderComponent = () => {
+const OrderComponent = (props) => {
 
-    const [Order] = useState([
+    const [total, setTotal] = useState(9.4)
+
+    const [orderType, setOrderType] = useState(props.orderType)
+
+    // calcTotal()
+    //
+    // function calcTotal(){
+    //     let total = 0;
+    //     for(let order of Order)
+    //     {
+    //         total += order.price * order.amount;
+    //     }
+    //     setTotal(total);
+    // }
+
+    const [Orders] = useState([
         {
             key: 1,
             name: 'Latte',
@@ -42,43 +57,96 @@ const OrderComponent = () => {
     ]);
 
     return (
-        <SafeAreaView>
+        <View>
+        {orderType == 'expanded' ?
             <View style={styles.rectangle}>
                 <View style={styles.left_side}>
                     <View style={styles.header}>
                         <Text style={styles.name}>Mike Myers</Text>
-                        <Text style={styles.total_price}>£9.40</Text>
+                    </View>
+                    <Text style={styles.order_number}>#53441</Text>
+                    <Text style={styles.order_size}>4 items</Text>
+                    <View style={styles.list_of_orders}>
+                        <ScrollView>
+                            <FlatList
+                                style={styles.horizontalList}
+                                data={Orders}
+                                renderItem={({item}) => (
+                                    <View style={styles.order}>
+                                        <Text style={styles.amount}>{item.amount}</Text>
+                                        <Text style={styles.item_name}>{item.name}</Text>
+                                    </View>
+                                )}/>
+                        </ScrollView>
+                    </View>
+                    <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
+                    <Pressable style={[styles.rejectButton, styles.button]}
+                               onPress={() => setOrderType('rejected')}>
+                        <Text style={styles.button_text}>Accept Order</Text>
+                    </Pressable>
+                </View>
+                <View style={styles.right_side}>
+                    <View style={styles.time}>
+                        <Text style={styles.c}>Icon!!!</Text>
+                        <Text style={styles.clock_number}>6</Text>
+                    </View>
+                    <Pressable style={[styles.acceptButton,styles.button]}
+                               onPress={() => setOrderType('accepted')}>
+                        <Text style={styles.button_text}>Accept Order</Text>
+                    </Pressable>
+                </View>
+            </View>
+            :
+            <View style={styles.rectangle}>
+                <View style={styles.left_side}>
+                    <View style={styles.header}>
+                        <Text style={styles.name}>Mike Myers</Text>
+                        <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
                     </View>
                     <Text style={styles.order_number}>#53441</Text>
                     <Text style={styles.order_size}>4 items</Text>
                     <View style={styles.list_of_orders}>
                         <FlatList
                             style={styles.list}
-                            data={Order.slice(0,2)}
+                            data={Orders.slice(0, 2)}
                             horizontal={true}
                             renderItem={({item}) => (
-                            <View style={styles.order}>
-                                <Text style={styles.amount}>{item.amount}</Text>
-                                <Text style={styles.item_name}>{item.name}</Text>
-                            </View>
-                        )}/>
+                                <View style={styles.order}>
+                                    <Text style={styles.amount}>{item.amount}</Text>
+                                    <Text style={styles.item_name}>{item.name}</Text>
+                                </View>
+                            )}/>
 
-                        {Order.length > 2 ? <Text style={styles.dots}>...</Text>: null}
+                        {Orders.length > 2 ? <Text style={styles.dots}>...</Text> : null}
                     </View>
                 </View>
                 <View style={styles.right_side}>
                     <View style={styles.time}>
-                        <FontAwesomeIcon
-                            icon='clock-five'
-                            />
+                        <Text style={styles.c}>Icon!!!</Text>
                         <Text style={styles.clock_number}>6</Text>
                     </View>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.button_text}>Mark as ready</Text>
-                    </Pressable>
+                    {orderType == 'incoming' ?
+                        <Pressable style={[styles.incomingButton, styles.button]}
+                                   onPress={() => setOrderType('expanded')}>
+                            <Text style={styles.button_text}>View order</Text>
+                        </Pressable>
+                        : null}
+                    {orderType == 'accepted' ?
+                        <Pressable style={[styles.acceptedButton, styles.button]}
+                                   onPress={() => setOrderType('ready')}>
+                            <Text style={styles.button_text}>Mark as ready</Text>
+                        </Pressable>
+                        : null}
+                    {orderType == 'ready' ?
+                        <Pressable style={[styles.readyButton, styles.button]}
+                                   onPress={() => setOrderType('finished')}>
+                            <Text style={styles.button_text}>Mark as collected</Text>
+                        </Pressable>
+                        : null}
                 </View>
             </View>
-        </SafeAreaView>
+        }
+        </View>
     );
 };
 
@@ -90,12 +158,22 @@ const styles = StyleSheet.create({
         color: '#000000'
     },
     rectangle: {
+        marginVertical: '2%',
         display: "flex",
         flexDirection: 'row',
         width: '100%',
         backgroundColor: '#F2F2F2',
         justifyContent: 'space-between',
         padding: '3%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 6,
     },
     order_number:{
         fontFamily: 'Montserrat',
@@ -127,9 +205,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'flex-end',
     },
-    clock:{
-
-    },
     clock_number:{
         fontFamily: 'Montserrat',
         fontWeight: '600',
@@ -139,6 +214,7 @@ const styles = StyleSheet.create({
     left_side:{
         display: 'flex',
         flexDirection: 'column',
+        maxWidth: '50%',
     },
     right_side:{
         display: 'flex',
@@ -155,11 +231,6 @@ const styles = StyleSheet.create({
     header: {
         display: 'flex',
         flexDirection: 'row',
-    },
-    list:{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: "nowrap",
     },
     amount:{
         fontFamily: 'Roboto',
@@ -190,10 +261,24 @@ const styles = StyleSheet.create({
     },
     button: {
         display: 'flex',
-        backgroundColor: '#4273D3',
         padding: '5%',
         alignItems: 'center',
     },
+    acceptButton:{
+
+    },
+    rejectButton:{
+
+    },
+    incomingButton:{
+        backgroundColor: '#D2AD2B',
+    },
+    acceptedButton:{
+        backgroundColor: '#4273D3',
+    },
+    readyButton:{
+        backgroundColor: '#218F89',
+    }
 });
 
 export default OrderComponent;
