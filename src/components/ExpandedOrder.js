@@ -2,7 +2,7 @@ import {FlatList, StyleSheet, Text, View} from "react-native";
 import React from 'react';
 import OrderActionButton from "./OrderActionButton";
 
-const ExpandedOrder = ({orders, setOrderStatus, total, orderStatus}) => {
+const ExpandedOrder = ({order, setOrderStatus, total, orderStatus}) => {
     return (
         <View style={styles.rectangle}>
             <View style={styles.left_side}>
@@ -13,7 +13,7 @@ const ExpandedOrder = ({orders, setOrderStatus, total, orderStatus}) => {
                 <Text style={styles.order_size}>4 items</Text>
                 <View style={styles.list_of_orders}>
                         <FlatList
-                            data={orders}
+                            data={order}
                             renderItem={({item}) => (
                                 <View style={[styles.order, styles.expandedOrder]}>
                                     <Text style={styles.amount}>{item.amount}</Text>

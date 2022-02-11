@@ -4,15 +4,20 @@ import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
 
-const OrdersTab = ({SECTIONS}) => {
+const OrdersTab = ({SECTIONS, setStatus}) => {
 
   const [index, setIndex] = useState(0)
+
+  const updatePage = (newIndex) => {
+    setIndex(newIndex)
+    setStatus(SECTIONS[newIndex])
+  }
 
   return (
     <SegmentedControlTab
       values={SECTIONS}
       selectedIndex={index}
-      onTabPress={setIndex}
+      onTabPress={updatePage}
       tabStyle={styles.tab}
       tabsContainerStyle={styles.tabContainer}
       firstTabStyle={styles.firstTab}

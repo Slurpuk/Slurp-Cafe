@@ -2,7 +2,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import OrderActionButton from "./OrderActionButton";
 import React, {useState} from 'react';
 
-const ReducedOrder = ({orders, orderStatus, setOrderStatus, total}) => {
+const ReducedOrder = ({order, orderStatus, setOrderStatus, total}) => {
     return (
         <View style={styles.rectangle}>
             <View style={styles.left_side}>
@@ -15,7 +15,7 @@ const ReducedOrder = ({orders, orderStatus, setOrderStatus, total}) => {
                 <View style={styles.list_of_orders}>
                     <FlatList
                         style={styles.list}
-                        data={orders.slice(0, 2)}
+                        data={order.slice(0, 2)}
                         horizontal={true}
                         renderItem={({item}) => (
                             <View style={styles.order}>
@@ -24,7 +24,7 @@ const ReducedOrder = ({orders, orderStatus, setOrderStatus, total}) => {
                             </View>
                         )}/>
 
-                    {orders.length > 2 ? <Text style={styles.dots}>...</Text> : null}
+                    {order.length > 2 ? <Text style={styles.dots}>...</Text> : null}
                 </View>
             </View>
             <View style={styles.right_side}>

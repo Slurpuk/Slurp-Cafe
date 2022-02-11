@@ -1,4 +1,5 @@
 const OrderStatuses= {
+    ALL: 'all',
     INCOMING: 'incoming',
     ACCEPTED: 'accepted',
     READY: 'ready',

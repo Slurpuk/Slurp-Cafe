@@ -13,7 +13,6 @@ import {
 import ReducedOrder from "./ReducedOrder";
 import ExpandedOrder from "./ExpandedOrder";
 import OrderStatuses from "./OrderStatuses";
-import OrdersData from "../fake-data/OrdersData";
 
 const OrderCard = (props) => {
 
@@ -21,16 +20,16 @@ const OrderCard = (props) => {
 
     const [orderStatus, setOrderStatus] = useState(OrderStatuses.INCOMING)
 
-    const [orders, setOrders] = useState(OrdersData);
+    const [order, setOrder] = useState(props.order);
 
     return (
         <View>
             {orderStatus === OrderStatuses.REJECTED || orderStatus === OrderStatuses.FINISHED ? null :
                 <View>
                 {orderStatus === OrderStatuses.EXPANDED ?
-                    <ExpandedOrder orders={orders} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total}/>
+                    <ExpandedOrder order={order} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total}/>
                     :
-                    <ReducedOrder orders={orders} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total} />
+                    <ReducedOrder order={order} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total} />
             }
                 </View>
             }
