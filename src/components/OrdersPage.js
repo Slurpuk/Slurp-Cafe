@@ -11,15 +11,16 @@ import {
     SafeAreaView,
     StyleSheet,
 } from 'react-native';
-import OrderComponent from "./OrderComponent";
+import OrderCard from "./OrderCard";
+import OrderStatuses from "./OrderStatuses";
 
 const OrdersPage = () => {
 
     return (
         <SafeAreaView style={styles.page}>
-            <OrderComponent orderType={'incoming'}></OrderComponent>
-            <OrderComponent orderType={'accepted'}></OrderComponent>
-            <OrderComponent orderType={'ready'}></OrderComponent>
+            <OrderCard orderType={OrderStatuses.INCOMING}/>
+            <OrderCard orderType={OrderStatuses.INCOMING}/>
+            <OrderCard orderType={OrderStatuses.INCOMING}/>
         </SafeAreaView>
     );
 };
