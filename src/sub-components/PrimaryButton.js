@@ -24,12 +24,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
+        borderRadius: 3,
     },
     button_text: {
         color: 'white',
         fontWeight: '700',
         fontSize: 25,
-        fontFamily: 'Roboto'
+        fontFamily: 'Roboto',
     },
 });
 

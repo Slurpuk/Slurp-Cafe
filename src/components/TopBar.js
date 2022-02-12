@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
         shadowRadius: 6.27,
     },
     manageButton: {
-        backgroundColor: '#207671'
+        backgroundColor: '#207671',
+        width: '35%',
     },
     manageOrdersHeadline: {
         display: 'flex',
