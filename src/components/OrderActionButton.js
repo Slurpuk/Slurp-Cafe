@@ -1,6 +1,7 @@
 import {Pressable, StyleSheet, Text} from "react-native";
 import OrderStatuses from "./OrderStatuses";
 import React from 'react';
+import PrimaryButton from "../sub-components/PrimaryButton";
 
 const OrderActionButton = ({status, setOrderStatus, accept}) => {
     let newStyle = null;
@@ -31,25 +32,11 @@ const OrderActionButton = ({status, setOrderStatus, accept}) => {
 
     console.log(newStatus)
     return(
-        <Pressable style={[newStyle, styles.button]}
-                   onPress={() => setOrderStatus(newStatus)}>
-            <Text style={styles.button_text}>{buttonText}</Text>
-        </Pressable>
+        <PrimaryButton newStyle={newStyle} buttonText={buttonText}/>
     )
 }
 
 const styles = StyleSheet.create({
-    button_text: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 25,
-        fontFamily: 'Roboto'
-    },
-    button: {
-        display: 'flex',
-        padding: '5%',
-        alignItems: 'center',
-    },
     incomingButton:{
         backgroundColor: '#D2AD2B',
     },
