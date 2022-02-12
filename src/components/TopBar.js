@@ -17,7 +17,7 @@ const TopBar = () => {
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleSwitch}
                     value={isEnabled}
-
+                    style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
             />
         </View>
     );

@@ -9,7 +9,7 @@ import TopBar from "../components/TopBar"
 
 const OrdersPage = () => {
     return (
-        <SafeAreaView style={{display: 'flex', backgroundColor: 'pink', height: '100%'}}>
+        <SafeAreaView style={{display: 'flex', height: '100%'}}>
             <TopBar/>
             <View style={{padding: '5%'}}>
                 <Text style={styles.activeOrdersText}>Active orders</Text>
