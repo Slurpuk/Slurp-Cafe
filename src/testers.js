@@ -1,20 +1,12 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import SECTIONS from "./fake-data/OrderTabSectionsData";
-import OrdersTab from "./components/OrdersTab";
-import OrderCard from "./components/OrderCard";
-import OrderStatuses from "./components/OrderStatuses";
+import OrdersPage from "./screens/OrdersPage";
 
 
-const OrdersTabTester = () => {
+const OrdersTester = () => {
   return (
-    <SafeAreaView style={{marginTop: '40%'}}>
-      <OrdersTab SECTIONS={SECTIONS}/>
-        <OrderCard orderType={OrderStatuses.INCOMING}/>
-        <OrderCard orderType={OrderStatuses.INCOMING}/>
-        <OrderCard orderType={OrderStatuses.INCOMING}/>
-    </SafeAreaView>
+    <OrdersPage/>
   );
 };
 
-export default OrdersTabTester;
+
+export default OrdersTester;
