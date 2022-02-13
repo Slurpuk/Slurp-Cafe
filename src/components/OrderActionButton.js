@@ -1,71 +1,109 @@
-import {Pressable, StyleSheet, Text} from "react-native";
-import OrderStatuses from "./OrderStatuses";
-import React from 'react';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import OrderStatuses from './OrderStatuses';
+import React, {useContext, useEffect, useState} from 'react';
+import {OrdersContext} from '../testers';
+import {DetailsContext} from './OrderCard';
 
-const OrderActionButton = ({status, setOrderStatus, accept}) => {
-    let newStyle = null;
-    let newStatus = null;
-    let buttonText = null;
-    switch(status){
-        case OrderStatuses.INCOMING:
-            buttonText = 'View Order'
-            newStyle = styles.incomingButton
-            newStatus = OrderStatuses.EXPANDED
-            break
+const OrderActionButton = ({accept}) => {
+  const orders = useContext(OrdersContext);
+  const details = useContext(DetailsContext);
+  const [customStyle, setStyle] = useState(
+    details.isExpanded
+      ? accept
+        ? styles.acceptButton
+        : styles.rejectButton
+      : styles.incomingButton,
+  );
+  const [buttonText, setButtonText] = useState(
+    details.isExpanded
+      ? accept
+        ? 'Accept order'
+        : 'Reject order'
+      : 'View Order',
+  );
+  const [currStatus, setCurrStatus] = useState(details.order.status);
+
+  useEffect(() => {
+    if (details.isExpanded === false) {
+      switch (details.order.status) {
         case OrderStatuses.ACCEPTED:
-            buttonText = 'Mark as ready'
-            newStyle = styles.acceptedButton
-            newStatus = OrderStatuses.READY
-            break
+          setButtonText('Mark as Ready');
+          setStyle(styles.acceptedButton);
+          break;
         case OrderStatuses.READY:
-            buttonText = 'Mark as collected'
-            newStyle = styles.readyButton
-            newStatus = OrderStatuses.FINISHED
-            break
-        case OrderStatuses.EXPANDED:
-            buttonText = accept ? 'Accept order': 'Reject order'
-            newStyle = accept ? styles.acceptButton: styles.rejectButton
-            newStatus = accept ? OrderStatuses.ACCEPTED: OrderStatuses.REJECTED
-            break
+          setButtonText('Mark as Collected');
+          setStyle(styles.readyButton);
+          break;
+      }
     }
+  }, [currStatus]);
 
-    console.log(newStatus)
-    return(
-        <Pressable style={[newStyle, styles.button]}
-                   onPress={() => setOrderStatus(newStatus)}>
-            <Text style={styles.button_text}>{buttonText}</Text>
-        </Pressable>
-    )
-}
+  const updateStatus = () => {
+    if (details.isExpanded === false) {
+      switch (details.order.status) {
+        case OrderStatuses.INCOMING:
+          details.setExpanded(true);
+          break;
+        case OrderStatuses.ACCEPTED:
+          orders.setOrderStatus(details.order, OrderStatuses.READY);
+          setCurrStatus(OrderStatuses.READY);
+          break;
+        case OrderStatuses.READY:
+          orders.setOrderStatus(details.order, OrderStatuses.COLLECTED);
+          details.setFinished(true);
+          setCurrStatus(OrderStatuses.COLLECTED);
+          break;
+      }
+    } else {
+      if (accept) {
+        orders.setOrderStatus(details.order, OrderStatuses.ACCEPTED);
+        setCurrStatus(OrderStatuses.ACCEPTED);
+      } else {
+        orders.setOrderStatus(details.order, OrderStatuses.REJECTED);
+        details.setFinished(true);
+        setCurrStatus(OrderStatuses.REJECTED);
+      }
+      details.setExpanded(false);
+    }
+  };
+
+  return (
+    <Pressable
+      style={[customStyle, styles.button]}
+      onPress={() => updateStatus()}
+    >
+      <Text style={styles.button_text}>{buttonText}</Text>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
-    button_text: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 25,
-        fontFamily: 'Roboto'
-    },
-    button: {
-        display: 'flex',
-        padding: '5%',
-        alignItems: 'center',
-    },
-    incomingButton:{
-        backgroundColor: '#D2AD2B',
-    },
-    acceptedButton:{
-        backgroundColor: '#4273D3',
-    },
-    readyButton:{
-        backgroundColor: '#218F89',
-    },
-    acceptButton:{
-        backgroundColor: '#4273D3',
-    },
-    rejectButton:{
-        backgroundColor: 'red'
-    },
+  button_text: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 25,
+    fontFamily: 'Roboto-Black',
+  },
+  button: {
+    display: 'flex',
+    padding: '5%',
+    alignItems: 'center',
+  },
+  incomingButton: {
+    backgroundColor: '#D2AD2B',
+  },
+  acceptedButton: {
+    backgroundColor: '#4273D3',
+  },
+  readyButton: {
+    backgroundColor: '#218F89',
+  },
+  acceptButton: {
+    backgroundColor: '#4273D3',
+  },
+  rejectButton: {
+    backgroundColor: 'red',
+  },
 });
 
 export default OrderActionButton;
-

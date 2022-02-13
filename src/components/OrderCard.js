@@ -7,34 +7,41 @@
  */
 
 import React, {useState} from 'react';
-import {
-    View,
-} from 'react-native';
-import ReducedOrder from "./ReducedOrder";
-import ExpandedOrder from "./ExpandedOrder";
-import OrderStatuses from "./OrderStatuses";
+import {TouchableOpacity, View} from 'react-native';
+import ReducedOrder from './ReducedOrder';
+import ExpandedOrder from './ExpandedOrder';
+import mapper from './mapper';
+import TabStatuses from './TabStatuses';
 
-const OrderCard = (props) => {
+export const DetailsContext = React.createContext();
 
-    const [total, setTotal] = useState(9.4)
+const OrderCard = ({order}) => {
+  const [isExpanded, setExpanded] = useState(false);
+  const [finished, setFinished] = useState(
+    mapper(TabStatuses.FINISHED).includes(order.status),
+  );
 
-    const [orderStatus, setOrderStatus] = useState(OrderStatuses.INCOMING)
+  const toggleExpanded = () => {
+    setExpanded(!isExpanded);
+  };
 
-    const [order, setOrder] = useState(props.order);
-
-    return (
-        <View>
-            {orderStatus === OrderStatuses.REJECTED || orderStatus === OrderStatuses.FINISHED ? null :
-                <View>
-                {orderStatus === OrderStatuses.EXPANDED ?
-                    <ExpandedOrder order={order} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total}/>
-                    :
-                    <ReducedOrder order={order} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total} />
-            }
-                </View>
-            }
-        </View>
-    );
+  return (
+    <View>
+      <DetailsContext.Provider
+        value={{
+          order: order,
+          isExpanded: isExpanded,
+          setExpanded: setExpanded,
+          isFinished: finished,
+          setFinished: setFinished,
+        }}
+      >
+        <TouchableOpacity onPress={() => toggleExpanded()}>
+          {isExpanded ? <ExpandedOrder /> : <ReducedOrder />}
+        </TouchableOpacity>
+      </DetailsContext.Provider>
+    </View>
+  );
 };
 
 export default OrderCard;
