@@ -9,7 +9,7 @@ import TabStatuses from './components/TabStatuses';
 
 export const OrdersContext = React.createContext();
 
-const OrdersTabTester = () => {
+const OrdersPageTester = () => {
   const [orders, setOrders] = useState(OrdersData);
   const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
   const [currentOrders, setCurrentOrders] = useState(OrdersData);
@@ -55,4 +55,4 @@ const OrdersTabTester = () => {
   );
 };
 
-export default OrdersTabTester;
+export default OrdersPageTester;
