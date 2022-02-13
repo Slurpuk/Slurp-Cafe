@@ -18,8 +18,6 @@ const OrdersTab = ({SECTIONS, setStatus}) => {
       onTabPress={updatePage}
       tabStyle={styles.tab}
       tabsContainerStyle={styles.tabContainer}
-      firstTabStyle={styles.firstTab}
-      lastTabStyle={styles.lastTab}
       tabTextStyle={styles.tabText}
       borderRadius={20}
       activeTabStyle={styles.activeTab}
@@ -55,14 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#E1E1E1',
     alignSelf: 'baseline',
     alignItems: 'baseline',
-  },
-
-  firstTab: {
-    marginRight: '1%',
-  },
-
-  lastTab: {
-    marginLeft: '0%',
   },
 
   tabText: {

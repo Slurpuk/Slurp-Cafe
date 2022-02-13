@@ -1,8 +1,10 @@
+
 import {Pressable, StyleSheet, Text} from 'react-native';
 import OrderStatuses from './OrderStatuses';
 import React, {useContext, useEffect, useState} from 'react';
 import {OrdersContext} from '../testers';
 import {DetailsContext} from './OrderCard';
+import PrimaryButton from "../sub-components/PrimaryButton";
 
 const OrderActionButton = ({accept}) => {
   const orders = useContext(OrdersContext);
@@ -104,6 +106,29 @@ const styles = StyleSheet.create({
   rejectButton: {
     backgroundColor: 'red',
   },
+  
+//     console.log(newStatus)
+//     return(
+//         <PrimaryButton newStyle={newStyle} buttonText={buttonText}/>
+//     )
+// }
+
+// const styles = StyleSheet.create({
+//     incomingButton:{
+//         backgroundColor: '#D2AD2B',
+//     },
+//     acceptedButton:{
+//         backgroundColor: '#4273D3',
+//     },
+//     readyButton:{
+//         backgroundColor: '#218F89',
+//     },
+//     acceptButton:{
+//         backgroundColor: '#4273D3',
+//     },
+//     rejectButton:{
+//         backgroundColor: 'red'
+//     },
 });
 
 export default OrderActionButton;

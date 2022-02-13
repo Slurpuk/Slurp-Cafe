@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 import SECTIONS from './fake-data/OrderTabSectionsData';
@@ -6,6 +7,8 @@ import OrderCard from './components/OrderCard';
 import OrdersData from './fake-data/OrdersData';
 import mapper from './components/mapper';
 import TabStatuses from './components/TabStatuses';
+import OrdersPage from "./screens/OrdersPage";
+
 
 export const OrdersContext = React.createContext();
 
@@ -48,7 +51,6 @@ const OrdersPageTester = () => {
           data={currentOrders}
           renderItem={({item}) => <OrderCard order={item} />}
           style={{padding: '5%'}}
-          // extraData={currentStatus}
         />
       </OrdersContext.Provider>
     </SafeAreaView>
@@ -56,3 +58,13 @@ const OrdersPageTester = () => {
 };
 
 export default OrdersPageTester;
+
+const OrdersTester = () => {
+  return (
+    <OrdersPage/>
+  );
+};
+
+
+export default OrdersTester;
+
