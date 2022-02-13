@@ -23,13 +23,18 @@ const OrdersPage = () => {
 
     function filterOrders() {
         switch(selectedOrderType){
-            case 'all':
-                return orders
-            case 'incoming':
-                return orders.filter(item => item.status === OrderStatuses.EXPANDED || item.status === OrderStatuses.INCOMING)
             case 'rejected':
                 return []
-            default: return orders.filter(item => item.status === selectedOrderType)
+            case 'all':
+                return orders.filter(item => item.status !== OrderStatuses.FINISHED)
+            case 'incoming':
+                return orders.filter(item => item.status === OrderStatuses.EXPANDED || item.status === OrderStatuses.INCOMING)
+            case 'accepted':
+                return orders.filter(item => item.status === OrderStatuses.ACCEPTED)
+            case 'finished':
+                return orders.filter(item => item.status === OrderStatuses.FINISHED)
+            case 'ready':
+                return orders.filter(item => item.status === OrderStatuses.READY)
         }
     }
 
