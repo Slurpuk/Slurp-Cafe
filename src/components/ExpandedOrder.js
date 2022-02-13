@@ -2,7 +2,7 @@ import {FlatList, StyleSheet, Text, View} from "react-native";
 import React from 'react';
 import OrderActionButton from "./OrderActionButton";
 
-const ExpandedOrder = ({orders, setOrderStatus, total, orderStatus}) => {
+const ExpandedOrder = ({order, total}) => {
     return (
         <View style={styles.rectangle}>
             <View style={styles.left_side}>
@@ -13,7 +13,7 @@ const ExpandedOrder = ({orders, setOrderStatus, total, orderStatus}) => {
                 <Text style={styles.order_size}>4 items</Text>
                 <View style={styles.list_of_orders}>
                         <FlatList
-                            data={orders}
+                            data={order.items}
                             renderItem={({item}) => (
                                 <View style={[styles.order, styles.expandedOrder]}>
                                     <Text style={styles.amount}>{item.amount}</Text>
@@ -25,14 +25,14 @@ const ExpandedOrder = ({orders, setOrderStatus, total, orderStatus}) => {
                     <Text style={styles.total_text}>Total</Text>
                     <Text style={styles.total_price}>£{total.toFixed(2)}</Text>
                 </View>
-                <OrderActionButton status={orderStatus} setOrderStatus={setOrderStatus} accept={true}/>
+                <OrderActionButton order={order} accept={true}/>
             </View>
             <View style={styles.right_side}>
                 <View style={styles.time}>
                     <Text>Icon!!!</Text>
                     <Text style={styles.clock_number}>6</Text>
                 </View>
-                <OrderActionButton status={orderStatus} setOrderStatus={setOrderStatus} accept={false}/>
+                <OrderActionButton order={order} accept={false}/>
             </View>
         </View>
     )

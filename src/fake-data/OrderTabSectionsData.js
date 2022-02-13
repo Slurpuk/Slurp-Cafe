@@ -1,3 +1,3 @@
-const SECTIONS = ['All', 'Incoming', 'Accepted', 'Ready', 'Finished'];
+const SECTIONS = ['all', 'incoming', 'accepted', 'ready', 'finished'];
 
 export default SECTIONS;
