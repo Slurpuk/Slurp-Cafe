@@ -38,8 +38,6 @@ const OrderActionButton = ({order, accept, updateOrder}) => {
                 newStatus = accept ? OrderStatuses.ACCEPTED: OrderStatuses.REJECTED
                 newStyle = accept ? styles.acceptButton: styles.rejectButton
                 break
-            default:
-                newStatus = currentStatus
         }
 
         return(

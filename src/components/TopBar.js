@@ -26,7 +26,7 @@ const TopBar = () => {
 const styles = StyleSheet.create({
     container: {
         height: '12%',
-        padding: '3.5%',
+        paddingHorizontal: '3.5%',
         alignItems: 'center',
         backgroundColor: '#F6F6F6',
         display: 'flex',

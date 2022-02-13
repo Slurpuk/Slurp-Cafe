@@ -5,7 +5,6 @@ import OrdersTab from "../components/OrdersTab";
 import OrderCard from "../components/OrderCard";
 import TopBar from "../components/TopBar"
 import OrdersData from "../fake-data/OrdersData";
-import OrderTabSectionsData from "../fake-data/OrderTabSectionsData";
 import OrderStatuses from "../components/OrderStatuses";
 
 const OrdersContext = React.createContext();

@@ -3,6 +3,7 @@ import OrderStatuses from "../components/OrderStatuses";
 const OrdersData = [
     {
         key: 1,
+        customer: 'Sonia',
         status: OrderStatuses.READY,
         items: [
                 {
@@ -30,13 +31,42 @@ const OrdersData = [
     },
     {
         key: 2,
-        status: OrderStatuses.INCOMING,
+        customer: 'John',
+        status: OrderStatuses.ACCEPTED,
         items: [
             {
                 key: 1,
                 name: 'Americano',
                 amount: 1,
                 price: 2.80,
+                specifications: ['Almond Milk'],
+            },
+        ]
+    },
+    {
+        key: 3,
+        customer: 'Paula',
+        status: OrderStatuses.ACCEPTED,
+        items: [
+            {
+                key: 1,
+                name: 'Mocha',
+                amount: 1,
+                price: 2.80,
+                specifications: ['Oat Milk'],
+            },
+        ]
+    },
+    {
+        key: 4,
+        customer: 'Sebastian',
+        status: OrderStatuses.INCOMING,
+        items: [
+            {
+                key: 1,
+                name: 'White Americano',
+                amount: 1,
+                price: 2.20,
                 specifications: ['Almond Milk'],
             },
         ]
