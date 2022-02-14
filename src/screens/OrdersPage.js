@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, SafeAreaView, Text, View, StyleSheet} from 'react-native';
+import {FlatList, SafeAreaView, Text, View, StyleSheet, Image} from 'react-native';
 import SECTIONS from '../fake-data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
 import OrderCard from '../components/OrderCard';
@@ -14,6 +14,9 @@ const OrdersPage = () => {
     const [orders, setOrders] = useState(OrdersData);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState(OrdersData);
+    const [receivingOrders, setReceivingOrders] = useState(true)
+
+    console.log(receivingOrders)
 
     const setOrderStatus = (order, status) => {
         let index = orders.indexOf(order);
@@ -36,29 +39,54 @@ const OrdersPage = () => {
     }, [currentStatus]);
 
     return (
-        <SafeAreaView>
-            <TopBar/>
-            <View style={{padding: '5%'}}>
-                <OrdersContext.Provider
-                    value={{
-                        orders: orders,
-                        setOrderStatus: setOrderStatus,
-                        updateOrders: updateOrders,
-                    }}
-                >
-                    <Text style={styles.activeOrdersText}>Active orders</Text>
-                    <OrdersTab SECTIONS={SECTIONS} setStatus={setCurrentStatus} />
-                    <FlatList
-                        data={currentOrders}
-                        renderItem={({item}) => <OrderCard order={item} />}
-                    />
-                </OrdersContext.Provider>
-            </View>
+        <SafeAreaView style={{height: '100%'}}>
+            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders}/>
+            {receivingOrders ?
+                <View style={{padding: '5%'}}>
+                    <OrdersContext.Provider
+                        value={{
+                            orders: orders,
+                            setOrderStatus: setOrderStatus,
+                            updateOrders: updateOrders,
+                        }}
+                    >
+                        <Text style={styles.activeOrdersText}>Active orders</Text>
+                        <OrdersTab SECTIONS={SECTIONS} setStatus={setCurrentStatus}/>
+                        <FlatList
+                            data={currentOrders}
+                            renderItem={({item}) => <OrderCard order={item}/>}
+                        />
+                    </OrdersContext.Provider>
+                </View>
+                :
+                <View style={styles.inactiveScreen}>
+                    <Text style={styles.inactiveText}>Toggle the Switch ;)</Text>
+                    <Image source={require('../assets/desert.png')} style={styles.inactiveImage}/>
+                </View>
+            }
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    inactiveScreen: {
+        paddingVertical: '5%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    inactiveText:{
+        fontFamily: 'Montserrat',
+        fontWeight: '600',
+        fontSize: 30,
+        color: '#000000',
+        alignSelf: 'center',
+        marginVertical: '20%'
+    },
+    inactiveImage: {
+        alignSelf: 'center',
+        height: '50%'
+    },
     activeOrdersText: {
         fontFamily: 'Montserrat',
         fontWeight: '600',

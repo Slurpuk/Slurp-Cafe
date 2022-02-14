@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 
-const TopBar = () => {
-    const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled(prevState => !prevState)
+const TopBar = ({receivingOrders, setReceivingOrders}) => {
+    const [isEnabled, setIsEnabled] = useState(receivingOrders)
+
+    const toggleSwitch = () =>
+    {
+        setIsEnabled(prevState => !prevState)
+    }
+
+    useEffect(() => {
+        setReceivingOrders(isEnabled)
+    }, [isEnabled])
+
     return (
         <View style={styles.container}>
             <PrimaryButton newStyle={styles.manageButton} buttonText={'Manage Stock'}/>
