@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 44,
         color: '#000000',
-        marginVertical: '5%',
+        marginBottom: '5%',
     }
 });
 
