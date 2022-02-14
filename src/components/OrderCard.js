@@ -7,11 +7,12 @@
  */
 
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import ReducedOrder from './ReducedOrder';
 import ExpandedOrder from './ExpandedOrder';
 import mapper from './mapper';
 import TabStatuses from './TabStatuses';
+
 
 export const DetailsContext = React.createContext();
 
@@ -36,9 +37,9 @@ const OrderCard = ({order}) => {
           setFinished: setFinished,
         }}
       >
-        <TouchableOpacity onPress={() => toggleExpanded()}>
+        <Pressable onPress={() => toggleExpanded()}>
           {isExpanded ? <ExpandedOrder /> : <ReducedOrder />}
-        </TouchableOpacity>
+        </Pressable>
       </DetailsContext.Provider>
     </View>
   );
