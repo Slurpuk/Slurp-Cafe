@@ -7,35 +7,42 @@
  */
 
 import React, {useState} from 'react';
-import {
-    View,
-} from 'react-native';
-import ReducedOrder from "./ReducedOrder";
-import ExpandedOrder from "./ExpandedOrder";
-import OrderStatuses from "./OrderStatuses";
-import OrdersData from "../fake-data/OrdersData";
+import {Pressable, View} from 'react-native';
+import ReducedOrder from './ReducedOrder';
+import ExpandedOrder from './ExpandedOrder';
+import mapper from './mapper';
+import TabStatuses from './TabStatuses';
 
-const OrderCard = (props) => {
 
-    const [total, setTotal] = useState(9.4)
+export const DetailsContext = React.createContext();
 
-    const [orderStatus, setOrderStatus] = useState(OrderStatuses.INCOMING)
+const OrderCard = ({order}) => {
+  const [isExpanded, setExpanded] = useState(false);
+  const [finished, setFinished] = useState(
+    mapper(TabStatuses.FINISHED).includes(order.status),
+  );
 
-    const [orders, setOrders] = useState(OrdersData);
+  const toggleExpanded = () => {
+    setExpanded(!isExpanded);
+  };
 
-    return (
-        <View>
-            {orderStatus === OrderStatuses.REJECTED || orderStatus === OrderStatuses.FINISHED ? null :
-                <View>
-                {orderStatus === OrderStatuses.EXPANDED ?
-                    <ExpandedOrder orders={orders} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total}/>
-                    :
-                    <ReducedOrder orders={orders} orderStatus={orderStatus} setOrderStatus={setOrderStatus} total={total} />
-            }
-                </View>
-            }
-        </View>
-    );
+  return (
+    <View>
+      <DetailsContext.Provider
+        value={{
+          order: order,
+          isExpanded: isExpanded,
+          setExpanded: setExpanded,
+          isFinished: finished,
+          setFinished: setFinished,
+        }}
+      >
+        <Pressable onPress={() => toggleExpanded()}>
+          {isExpanded ? <ExpandedOrder /> : <ReducedOrder />}
+        </Pressable>
+      </DetailsContext.Provider>
+    </View>
+  );
 };
 
 export default OrderCard;

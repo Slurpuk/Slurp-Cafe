@@ -3,16 +3,19 @@ import {Dimensions, Platform, PixelRatio} from 'react-native';
 import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
+const OrdersTab = ({SECTIONS, setStatus}) => {
+  const [index, setIndex] = useState(0);
 
-const OrdersTab = ({SECTIONS}) => {
-
-  const [index, setIndex] = useState(0)
+  const updatePage = newIndex => {
+    setIndex(newIndex);
+    setStatus(SECTIONS[newIndex]);
+  };
 
   return (
     <SegmentedControlTab
       values={SECTIONS}
       selectedIndex={index}
-      onTabPress={setIndex}
+      onTabPress={updatePage}
       tabStyle={styles.tab}
       tabsContainerStyle={styles.tabContainer}
       tabTextStyle={styles.tabText}
@@ -22,27 +25,23 @@ const OrdersTab = ({SECTIONS}) => {
   );
 };
 
-
-
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
+const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const scale = SCREEN_WIDTH / 300;
 
 export function normalize(size) {
-  const newSize = size * scale
+  const newSize = size * scale;
   if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
 
 const styles = StyleSheet.create({
   tabContainer: {
-    justifyContent: "flex-start",
+    marginHorizontal: '5%',
+    justifyContent: 'flex-start',
   },
 
   tab: {
@@ -53,14 +52,13 @@ const styles = StyleSheet.create({
     marginHorizontal: '1%',
     backgroundColor: '#E1E1E1',
     alignSelf: 'baseline',
-    alignItems: 'baseline'
+    alignItems: 'baseline',
   },
 
   tabText: {
     color: 'black',
     fontSize: normalize(7),
     fontFamily: 'Montserrat-Bold',
-
   },
 
   activeTab: {
