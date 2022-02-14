@@ -16,8 +16,6 @@ const OrdersPage = () => {
     const [currentOrders, setCurrentOrders] = useState(OrdersData);
     const [receivingOrders, setReceivingOrders] = useState(true)
 
-    console.log(receivingOrders)
-
     const setOrderStatus = (order, status) => {
         let index = orders.indexOf(order);
         let current = orders;
@@ -47,7 +45,6 @@ const OrdersPage = () => {
                         value={{
                             orders: orders,
                             setOrderStatus: setOrderStatus,
-                            updateOrders: updateOrders,
                         }}
                     >
                         <Text style={styles.activeOrdersText}>Active orders</Text>
@@ -70,7 +67,6 @@ const OrdersPage = () => {
 
 const styles = StyleSheet.create({
     inactiveScreen: {
-        paddingVertical: '5%',
         height: '100%',
         display: 'flex',
         justifyContent: 'center'

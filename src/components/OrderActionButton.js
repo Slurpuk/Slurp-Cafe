@@ -2,9 +2,9 @@
 import {Pressable, StyleSheet, Text} from 'react-native';
 import OrderStatuses from './OrderStatuses';
 import React, {useContext, useEffect, useState} from 'react';
-import {OrdersContext} from '../testers';
 import {DetailsContext} from './OrderCard';
 import PrimaryButton from "../sub-components/PrimaryButton";
+import {OrdersContext} from "../screens/OrdersPage";
 
 const OrderActionButton = ({accept}) => {
   const orders = useContext(OrdersContext);
