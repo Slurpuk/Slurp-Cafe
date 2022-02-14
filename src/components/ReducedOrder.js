@@ -2,6 +2,8 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import OrderActionButton from './OrderActionButton';
 import React, {useContext} from 'react';
 import {DetailsContext} from './OrderCard';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 
 const ReducedOrder = () => {
   const order = useContext(DetailsContext);
@@ -9,13 +11,13 @@ const ReducedOrder = () => {
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>Mike Myers</Text>
+          <Text style={styles.name}>{order.order.customerName}</Text>
           <Text style={styles.total_price}>
             £{order.order.total.toFixed(2)}
           </Text>
         </View>
-        <Text style={styles.order_number}>#53441</Text>
-        <Text style={styles.order_size}>4 items</Text>
+        <Text style={styles.order_number}>#{order.order.key}</Text>
+        <Text style={styles.order_size}>{order.order.items.length} items</Text>
         <View style={styles.list_of_orders}>
           <FlatList
             style={styles.list}
@@ -36,7 +38,7 @@ const ReducedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Text>Icon!!!</Text>
+          <Icon size={24} color={'#239DAD'} name='clock'/>
           <Text style={styles.clock_number}>6</Text>
         </View>
         {order.isFinished ? (
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignSelf: 'flex-end',
+    alignItems: 'center',
   },
   clock_number: {
     fontFamily: 'Montserrat',

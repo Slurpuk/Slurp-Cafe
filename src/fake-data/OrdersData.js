@@ -3,6 +3,7 @@ import OrderStatuses from '../components/OrderStatuses';
 const OrdersData = [
   {
     key: 1,
+    customerName: 'John Doe',
     status: OrderStatuses.INCOMING,
     total: 15.1,
     items: [
@@ -32,6 +33,7 @@ const OrdersData = [
 
   {
     key: 2,
+    customerName: 'Sonia',
     status: OrderStatuses.INCOMING,
     total: 2.8,
     items: [
