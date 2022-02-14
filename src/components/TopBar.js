@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 
-const TopBar = () => {
-    const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled(prevState => !prevState)
+const TopBar = ({receivingOrders, setReceivingOrders}) => {
+    const [isEnabled, setIsEnabled] = useState(receivingOrders)
+
+    const toggleSwitch = () =>
+    {
+        setIsEnabled(prevState => !prevState)
+    }
+
+    useEffect(() => {
+        setReceivingOrders(isEnabled)
+    }, [isEnabled])
+
     return (
         <View style={styles.container}>
             <PrimaryButton newStyle={styles.manageButton} buttonText={'Manage Stock'}/>
@@ -26,7 +35,7 @@ const TopBar = () => {
 const styles = StyleSheet.create({
     container: {
         height: '12%',
-        padding: '3.5%',
+        paddingHorizontal: '3.5%',
         alignItems: 'center',
         backgroundColor: '#F6F6F6',
         display: 'flex',
@@ -44,6 +53,7 @@ const styles = StyleSheet.create({
     manageButton: {
         backgroundColor: '#207671',
         width: '35%',
+        padding: '2%',
     },
     manageOrdersHeadline: {
         display: 'flex',

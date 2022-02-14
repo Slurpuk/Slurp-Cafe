@@ -13,7 +13,8 @@
   "dependencies": {
     "react": "17.0.2",
     "react-native": "0.67.2",
-    "react-native-segmented-control-tab": "^4.0.0"
+    "react-native-segmented-control-tab": "^4.0.0",
+    "react-native-vector-icons": "^9.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.12",

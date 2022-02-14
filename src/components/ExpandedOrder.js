@@ -3,6 +3,7 @@ import React, {useContext} from 'react';
 import OrderActionButton from './OrderActionButton';
 import {DetailsContext} from './OrderCard';
 import OrderStatuses from './OrderStatuses';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
@@ -10,10 +11,10 @@ const ExpandedOrder = () => {
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>Mike Myers</Text>
+          <Text style={styles.name}>{context.order.customerName}</Text>
         </View>
-        <Text style={styles.order_number}>#53441</Text>
-        <Text style={styles.order_size}>4 items</Text>
+        <Text style={styles.order_number}>#{context.order.key}</Text>
+        <Text style={styles.order_size}>{context.order.items.length} items</Text>
         <View style={styles.list_of_orders}>
           <FlatList
             data={context.order.items}
@@ -37,7 +38,7 @@ const ExpandedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Text>Icon!!!</Text>
+          <Icon size={24} color={'#239DAD'} name='clock'/>
           <Text style={styles.clock_number}>6</Text>
         </View>
         {context.order.status === OrderStatuses.INCOMING ? (
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignSelf: 'flex-end',
+    alignItems: 'center'
   },
   clock_number: {
     fontFamily: 'Montserrat',
