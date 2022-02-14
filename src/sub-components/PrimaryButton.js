@@ -14,7 +14,6 @@ const PrimaryButton = ({newStyle, buttonText, onPress}) => {
 const styles = StyleSheet.create({
     button: {
         display: 'flex',
-        padding: '5%',
         alignItems: 'center',
         elevation: 5,
         shadowColor: "#000",

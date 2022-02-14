@@ -40,7 +40,6 @@ export function normalize(size) {
 
 const styles = StyleSheet.create({
   tabContainer: {
-    marginHorizontal: '5%',
     justifyContent: 'flex-start',
   },
 

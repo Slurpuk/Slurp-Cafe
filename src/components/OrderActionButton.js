@@ -70,7 +70,7 @@ const OrderActionButton = ({accept}) => {
   };
 
   return (
-      <PrimaryButton newStyle={customStyle} buttonText={buttonText} onPress={updateStatus}/>
+      <PrimaryButton newStyle={[customStyle, {padding: '5%'}]} buttonText={buttonText} onPress={updateStatus}/>
   );
 };
 
