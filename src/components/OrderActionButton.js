@@ -70,65 +70,27 @@ const OrderActionButton = ({accept}) => {
   };
 
   return (
-    <Pressable
-      style={[customStyle, styles.button]}
-      onPress={() => updateStatus()}
-    >
-      <Text style={styles.button_text}>{buttonText}</Text>
-    </Pressable>
+      <PrimaryButton newStyle={customStyle} buttonText={buttonText} onPress={updateStatus}/>
   );
 };
 
-const styles = StyleSheet.create({
-  button_text: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 25,
-    fontFamily: 'Roboto-Black',
-  },
-  button: {
-    display: 'flex',
-    padding: '5%',
-    alignItems: 'center',
-  },
-  incomingButton: {
-    backgroundColor: '#D2AD2B',
-  },
-  acceptedButton: {
-    backgroundColor: '#4273D3',
-  },
-  readyButton: {
-    backgroundColor: '#218F89',
-  },
-  acceptButton: {
-    backgroundColor: '#4273D3',
-  },
-  rejectButton: {
-    backgroundColor: 'red',
-  },
-  
-//     console.log(newStatus)
-//     return(
-//         <PrimaryButton newStyle={newStyle} buttonText={buttonText}/>
-//     )
-// }
 
-// const styles = StyleSheet.create({
-//     incomingButton:{
-//         backgroundColor: '#D2AD2B',
-//     },
-//     acceptedButton:{
-//         backgroundColor: '#4273D3',
-//     },
-//     readyButton:{
-//         backgroundColor: '#218F89',
-//     },
-//     acceptButton:{
-//         backgroundColor: '#4273D3',
-//     },
-//     rejectButton:{
-//         backgroundColor: 'red'
-//     },
+const styles = StyleSheet.create({
+    incomingButton:{
+        backgroundColor: '#D2AD2B',
+    },
+    acceptedButton:{
+        backgroundColor: '#4273D3',
+    },
+    readyButton:{
+        backgroundColor: '#218F89',
+    },
+    acceptButton:{
+        backgroundColor: '#4273D3',
+    },
+    rejectButton:{
+        backgroundColor: 'red'
+    },
 });
 
 export default OrderActionButton;

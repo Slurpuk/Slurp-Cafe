@@ -59,12 +59,12 @@ const OrdersPageTester = () => {
 
 export default OrdersPageTester;
 
-const OrdersTester = () => {
-  return (
-    <OrdersPage/>
-  );
-};
-
-
-export default OrdersTester;
+// const OrdersTester = () => {
+//   return (
+//     <OrdersPage/>
+//   );
+// };
+//
+//
+// export default OrdersTester;
 
