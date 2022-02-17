@@ -6,19 +6,9 @@ export const OrdersContext = React.createContext();
 
 const FakePage = () => {
 
-    const fakeOrders = firestore().collection('FakeOrder');
-
     return (
         <SafeAreaView style={{height: '100%'}}>
             <Text>Orders</Text>
-            <FlatList data={fakeOrders} renderItem={({item}) =>
-                <View>
-                    <Text>item.name</Text>
-                    <Text>item.status</Text>
-                </View>
-            }>
-
-            </FlatList>
         </SafeAreaView>
     );
 };

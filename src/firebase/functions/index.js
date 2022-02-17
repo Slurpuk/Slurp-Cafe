@@ -8,10 +8,10 @@ const functions = require("firebase-functions");
 //   response.send("Hello from Firebase!");
 // });
 
-exports.myFunction = functions.firestore
-    .document('FakeOrder')
-    .onCreate((change, context) => {
-        /**
-         * inform the user of a change in their current orders' status
-         */
-    });
+// exports.myFunction = functions.firestore
+//     .document('FakeOrder')
+//     .onCreate((change, context) => {
+//         /**
+//          * inform the user of a change in their current orders' status
+//          */
+//     });
