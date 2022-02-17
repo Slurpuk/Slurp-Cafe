@@ -7,3 +7,11 @@ const functions = require("firebase-functions");
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+exports.myFunction = functions.firestore
+    .document('FakeOrder')
+    .onCreate((change, context) => {
+        /**
+         * inform the user of a change in their current orders' status
+         */
+    });
