@@ -7,14 +7,40 @@ import OrdersData from '../fake-data/OrdersData';
 import mapper from '../components/mapper';
 import TabStatuses from '../components/TabStatuses';
 import TopBar from "../components/TopBar";
-
+import firestore from "@react-native-firebase/firestore";
 export const OrdersContext = React.createContext();
 
 const OrdersPage = () => {
-    const [orders, setOrders] = useState(OrdersData);
+    const [orders, setOrders] = useState([]);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
-    const [currentOrders, setCurrentOrders] = useState(OrdersData);
+    const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState(true)
+
+    useEffect(() => {
+        const subscriber = firestore()
+            .collection('FakeOrder')
+            .onSnapshot(querySnapshot => {
+                const currentOrders = [];
+                const orders = [];
+
+                querySnapshot.forEach(documentSnapshot => {
+                    currentOrders.push({
+                        ...documentSnapshot.data(),
+                        key: documentSnapshot.id,
+                    });
+                    orders.push({
+                        ...documentSnapshot.data(),
+                        key: documentSnapshot.id,
+                    });
+                });
+
+                setCurrentOrders(currentOrders);
+                setOrders(orders);
+            });
+
+        // Unsubscribe from events when no longer in use
+        return () => subscriber();
+    }, []);
 
     const setOrderStatus = (order, status) => {
         let index = orders.indexOf(order);
