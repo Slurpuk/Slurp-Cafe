@@ -8,6 +8,7 @@ import mapper from '../components/mapper';
 import TabStatuses from '../components/TabStatuses';
 import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
+import firebase from "@react-native-firebase/app";
 export const OrdersContext = React.createContext();
 
 const OrdersPage = () => {
@@ -15,6 +16,11 @@ const OrdersPage = () => {
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState(true)
+
+
+    useEffect(() => {
+        updateOrders();
+    }, [currentStatus]);
 
     useEffect(() => {
         const subscriber = firestore()
@@ -46,6 +52,12 @@ const OrdersPage = () => {
         let index = orders.indexOf(order);
         let current = orders;
         current[index].status = status;
+
+        let documentPath = firebase.firestore().collection('FakeOrder').find(doc => doc.customerName == order.customerName)
+        firebase.firestore().collection('FakeOrder').doc(documentPath).update({
+            status: status
+        })
+
         setOrders(current);
         updateOrders();
     };
@@ -57,10 +69,6 @@ const OrdersPage = () => {
             setCurrentOrders(orders.filter(or => target.indexOf(or.status) !== -1));
         }
     };
-
-    useEffect(() => {
-        updateOrders();
-    }, [currentStatus]);
 
     return (
         <SafeAreaView style={{height: '100%'}}>
