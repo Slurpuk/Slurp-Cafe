@@ -9,6 +9,7 @@ import TabStatuses from '../components/TabStatuses';
 import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
 import firebase from "@react-native-firebase/app";
+import OrderStatuses from "../components/OrderStatuses";
 export const OrdersContext = React.createContext();
 
 const OrdersPage = () => {
@@ -51,12 +52,16 @@ const OrdersPage = () => {
     const setOrderStatus = (order, status) => {
         let index = orders.indexOf(order);
         let current = orders;
-        current[index].status = status;
+        // current[index].status = status;
 
-        let documentPath = firebase.firestore().collection('FakeOrder').find(doc => doc.customerName == order.customerName)
-        firebase.firestore().collection('FakeOrder').doc(documentPath).update({
-            status: status
-        })
+        //let documentPath = firebase.firestore().collection('FakeOrder').find('7KDVQqdQjuUzVLyWVmVE')
+        if(status === OrderStatuses.REJECTED){
+            firebase.firestore().collection('FakeOrder').doc('7KDVQqdQjuUzVLyWVmVE').delete().then(r => console.log('order removed'))
+        }else {
+            firebase.firestore().collection('FakeOrder').doc('7KDVQqdQjuUzVLyWVmVE').update({
+                status: status
+            }).then(r => console.log('hello'))
+        }
 
         setOrders(current);
         updateOrders();
