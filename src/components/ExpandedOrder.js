@@ -1,12 +1,17 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import OrderActionButton from './OrderActionButton';
 import {DetailsContext} from './OrderCard';
 import OrderStatuses from './OrderStatuses';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import calculateTime from "../screens/etaLogic";
 
 const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
+  const [timerCount, setTimer] = useState(calculateTime);
+  useEffect(() => {
+    setTimer(calculateTime());
+  });
   return (
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
@@ -39,7 +44,7 @@ const ExpandedOrder = () => {
       <View style={styles.right_side}>
         <View style={styles.time}>
           <Icon size={24} color={'#239DAD'} name='clock'/>
-          <Text style={styles.clock_number}>6</Text>
+          <Text style={styles.clock_number}>{timerCount}</Text>
         </View>
         {context.order.status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={false} />

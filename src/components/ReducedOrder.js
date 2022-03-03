@@ -3,7 +3,7 @@ import OrderActionButton from './OrderActionButton';
 import React, {useContext} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import calculateTime from "../screens/etaLogic";
 
 const ReducedOrder = () => {
   const order = useContext(DetailsContext);
@@ -39,7 +39,7 @@ const ReducedOrder = () => {
       <View style={styles.right_side}>
         <View style={styles.time}>
           <Icon size={24} color={'#239DAD'} name='clock'/>
-          <Text style={styles.clock_number}>6</Text>
+          <Text style={styles.clock_number}>{calculateTime()}</Text>
         </View>
         {order.isFinished ? (
           <Text style={styles.finished}>This order is finished</Text>
