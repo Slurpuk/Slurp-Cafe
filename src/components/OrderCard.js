@@ -13,6 +13,8 @@ import ExpandedOrder from './ExpandedOrder';
 import mapper from './mapper';
 import TabStatuses from './TabStatuses';
 import calculateTime from "../screens/etaLogic";
+import firestore from "@react-native-firebase/firestore";
+import firebase from "@react-native-firebase/app";
 
 
 export const DetailsContext = React.createContext();
@@ -22,22 +24,60 @@ const OrderCard = ({order}) => {
   const [finished, setFinished] = useState(
     mapper(TabStatuses.FINISHED).includes(order.status),
   );
-  const [timerCount, setTimer] = useState(calculateTime);
   const [statusColor, setStatusColor]=useState('#239DAD');
-  let counter=timerCount;
+    const [userLatitude, setUserLatitude]=useState(0);
+    const [userLongitude, setUserLongitude]=useState(0);
+    const [locationUpdated, setLocationUpdated]=useState(false);
+    const [displayTime, setDisplayTime]=useState(0);
+    const [shopLatitude, setShopLatitude]=useState(0);
+    const [shopLongitude, setShopLongitude]=useState(0);
+  const orderUser=order.UserId.replace(/\s/g, '') ; // it has unneccesary spaces idk why
 
     useEffect(() => {
-        const oneSecInterval=setInterval(() => {
-            counter--;
-            //console.log(counter);
-            if(counter==0){
-                clearInterval(oneSecInterval);
-                setStatusColor('red');
+            const oneSecInterval=setInterval(() => {
+                setDisplayTime(displayTime - 1);
+                if(displayTime===0){
+                    clearInterval(oneSecInterval);
+                    setStatusColor('red');
+                }
+            }, 1000);
+    }, [locationUpdated]);
+
+    useEffect(() => {
+            //console.log(userLatitude);
+            //setUserLatitude(10);
+            const curr = calculateTime(userLatitude, userLongitude,shopLatitude ,shopLongitude)
+            if (curr !== displayTime){
+                setDisplayTime(curr);
+                setLocationUpdated(!locationUpdated)
             }
-            setTimer(counter);
-        }, 1000);
+
+    }, [userLatitude,userLongitude,shopLatitude,shopLongitude]);
+
+
+    useEffect(() => {
+        const subscriber = firestore().doc('Users/' + orderUser).onSnapshot(querySnapshot => {
+            const user = querySnapshot;
+            //console.log(user.data().Latitude);
+            setUserLatitude(user.data().Latitude);
+            //console.log(userLatitude);
+            setUserLongitude(user.data().Longitude);
+        });
+        return () => subscriber();
     }, []);
 
+    useEffect(() => {
+        const subscriber =firestore().doc('CoffeeShop/' + order.CoffeeShopId.replace(/\s/g, '')).onSnapshot(querySnapshot => {
+            const shop = querySnapshot;
+            setShopLatitude(shop.data().Location.latitude);
+            setShopLongitude(shop.data().Location.longitude);
+        });
+        return () => subscriber();
+    }, []);
+
+
+
+    //console.log(displayTime);
   const toggleExpanded = () => {
     setExpanded(!isExpanded);
   };
@@ -47,7 +87,7 @@ const OrderCard = ({order}) => {
       <DetailsContext.Provider
         value={{
           order: order,
-            timerCount:timerCount ,
+            timerCount:displayTime ,
             statusColor:statusColor,
           isExpanded: isExpanded,
           setExpanded: setExpanded,

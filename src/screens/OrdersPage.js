@@ -16,54 +16,12 @@ const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState([]);
-    const [receivingOrders, setReceivingOrders] = useState(true)
-    const [currentShop, setCurrentShop] = useState(null)
-
-    /*for (o of orders){
-        console.log(o.UserId);
-    }*/
-
-    //console.log(currentShop);
-
-    useEffect(() => {
-        const getETA = () => {
-            /*let userLatitude = 0;
-            let userLongitude = 0;
-
-            firestore()
-                .collection('Users')
-                .onSnapshot(querySnapshot => {
-                    const user = [];
-                    const finalUser = [];
-
-                    querySnapshot.forEach(documentSnapshot => {
-                        user.push({
-                            ...documentSnapshot.data(),
-                            key: documentSnapshot.id,
-                        });
-                        finalUser.push({
-                            ...documentSnapshot.data(),
-                            key: documentSnapshot.id,
-                        });
-                    });
-                    userLatitude = finalUser.map(u => u.Latitude);
-                    userLongitude = finalUser.map(u => u.Longitude);
-                    console.log(userLongitude);
-
-                    //currentShop.Latitude;
-                });*/
-
-        };
-        getETA();
-    }, []);
-
-
-
+    const [receivingOrders, setReceivingOrders] = useState(true);
+    const [currentShop, setCurrentShop] = useState(null);
 
     useEffect(() => {
         firestore().doc('CoffeeShop/3ktdgIGsHcFkVLdQzSYx').onSnapshot(querySnapshot => {
             const shop = querySnapshot;
-            //console.log(shop.map(u => u));
             setCurrentShop(shop);
         });
         //console.log(currentShop);
@@ -85,7 +43,7 @@ const OrdersPage = () => {
                     const orderCoffeeShopId=documentSnapshot.data().CoffeeShopId;
                     //console.log(orderCoffeeShopId);
                     if(orderCoffeeShopId.includes('3ktdgIGsHcFkVLdQzSYx')){
-                        console.log(documentSnapshot.data().CoffeeShopId);
+                        //console.log(documentSnapshot.data().CoffeeShopId);
                         currentOrders.push({
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
@@ -94,7 +52,7 @@ const OrdersPage = () => {
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
                         });
-                        console.log(orders.map(u => u.CoffeeShopId));
+                        //console.log(orders.map(u => u.CoffeeShopId));
                     }
                 });
 
