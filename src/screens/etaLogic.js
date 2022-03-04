@@ -1,15 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, SafeAreaView, Text, View} from "react-native";
-
+import React from 'react';
 
 const calculateDistance = () => {
-    //console.log('This is the user latitude: '+currentLatitude)
-    //console.log('This is  the user longitude: '+currentLongitude)
-    /*console.log('This is my bush house latitude: '+bushHouse.latitude)
-    console.log('This is my bush house longitude: '+bushHouse.longitude)
-    console.log('This is my shop latitude: '+hardcodedMarker2.latitude)
-    console.log('This is my shop longitude: '+hardcodedMarker2.latitude)*/
-
     const R = 6371e3; // metres
     const latitude1 = bushHouse.latitude * Math.PI/180; // φ, λ in radians
     const latitude2 = hardcodedMarker2.latitude * Math.PI/180;
@@ -28,14 +19,9 @@ const calculateDistance = () => {
 };
 
 const calculateTime = () => {
-
     const distance=calculateDistance();
     const speed=4*16.6667;
     const time=parseInt(distance/speed);
-    //const randomNumber=Math.floor(Math.random() * 100) + 1;
-    //const time=parseInt(distance/randomNumber);
-
-    //console.log('The time it  takes to go to this place is  '+time+' minutes')
     return time;
 };
 
@@ -49,17 +35,6 @@ const bushHouse={ //this corresponds to the bush house area
 const hardcodedMarker2= { //this corresponds to the bush house area
     latitude: 51.51143534301982,
     longitude: -0.11969058630179567,
-};
-
-const ETA = () => {
-
-    return (
-        <SafeAreaView style={{height: '100%'}}>
-            <View>
-                <Text>{calculateTime()}</Text>
-            </View>
-        </SafeAreaView>
-    );
 };
 
 export default calculateTime;

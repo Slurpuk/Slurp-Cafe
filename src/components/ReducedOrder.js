@@ -3,41 +3,25 @@ import OrderActionButton from './OrderActionButton';
 import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import OrderStatuses from "./OrderStatuses";
-import calculateTime from "../screens/etaLogic";
 
-const ReducedOrder = () => {
-  const order = useContext(DetailsContext);
-  const [timerCount, setTimer] = useState(calculateTime);
-  const [statusColor, setStatusColor]=useState('#239DAD');
-  let counter=timerCount;
-  useEffect(() => {
-    const oneSecInterval=setInterval(() => {
-      counter--;
-      console.log(counter);
-      if(counter==0){
-        clearInterval(oneSecInterval);
-        setStatusColor('red');
-      }
-      setTimer(counter);
-    }, 1000);
-  }, []);
+const ReducedOrder = (props) => {
+  const context = useContext(DetailsContext);
 
   return (
     <View style={[styles.rectangle, {backgroundColor: props.data}]}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>{order.order.customerName}</Text>
+          <Text style={styles.name}>{context.order.customerName}</Text>
           <Text style={styles.total_price}>
-            £{order.order.total.toFixed(2)}
+            £{context.order.total.toFixed(2)}
           </Text>
         </View>
-        <Text style={styles.order_number}>#{order.order.key}</Text>
-        <Text style={styles.order_size}>{order.order.items.length} items</Text>
+        <Text style={styles.order_number}>#{context.order.key}</Text>
+        <Text style={styles.order_size}>{context.order.items.length} items</Text>
         <View style={styles.list_of_orders}>
           <FlatList
             style={styles.list}
-            data={order.order.items.slice(0, 2)}
+            data={context.order.items.slice(0, 2)}
             horizontal={true}
             renderItem={({item}) => (
               <View style={styles.order}>
@@ -47,17 +31,17 @@ const ReducedOrder = () => {
             )}
           />
 
-          {order.order.items.length > 2 ? (
+          {context.order.items.length > 2 ? (
             <Text style={styles.dots}>...</Text>
           ) : null}
         </View>
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Icon size={24} color={statusColor} name='clock'/>
-          <Text style={[styles.clock_number, {color:statusColor}]}>{timerCount}</Text>
+          <Icon size={24} color={context.statusColor} name='clock'/>
+          <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
         </View>
-        {order.isFinished ? (
+        {context.isFinished ? (
           <Text style={styles.finished}>This order is finished</Text>
         ) : (
           <OrderActionButton />

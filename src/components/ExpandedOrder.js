@@ -4,24 +4,9 @@ import OrderActionButton from './OrderActionButton';
 import {DetailsContext} from './OrderCard';
 import OrderStatuses from './OrderStatuses';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import calculateTime from "../screens/etaLogic";
 
 const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
-  const [timerCount, setTimer] = useState(calculateTime);
-  const [statusColor, setStatusColor]=useState('#239DAD');
-  let counter=timerCount;
-  useEffect(() => {
-    const oneSecInterval=setInterval(() => {
-      counter--;
-      console.log(counter);
-      if(counter==0){
-        clearInterval(oneSecInterval);
-        setStatusColor('red');
-      }
-      setTimer(counter);
-    }, 1000);
-  }, []);
 
   return (
     <View style={styles.rectangle}>
@@ -54,8 +39,8 @@ const ExpandedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Icon size={24} color={statusColor} name='clock'/>
-          <Text style={[styles.clock_number, {color:statusColor}]}>{timerCount}</Text>
+          <Icon size={24} color={context.statusColor} name='clock'/>
+          <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
         </View>
         {context.order.status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={false} />

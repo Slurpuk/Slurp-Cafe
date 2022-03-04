@@ -6,12 +6,13 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import ReducedOrder from './ReducedOrder';
 import ExpandedOrder from './ExpandedOrder';
 import mapper from './mapper';
 import TabStatuses from './TabStatuses';
+import calculateTime from "../screens/etaLogic";
 
 
 export const DetailsContext = React.createContext();
@@ -21,6 +22,21 @@ const OrderCard = ({order}) => {
   const [finished, setFinished] = useState(
     mapper(TabStatuses.FINISHED).includes(order.status),
   );
+  const [timerCount, setTimer] = useState(calculateTime);
+  const [statusColor, setStatusColor]=useState('#239DAD');
+  let counter=timerCount;
+
+    useEffect(() => {
+        const oneSecInterval=setInterval(() => {
+            counter--;
+            //console.log(counter);
+            if(counter==0){
+                clearInterval(oneSecInterval);
+                setStatusColor('red');
+            }
+            setTimer(counter);
+        }, 1000);
+    }, []);
 
   const toggleExpanded = () => {
     setExpanded(!isExpanded);
@@ -31,6 +47,8 @@ const OrderCard = ({order}) => {
       <DetailsContext.Provider
         value={{
           order: order,
+            timerCount:timerCount ,
+            statusColor:statusColor,
           isExpanded: isExpanded,
           setExpanded: setExpanded,
           isFinished: finished,

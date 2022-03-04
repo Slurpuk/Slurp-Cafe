@@ -10,6 +10,7 @@ import firestore from "@react-native-firebase/firestore";
 import firebase from "@react-native-firebase/app";
 import OrderStatuses from "../components/OrderStatuses";
 export const OrdersContext = React.createContext();
+import calculateTime from "./etaLogic";
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
@@ -18,11 +19,54 @@ const OrdersPage = () => {
     const [receivingOrders, setReceivingOrders] = useState(true)
     const [currentShop, setCurrentShop] = useState(null)
 
+    /*for (o of orders){
+        console.log(o.UserId);
+    }*/
+
+
+
+    useEffect(() => {
+        const getETA = () => {
+            /*let userLatitude = 0;
+            let userLongitude = 0;
+
+            firestore()
+                .collection('Users')
+                .onSnapshot(querySnapshot => {
+                    const user = [];
+                    const finalUser = [];
+
+                    querySnapshot.forEach(documentSnapshot => {
+                        user.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                        finalUser.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                    });
+                    userLatitude = finalUser.map(u => u.Latitude);
+                    userLongitude = finalUser.map(u => u.Longitude);
+                    console.log(userLongitude);
+
+                    //currentShop.Latitude;
+                });*/
+
+        };
+        getETA();
+    }, []);
+
+
+
+
     useEffect(() => {
         firestore().doc('CoffeeShop/3ktdgIGsHcFkVLdQzSYx').onSnapshot(querySnapshot => {
             const shop = querySnapshot;
-            setCurrentShop(shop)
+            //console.log(shop.map(u => u));
+            setCurrentShop(shop);
         });
+        //console.log(currentShop);
     }, [])
 
 
@@ -99,11 +143,11 @@ const OrdersPage = () => {
                             data={currentOrders}
                             renderItem={({item}) => item.status === OrderStatuses.INCOMING ?
                                 (
-                                    <OrderCard order={item} data='#FFFFFF'/>
+                                    <OrderCard order={item}  data='#FFFFFF'/>
                                 )
                                 :
                                 (
-                                    <OrderCard order={item} data='#F2F2F2'/>
+                                    <OrderCard order={item}  data='#F2F2F2'/>
                                 )
                             }
                         />
