@@ -3,6 +3,7 @@ import OrderActionButton from './OrderActionButton';
 import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import OrderStatuses from "./OrderStatuses";
 import calculateTime from "../screens/etaLogic";
 
 const ReducedOrder = () => {
@@ -23,7 +24,7 @@ const ReducedOrder = () => {
   }, []);
 
   return (
-    <View style={styles.rectangle}>
+    <View style={[styles.rectangle, {backgroundColor: props.data}]}>
       <View style={styles.left_side}>
         <View style={styles.header}>
           <Text style={styles.name}>{order.order.customerName}</Text>
@@ -69,9 +70,9 @@ const ReducedOrder = () => {
 const styles = StyleSheet.create({
   name: {
     fontFamily: 'Montserrat',
-    fontWeight: '600',
     fontSize: 25,
     color: '#000000',
+    fontWeight: '700',
   },
   rectangle: {
     marginVertical: '2%',
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 21,
     color: '#9A9A9A',
+    marginBottom: '10%',
   },
   list_of_orders: {
     display: 'flex',
@@ -147,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#000000',
     marginLeft: '5%',
+    fontWeight: '700',
   },
   total_text: {
     fontFamily: 'Montserrat',
