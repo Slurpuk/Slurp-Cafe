@@ -9,9 +9,20 @@ import calculateTime from "../screens/etaLogic";
 const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
   const [timerCount, setTimer] = useState(calculateTime);
+  const [statusColor, setStatusColor]=useState('#239DAD');
+  let counter=timerCount;
   useEffect(() => {
-    setTimer(calculateTime());
-  });
+    const oneSecInterval=setInterval(() => {
+      counter--;
+      console.log(counter);
+      if(counter==0){
+        clearInterval(oneSecInterval);
+        setStatusColor('red');
+      }
+      setTimer(counter);
+    }, 1000);
+  }, []);
+
   return (
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
@@ -43,8 +54,8 @@ const ExpandedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Icon size={24} color={'#239DAD'} name='clock'/>
-          <Text style={styles.clock_number}>{timerCount}</Text>
+          <Icon size={24} color={statusColor} name='clock'/>
+          <Text style={[styles.clock_number, {color:statusColor}]}>{timerCount}</Text>
         </View>
         {context.order.status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={false} />
@@ -118,7 +129,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontWeight: '600',
     fontSize: 25,
-    color: '#239DAD',
   },
   left_side: {
     display: 'flex',

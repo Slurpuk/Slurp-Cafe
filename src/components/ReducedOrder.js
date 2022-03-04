@@ -1,12 +1,27 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import OrderActionButton from './OrderActionButton';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import calculateTime from "../screens/etaLogic";
 
 const ReducedOrder = () => {
   const order = useContext(DetailsContext);
+  const [timerCount, setTimer] = useState(calculateTime);
+  const [statusColor, setStatusColor]=useState('#239DAD');
+  let counter=timerCount;
+  useEffect(() => {
+    const oneSecInterval=setInterval(() => {
+      counter--;
+      console.log(counter);
+      if(counter==0){
+        clearInterval(oneSecInterval);
+        setStatusColor('red');
+      }
+      setTimer(counter);
+    }, 1000);
+  }, []);
+
   return (
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
@@ -38,8 +53,8 @@ const ReducedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Icon size={24} color={'#239DAD'} name='clock'/>
-          <Text style={styles.clock_number}>{calculateTime()}</Text>
+          <Icon size={24} color={statusColor} name='clock'/>
+          <Text style={[styles.clock_number, {color:statusColor}]}>{timerCount}</Text>
         </View>
         {order.isFinished ? (
           <Text style={styles.finished}>This order is finished</Text>
