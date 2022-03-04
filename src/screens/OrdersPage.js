@@ -23,7 +23,7 @@ const OrdersPage = () => {
         console.log(o.UserId);
     }*/
 
-
+    //console.log(currentShop);
 
     useEffect(() => {
         const getETA = () => {
@@ -82,14 +82,20 @@ const OrdersPage = () => {
                 const orders = [];
 
                 querySnapshot.forEach(documentSnapshot => {
-                    currentOrders.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
-                    orders.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
+                    const orderCoffeeShopId=documentSnapshot.data().CoffeeShopId;
+                    //console.log(orderCoffeeShopId);
+                    if(orderCoffeeShopId.includes('3ktdgIGsHcFkVLdQzSYx')){
+                        console.log(documentSnapshot.data().CoffeeShopId);
+                        currentOrders.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                        orders.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                        console.log(orders.map(u => u.CoffeeShopId));
+                    }
                 });
 
                 setCurrentOrders(currentOrders);
