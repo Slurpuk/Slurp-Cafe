@@ -14,9 +14,6 @@ import mapper from './mapper';
 import TabStatuses from './TabStatuses';
 import calculateTime from "../screens/etaLogic";
 import firestore from "@react-native-firebase/firestore";
-import firebase from "@react-native-firebase/app";
-
-
 export const DetailsContext = React.createContext();
 
 const OrderCard = ({order}) => {
@@ -27,40 +24,27 @@ const OrderCard = ({order}) => {
   const [statusColor, setStatusColor]=useState('#239DAD');
     const [userLatitude, setUserLatitude]=useState(0);
     const [userLongitude, setUserLongitude]=useState(0);
-    const [locationUpdated, setLocationUpdated]=useState(false);
     const [displayTime, setDisplayTime]=useState(0);
     const [shopLatitude, setShopLatitude]=useState(0);
     const [shopLongitude, setShopLongitude]=useState(0);
   const orderUser=order.UserId.replace(/\s/g, '') ; // it has unneccesary spaces idk why
 
     useEffect(() => {
-            const oneSecInterval=setInterval(() => {
-                setDisplayTime(displayTime - 1);
-                if(displayTime===0){
-                    clearInterval(oneSecInterval);
-                    setStatusColor('red');
-                }
-            }, 1000);
-    }, [locationUpdated]);
-
-    useEffect(() => {
-            //console.log(userLatitude);
-            //setUserLatitude(10);
-            const curr = calculateTime(userLatitude, userLongitude,shopLatitude ,shopLongitude)
-            if (curr !== displayTime){
-                setDisplayTime(curr);
-                setLocationUpdated(!locationUpdated)
-            }
-
+        const curr = calculateTime(userLatitude, userLongitude,shopLatitude ,shopLongitude)
+        setDisplayTime(curr);
+        if(curr===0){
+            setStatusColor('red');
+        }
+        else{
+            setStatusColor('#239DAD');
+        }
     }, [userLatitude,userLongitude,shopLatitude,shopLongitude]);
 
 
     useEffect(() => {
         const subscriber = firestore().doc('Users/' + orderUser).onSnapshot(querySnapshot => {
             const user = querySnapshot;
-            //console.log(user.data().Latitude);
             setUserLatitude(user.data().Latitude);
-            //console.log(userLatitude);
             setUserLongitude(user.data().Longitude);
         });
         return () => subscriber();
@@ -75,9 +59,6 @@ const OrderCard = ({order}) => {
         return () => subscriber();
     }, []);
 
-
-
-    //console.log(displayTime);
   const toggleExpanded = () => {
     setExpanded(!isExpanded);
   };
