@@ -10,19 +10,21 @@ import firestore from "@react-native-firebase/firestore";
 import firebase from "@react-native-firebase/app";
 import OrderStatuses from "../components/OrderStatuses";
 export const OrdersContext = React.createContext();
+import calculateTime from "./etaLogic";
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState([]);
-    const [receivingOrders, setReceivingOrders] = useState(true)
-    const [currentShop, setCurrentShop] = useState(null)
+    const [receivingOrders, setReceivingOrders] = useState(true);
+    const [currentShop, setCurrentShop] = useState(null);
 
     useEffect(() => {
         firestore().doc('CoffeeShop/3ktdgIGsHcFkVLdQzSYx').onSnapshot(querySnapshot => {
             const shop = querySnapshot;
-            setCurrentShop(shop)
+            setCurrentShop(shop);
         });
+        //console.log(currentShop);
     }, [])
 
 
@@ -38,14 +40,20 @@ const OrdersPage = () => {
                 const orders = [];
 
                 querySnapshot.forEach(documentSnapshot => {
-                    currentOrders.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
-                    orders.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
+                    const orderCoffeeShopId=documentSnapshot.data().CoffeeShopId;
+                    //console.log(orderCoffeeShopId);
+                    if(orderCoffeeShopId.includes('3ktdgIGsHcFkVLdQzSYx')){
+                        //console.log(documentSnapshot.data().CoffeeShopId);
+                        currentOrders.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                        orders.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                        //console.log(orders.map(u => u.CoffeeShopId));
+                    }
                 });
 
                 setCurrentOrders(currentOrders);
@@ -99,11 +107,11 @@ const OrdersPage = () => {
                             data={currentOrders}
                             renderItem={({item}) => item.status === OrderStatuses.INCOMING ?
                                 (
-                                    <OrderCard order={item} data='#FFFFFF'/>
+                                    <OrderCard order={item}  data='#FFFFFF'/>
                                 )
                                 :
                                 (
-                                    <OrderCard order={item} data='#F2F2F2'/>
+                                    <OrderCard order={item}  data='#F2F2F2'/>
                                 )
                             }
                         />

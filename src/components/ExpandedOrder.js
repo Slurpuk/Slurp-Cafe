@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import OrderActionButton from './OrderActionButton';
 import {DetailsContext} from './OrderCard';
 import OrderStatuses from './OrderStatuses';
@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
+
   return (
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
@@ -38,8 +39,8 @@ const ExpandedOrder = () => {
       </View>
       <View style={styles.right_side}>
         <View style={styles.time}>
-          <Icon size={24} color={'#239DAD'} name='clock'/>
-          <Text style={styles.clock_number}>6</Text>
+          <Icon size={24} color={context.statusColor} name='clock'/>
+          <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
         </View>
         {context.order.status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={false} />
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontWeight: '600',
     fontSize: 25,
-    color: '#239DAD',
   },
   left_side: {
     display: 'flex',
