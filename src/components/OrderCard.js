@@ -28,7 +28,15 @@ const OrderCard = ({order}) => {
     const [displayTime, setDisplayTime]=useState(0);
     const [shopLatitude, setShopLatitude]=useState(0);
     const [shopLongitude, setShopLongitude]=useState(0);
-  const orderUser=order.UserId.replace(/\s/g, '') ; // it has unneccesary spaces idk why
+    const [user, setUser] = useState();
+
+    async function getUser() {
+        await firestore().collection('Users').doc(order.UserID).get().then(
+            (retrievedUser) => {
+                setUser(retrievedUser.data())
+                setReady(true);
+            })
+    }
 
     useEffect(() => {
         const curr = calculateTime(userLatitude, userLongitude,shopLatitude ,shopLongitude)
@@ -55,7 +63,7 @@ const OrderCard = ({order}) => {
     }, []);
 
     useEffect(() => {
-        const subscriber =firestore().doc('CoffeeShop/' + order.CoffeeShopId.replace(/\s/g, '')).onSnapshot(querySnapshot => {
+        const subscriber =firestore().doc('CoffeeShop/' + order.ShopID).onSnapshot(querySnapshot => {
             const shop = querySnapshot;
             setShopLatitude(shop.data().Location.latitude);
             setShopLongitude(shop.data().Location.longitude);

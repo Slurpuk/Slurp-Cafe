@@ -101,7 +101,7 @@ const OrdersPage = () => {
                         <OrdersTab SECTIONS={SECTIONS} setStatus={setCurrentStatus}/>
                         <FlatList
                             data={currentOrders}
-                            renderItem={({item}) => item.status === OrderStatuses.INCOMING ?
+                            renderItem={({item}) => item.Status === OrderStatuses.INCOMING ?
                                 (
                                     <OrderCard order={item}  data='#FFFFFF'/>
                                 )
