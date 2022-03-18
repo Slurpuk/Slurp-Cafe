@@ -19,8 +19,9 @@ export const DetailsContext = React.createContext();
 const OrderCard = ({order}) => {
   const [isExpanded, setExpanded] = useState(false);
   const [finished, setFinished] = useState(
-    mapper(TabStatuses.FINISHED).includes(order.status),
+    mapper(TabStatuses.FINISHED).includes(order.Status),
   );
+  const [ready, setReady] = useState(false);
   const [statusColor, setStatusColor]=useState('#239DAD');
     const [userLatitude, setUserLatitude]=useState(0);
     const [userLongitude, setUserLongitude]=useState(0);
@@ -40,12 +41,15 @@ const OrderCard = ({order}) => {
         }
     }, [userLatitude,userLongitude,shopLatitude,shopLongitude]);
 
+    useEffect(  () => {
+        getUser()
+    }, [])
 
     useEffect(() => {
-        const subscriber = firestore().doc('Users/' + orderUser).onSnapshot(querySnapshot => {
+        const subscriber = firestore().doc('Users/' + order.UserID).onSnapshot(querySnapshot => {
             const user = querySnapshot;
-            setUserLatitude(user.data().Latitude);
-            setUserLongitude(user.data().Longitude);
+            setUserLatitude(user.Latitude);
+            setUserLongitude(user.Longitude);
         });
         return () => subscriber();
     }, []);
@@ -77,7 +81,7 @@ const OrderCard = ({order}) => {
         }}
       >
         <Pressable onPress={() => toggleExpanded()}>
-          {isExpanded ? <ExpandedOrder /> : <ReducedOrder />}
+          {isExpanded ? <ExpandedOrder user={user} /> : <ReducedOrder user={user} />}
         </Pressable>
       </DetailsContext.Provider>
     </View>

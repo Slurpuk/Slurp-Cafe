@@ -3,35 +3,44 @@ import OrderActionButton from './OrderActionButton';
 import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import firestore from "@react-native-firebase/firestore";
 
-const ReducedOrder = (props) => {
+const ReducedOrder = ({user}) => {
   const context = useContext(DetailsContext);
 
+
+  async function getItem(item) {
+      await firestore().collection('Coffees').doc(item.ItemRef).get().then(
+        (retrievedItem) => {
+          console.log(retrievedItem.data())
+        })
+  }
+
   return (
-    <View style={[styles.rectangle, {backgroundColor: props.data}]}>
+    <View style={styles.rectangle}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>{context.order.customerName}</Text>
+          <Text style={styles.name}>{user !== undefined ? user.FirstName : ''}</Text>
           <Text style={styles.total_price}>
-            £{context.order.total.toFixed(2)}
+            £{context.order.Total.toFixed(2)}
           </Text>
         </View>
         <Text style={styles.order_number}>#{context.order.key}</Text>
-        <Text style={styles.order_size}>{context.order.items.length} items</Text>
+        <Text style={styles.order_size}>{context.order.Items.length} items</Text>
         <View style={styles.list_of_orders}>
           <FlatList
             style={styles.list}
-            data={context.order.items.slice(0, 2)}
+            data={context.order.Items.slice(0, 2)}
             horizontal={true}
             renderItem={({item}) => (
               <View style={styles.order}>
-                <Text style={styles.amount}>{item.amount}</Text>
-                <Text style={styles.item_name}>{item.name}</Text>
+                <Text style={styles.amount}>{item.Price}</Text>
+                <Text style={styles.item_name}>{getItem(item).Name}</Text>
               </View>
             )}
           />
 
-          {context.order.items.length > 2 ? (
+          {context.order.Items.length > 2 ? (
             <Text style={styles.dots}>...</Text>
           ) : null}
         </View>

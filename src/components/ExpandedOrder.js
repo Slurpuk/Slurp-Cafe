@@ -5,20 +5,20 @@ import {DetailsContext} from './OrderCard';
 import OrderStatuses from './OrderStatuses';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ExpandedOrder = () => {
+const ExpandedOrder = ({user}) => {
   const context = useContext(DetailsContext);
 
   return (
     <View style={styles.rectangle}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>{context.order.customerName}</Text>
+          <Text style={styles.name}>{user.FirstName}</Text>
         </View>
         <Text style={styles.order_number}>#{context.order.key}</Text>
-        <Text style={styles.order_size}>{context.order.items.length} items</Text>
+        <Text style={styles.order_size}>{context.order.Items.length} items</Text>
         <View style={styles.list_of_orders}>
           <FlatList
-            data={context.order.items}
+            data={context.order.Items}
             renderItem={({item}) => (
               <View style={[styles.order, styles.expandedOrder]}>
                 <Text style={styles.amount}>{item.amount}</Text>
@@ -30,10 +30,10 @@ const ExpandedOrder = () => {
         <View style={styles.total}>
           <Text style={styles.total_text}>Total</Text>
           <Text style={styles.total_price}>
-            £{context.order.total.toFixed(2)}
+            £{context.order.Total.toFixed(2)}
           </Text>
         </View>
-        {context.order.status === OrderStatuses.INCOMING ? (
+        {context.order.Status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={true} />
         ) : null}
       </View>
@@ -42,7 +42,7 @@ const ExpandedOrder = () => {
           <Icon size={24} color={context.statusColor} name='clock'/>
           <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
         </View>
-        {context.order.status === OrderStatuses.INCOMING ? (
+        {context.order.Status === OrderStatuses.INCOMING ? (
           <OrderActionButton accept={false} />
         ) : null}
       </View>

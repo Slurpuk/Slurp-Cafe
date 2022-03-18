@@ -20,7 +20,7 @@ const OrdersPage = () => {
     const [currentShop, setCurrentShop] = useState(null);
 
     useEffect(() => {
-        firestore().doc('CoffeeShop/3ktdgIGsHcFkVLdQzSYx').onSnapshot(querySnapshot => {
+        firestore().doc('CoffeeShop/1kHKQX3u3V6JEHLvlWKj').onSnapshot(querySnapshot => {
             const shop = querySnapshot;
             setCurrentShop(shop);
         });
@@ -34,16 +34,14 @@ const OrdersPage = () => {
 
     useEffect(() => {
         const subscriber = firestore()
-            .collection('FakeOrder')
+            .collection('Orders')
             .onSnapshot(querySnapshot => {
                 const currentOrders = [];
                 const orders = [];
 
                 querySnapshot.forEach(documentSnapshot => {
-                    const orderCoffeeShopId=documentSnapshot.data().CoffeeShopId;
-                    //console.log(orderCoffeeShopId);
-                    if(orderCoffeeShopId.includes('3ktdgIGsHcFkVLdQzSYx')){
-                        //console.log(documentSnapshot.data().CoffeeShopId);
+                    const ShopID = documentSnapshot.data().ShopID;
+                    if(ShopID.includes('1kHKQX3u3V6JEHLvlWKj')){
                         currentOrders.push({
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
@@ -52,7 +50,6 @@ const OrdersPage = () => {
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
                         });
-                        //console.log(orders.map(u => u.CoffeeShopId));
                     }
                 });
 
@@ -71,10 +68,10 @@ const OrdersPage = () => {
 
         //let documentPath = firebase.firestore().collection('FakeOrder').find('7KDVQqdQjuUzVLyWVmVE')
         if (status === OrderStatuses.REJECTED) {
-            firebase.firestore().collection('FakeOrder').doc('7KDVQqdQjuUzVLyWVmVE').delete().then(r => console.log('order removed'))
+            firebase.firestore().collection('Orders').doc(order.key).delete().then(r => console.log('order removed'))
         } else {
-            firebase.firestore().collection('FakeOrder').doc('7KDVQqdQjuUzVLyWVmVE').update({
-                status: status
+            firebase.firestore().collection('Orders').doc(order.key).update({
+                Status: status
             }).then(r => console.log('status updated'))
         }
 
@@ -86,14 +83,13 @@ const OrdersPage = () => {
         if (currentStatus === TabStatuses.ALL) setCurrentOrders(orders);
         else {
             let target = mapper(currentStatus);
-            setCurrentOrders(orders.filter(or => target.indexOf(or.status) !== -1));
+            setCurrentOrders(orders.filter(order => target.indexOf(order.Status) !== -1));
         }
     };
 
     return (
-        <SafeAreaView style={{height: '100%'}}>
+        <View style={{height: '100%'}}>
             <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop}/>
-            {receivingOrders ?
                 <View style={{padding: '5%'}}>
                     <OrdersContext.Provider
                         value={{
@@ -117,13 +113,7 @@ const OrdersPage = () => {
                         />
                     </OrdersContext.Provider>
                 </View>
-                :
-                <View style={styles.inactiveScreen}>
-                    <Text style={styles.inactiveText}>Toggle the Switch ;)</Text>
-                    <Image source={require('../assets/desert.png')} style={styles.inactiveImage}/>
-                </View>
-            }
-        </SafeAreaView>
+        </View>
     );
 };
 
