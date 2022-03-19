@@ -12,7 +12,6 @@ const ReducedOrder = ({user}) => {
   async function getItem(item) {
       await firestore().collection('Coffees').doc(item.ItemRef).get().then(
         (retrievedItem) => {
-          console.log(retrievedItem.data())
         })
   }
 

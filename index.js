@@ -9,7 +9,8 @@ import etaLogic from "./src/screens/etaLogic";
 import ReducedOrder from "./src/components/ReducedOrder";
 import FakePage from './src/screens/FakePage'
 import OrdersPage from "./src/screens/OrdersPage";
+import App from "./App";
 
-AppRegistry.registerComponent(appName, () => OrdersPage);
+AppRegistry.registerComponent(appName, () => App);
 
 

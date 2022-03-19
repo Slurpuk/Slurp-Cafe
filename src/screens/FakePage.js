@@ -37,7 +37,6 @@ const FakePage = () => {
             <FlatList data={orders} renderItem={({item}) =>
                 <View>
                     <Text style={styles.text}>{item.name}</Text>
-                    {console.log(item.items)}
                 </View>
             }/>
         </SafeAreaView>
