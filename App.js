@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import type {Node} from 'react';
 import {
@@ -17,6 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 import {
   Colors,
@@ -28,6 +21,10 @@ import {
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [currentUser, setCurrentUser] = useState(auth().currentUser);
+
+
+
   return (
     <View style={styles.sectionContainer}>
       <Text
