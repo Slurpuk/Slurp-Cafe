@@ -23,11 +23,11 @@ const OrderActionButton = ({accept}) => {
         : 'Reject order'
       : 'View Order',
   );
-  const [currStatus, setCurrStatus] = useState(details.order.status);
+  const [currStatus, setCurrStatus] = useState(details.order.Status);
 
   useEffect(() => {
     if (details.isExpanded === false) {
-      switch (details.order.status) {
+      switch (details.order.Status) {
         case OrderStatuses.ACCEPTED:
           setButtonText('Mark as Ready');
           setStyle(styles.acceptedButton);
@@ -42,7 +42,7 @@ const OrderActionButton = ({accept}) => {
 
   const updateStatus = () => {
     if (details.isExpanded === false) {
-      switch (details.order.status) {
+      switch (details.order.Status) {
         case OrderStatuses.INCOMING:
           details.setExpanded(true);
           break;
