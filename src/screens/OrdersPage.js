@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
-import {FlatList, StyleSheet, Text} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import SECTIONS from '../fake-data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
 import OrderCard from '../components/OrderCard';
@@ -10,6 +10,7 @@ import firestore from "@react-native-firebase/firestore";
 import firebase from "@react-native-firebase/app";
 import OrderStatuses from "../components/OrderStatuses";
 import {GlobalContext} from '../../App';
+import calculateTime from "./etaLogic";
 
 export const OrdersContext = React.createContext();
 
@@ -101,16 +102,17 @@ const OrdersPage = ({navigation}) => {
                 setTabStatus: changeTabStatus,
             }}
         >
-        <>
-            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
-                        <Text style={styles.activeOrdersText}>Active orders</Text>
-                        <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
-                        <FlatList
-                            data={currentOrders}
-                            renderItem={({item}) => <OrderCard order={item}/>}
-                            contentContainerStyle={styles.ordersList}
-                        />
-        </>
+            <View style={styles.ordersContainer}>
+                <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
+                <Text style={styles.activeOrdersText}>Active orders</Text>
+                <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
+                <FlatList
+                    data={currentOrders}
+                    renderItem={({item}) => <OrderCard order={item}/>}
+                    contentContainerStyle={styles.ordersListContainer}
+                    style={styles.ordersList}
+                />
+            </View>
         </OrdersContext.Provider>
     );
 };
@@ -125,13 +127,18 @@ const styles = StyleSheet.create({
         marginLeft: '6%',
 
     },
-
     ordersList:{
-        padding: '5%',
+        marginTop: '5%',
+        marginBottom: '4%',
+    },
+
+    ordersListContainer:{
+        paddingHorizontal: '5%',
     },
 
     ordersContainer:{
-        padding: '5%',
+        backgroundColor: 'white',
+        flex: 1,
     },
 
 });

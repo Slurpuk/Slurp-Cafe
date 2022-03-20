@@ -31,11 +31,7 @@ const OrderCard = ({order}) => {
     const initialHeight = Dimensions.get('window').height * 0.14
 
     useEffect(() => {
-        const curr = calculateTime(userLatitude, userLongitude,shopLocation.current.latitude ,shopLocation.current.longitudegitude)
-        console.log('ula', userLatitude)
-        console.log('ulo', userLongitude)
-        console.log('sla', shopLocation.current.latitude)
-        console.log('slo', shopLocation.current.longitude)
+        const curr = calculateTime(userLatitude, userLongitude,shopLocation.current.latitude ,shopLocation.current.longitude)
         setDisplayTime(curr);
         if(curr===0){
             setStatusColor('red');

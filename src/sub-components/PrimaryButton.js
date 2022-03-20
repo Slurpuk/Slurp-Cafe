@@ -3,7 +3,9 @@ import {Dimensions, Pressable, StyleSheet, Text} from "react-native";
 
 
 
-const PrimaryButton = ({color, buttonText, onPress}) => {
+const PrimaryButton = ({color, widthRatio = 0.3, buttonText, onPress}) => {
+    const screenWidth = Dimensions.get('window').width;
+
     return (
         <Pressable style={[styles.button, {backgroundColor: color, width: screenWidth * widthRatio}]} onPress={onPress}>
             <Text style={styles.button_text}>{buttonText}</Text>

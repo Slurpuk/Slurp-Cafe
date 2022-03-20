@@ -39,7 +39,6 @@ export default function App() {
           setCoffeeShop().then(() => {
               setIsLoggedIn(true);
               setCurrentUser(coffeeShop);
-              console.log('coffee shop set sfswdvwew');
           });
       } else {
         setIsLoggedIn(false);

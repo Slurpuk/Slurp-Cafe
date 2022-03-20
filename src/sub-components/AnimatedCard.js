@@ -27,7 +27,6 @@ const AnimatedCard = ({
 
     const growHeight = () => {
         setExpanded(!isExpanded);
-        //console.log(isExpanded);
 
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(adaptiveHeight, {
@@ -39,13 +38,11 @@ const AnimatedCard = ({
 
     const toggleheight = () => {
         isExpanded ? shrinkHeight() : growHeight();
-        //console.log('toggle height triggered');
     };
 
     const shrinkHeight = () => {
         setExpanded(!isExpanded);
         let isFlipped = '180deg';
-        //console.log(isExpanded);
 
         // Will change fadeAnim value to 0 in 3 seconds
         Animated.timing(adaptiveHeight, {

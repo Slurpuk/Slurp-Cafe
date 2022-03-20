@@ -182,6 +182,7 @@ const AuthenticationPage = () => {
                     <PrimaryButton
                         buttonText={'Log In'}
                         onPress={authenticateCoffeeShop}
+                        widthRatio={0.5}
                     />
                 </View>
             </View>
@@ -225,6 +226,7 @@ const AuthenticationPage = () => {
                     <PrimaryButton
                         buttonText={'Create Account'}
                         onPress={registerCoffeeShop}
+                        widthRatio={0.5}
                     />
                 </View>
             </View>
@@ -261,7 +263,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        height: 60,
         justifyContent: 'center',
         marginHorizontal: '22%',
         backgroundColor: '#207671',
