@@ -2,13 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
-import OrdersPage from "./src/screens/OrdersPage";
 import firebase from "@react-native-firebase/app";
 import firestore from "@react-native-firebase/firestore";
+import OrdersPage from "./src/screens/OrdersPage";
 import AuthenticationPage from "./src/screens/AuthenticationPage";
-import {View} from "react-native";
 import AccountManagementPage from "./src/screens/AccountManagementPage";
-//import LogInPage from "./src/screens/LogInPage";
 
 export const GlobalContext = React.createContext();
 
@@ -18,6 +16,10 @@ export default function App() {
     const [coffeeShopRef, setCoffeeShopRef] = useState(null);
     const [coffeeShopObj, setCoffeeShopObj] = useState(null);
 
+    /*
+    Use effect that listens to changes in the coffeeShop. PROBABLY UNNECESSARY, removing caused bugs but this feels
+    unnecesary thanks to new system.
+     */
   useEffect(() => {
     const subscriber = firestore()
         .collection('CoffeeShop')
@@ -30,6 +32,9 @@ export default function App() {
     return () => subscriber();
   }, [coffeeShopRef]);
 
+  /*
+  Use effect listens to changes in the authentication like logouts or logins and changes states accordingly.
+   */
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(coffeeShop => {
       if (coffeeShop) {
@@ -45,7 +50,9 @@ export default function App() {
     return () => subscriber();
   });
 
-
+    /*
+    Function to link the authentication entry to the CoffeeShop model via the email.
+     */
   async function setCoffeeShop() {
     if (currentUser) {
       await firestore()
@@ -59,6 +66,10 @@ export default function App() {
           });
     }
   }
+
+  /*
+  Creates the stack over which the pages are laid; enables navigation.
+   */
   const Stack = createNativeStackNavigator();
 
   return (
@@ -71,16 +82,11 @@ export default function App() {
       >
         <NavigationContainer>
           {isLoggedIn ? (
-              <Stack.Navigator
-                  screenOptions={{
-                      headerShown: false,
-                  }}
-              >
+              <Stack.Navigator screenOptions={{headerShown: false}}>
                   <Stack.Screen name="Orders Page" component={OrdersPage} />
                   <Stack.Screen name="Account Management" component={AccountManagementPage} />
               </Stack.Navigator>
           ) : (
-
               <AuthenticationPage/>
           )}
         </NavigationContainer>
