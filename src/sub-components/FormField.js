@@ -9,49 +9,30 @@ const FormField = ({
                        type = '',
                    }) => {
     let secureTextEntry = false;
-    let autoCapitalize = true;
+    let autoCapitalize = 'none';
     let autoCorrect = true;
     let autoCompleteType = 'off';
     let keyboardType = 'default';
     let maxLength = 1235;
+    let multiline = false;
     switch (type) {
         case 'name':
             autoCapitalize = 'words';
             autoCompleteType = 'name';
             break;
         case 'email':
-            autoCapitalize = 'none';
             autoCorrect = false;
             autoCompleteType = 'email';
             break;
         case 'password':
             secureTextEntry = true;
-            autoCapitalize = 'none';
             autoCorrect = false;
             autoCompleteType = 'password';
             break;
-        case 'cardNumber':
-            autoCapitalize = 'none';
-            autoCorrect = false;
-            autoCompleteType = 'cardComponent';
-            keyboardType = 'numeric';
-            maxLength = 16;
-            break;
-        case 'expiryDate':
-            autoCapitalize = 'none';
-            autoCorrect = false;
-            autoCompleteType = 'cardComponent';
-            keyboardType = 'numeric';
-            maxLength = 5;
-            break;
-        case 'CVC':
-            secureTextEntry = true;
-            autoCapitalize = 'none';
-            autoCorrect = false;
-            autoCompleteType = 'cardComponent';
-            keyboardType = 'numeric';
-            maxLength = 3;
-            break;
+        case 'multiline':
+            autoCapitalize = 'sentences';
+            multiline = true;
+
     }
 
     return (
@@ -62,7 +43,7 @@ const FormField = ({
                 {title}
             </Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, {height: multiline ? 90 : 37}]}
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
                 onChangeText={text => setField(text)}
@@ -71,6 +52,8 @@ const FormField = ({
                 autoCorrect={autoCorrect}
                 keyboardType={keyboardType}
                 maxLength={maxLength}
+                multiline={multiline}
+                value={value}
             />
         </View>
     );
@@ -80,12 +63,11 @@ const styles = StyleSheet.create({
     text: {
         marginBottom: '1.5%',
         fontFamily: 'Roboto-Medium',
-        fontSize: 19,
+        fontSize: 20,
     },
 
     input: {
         backgroundColor: '#F9F9F9',
-        height: 37,
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: '3.5%',
