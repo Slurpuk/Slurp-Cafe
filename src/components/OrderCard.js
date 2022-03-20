@@ -63,7 +63,7 @@ const OrderCard = ({order}) => {
     }, []);
 
   return (
-    <View style={{marginVertical: '3%'}}>
+    <View style={{marginVertical: '1%'}}>
       <DetailsContext.Provider
         value={{
           order: order,

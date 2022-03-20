@@ -5,13 +5,13 @@ import {Dimensions, Pressable, StyleSheet, Text} from "react-native";
 
 const PrimaryButton = ({color, buttonText, onPress}) => {
     return (
-        <Pressable style={[styles.button, {backgroundColor: color}]} onPress={onPress}>
+        <Pressable style={[styles.button, {backgroundColor: color, width: screenWidth * widthRatio}]} onPress={onPress}>
             <Text style={styles.button_text}>{buttonText}</Text>
         </Pressable>
     );
 };
 
-const screenWidth = Dimensions.get('window').width
+
 const styles = StyleSheet.create({
     button: {
         flexDirection: 'column',
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         borderRadius: 3,
         height: 60,
-        // width: screenWidth * 0.3,
     },
     button_text: {
         color: 'white',

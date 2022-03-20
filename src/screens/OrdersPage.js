@@ -34,37 +34,35 @@ const OrdersPage = ({navigation}) => {
     useEffect(() => {
         const subscriber = firestore()
             .collection('Orders')
-            .onSnapshot(querySnapshot => {
+            .where('ShopID', '==', globalContext.coffeeShopRef)
+            .onSnapshot(async querySnapshot => {
                 let newOrders = [];
-                querySnapshot.forEach(async documentSnapshot => {
+                await Promise.all(querySnapshot.docs.map(async documentSnapshot => {
                     const firebaseOrder = documentSnapshot.data();
-                    const ShopID = firebaseOrder.ShopID;
-                    if(ShopID === globalContext.coffeeShopRef){
-                        let newItems = [];
-                        await Promise.all(firebaseOrder.Items.map(async item => {
-                            await firestore().collection(item.Type + 's').doc(item.ItemRef).get().then(
-                                (retrievedItem) => {
-                                    let newItem = retrievedItem.data();
-                                    newItems.push({...newItem, amount: item.Quantity});
-                                    firebaseOrder.Items = newItems;
-                                })
-                                .catch(error => console.log(error))
-                        })).then(async () => {
-                            await firestore().collection('Users').doc(firebaseOrder.UserID).get().then(
-                                (retrievedUser) => {
-                                    firebaseOrder.user = retrievedUser.data();
-                                    let newOrder = {
-                                        ...firebaseOrder,
-                                        key: documentSnapshot.id,
-                                    }
-                                    newOrders.push(newOrder);
-                                }).then(() => {
-                                    setOrders(newOrders)
-                                    updateCurrentOrders(newOrders);
-                            }).catch(error => console.log(error))
-                        })
+                    let newItems = [];
+                    await Promise.all(firebaseOrder.Items.map(async item => {
+                        await firestore().collection(item.Type + 's').doc(item.ItemRef).get().then(
+                            (retrievedItem) => {
+                                let newItem = retrievedItem.data();
+                                newItems.push({...newItem, amount: item.Quantity});
+                                firebaseOrder.Items = newItems;
+                            })
                             .catch(error => console.log(error))
-                    }
+                    })).then(async () => {
+                        await firestore().collection('Users').doc(firebaseOrder.UserID).get().then(
+                            (retrievedUser) => {
+                                let user = retrievedUser.data();
+                                firebaseOrder.user = user;
+                                let newOrder = {
+                                    ...firebaseOrder,
+                                    key: documentSnapshot.id,
+                                }
+                                newOrders.push(newOrder);
+                            }).catch(error => console.log(error))
+                    }).catch(error => console.log(error))
+                })).then(r => {
+                    setOrders(newOrders)
+                    updateCurrentOrders(newOrders);
                 })
             });
 
