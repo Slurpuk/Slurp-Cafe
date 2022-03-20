@@ -35,7 +35,6 @@ const OrdersPage = ({navigation}) => {
         const subscriber = firestore()
             .collection('Orders')
             .onSnapshot(querySnapshot => {
-                let oldOrders
                 let newOrders = [];
                 querySnapshot.forEach(async documentSnapshot => {
                     const firebaseOrder = documentSnapshot.data();
@@ -102,7 +101,6 @@ const OrdersPage = ({navigation}) => {
                 orders: orders,
                 setOrderStatus: setOrderStatus,
                 setTabStatus: changeTabStatus,
-                currentShop: currentShop,
             }}
         >
         <>

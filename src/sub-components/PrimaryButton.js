@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         borderRadius: 3,
         height: 60,
-        width: screenWidth * 0.3,
+        // width: screenWidth * 0.3,
     },
     button_text: {
         color: 'white',

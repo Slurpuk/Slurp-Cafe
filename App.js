@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
@@ -13,24 +13,22 @@ export const GlobalContext = React.createContext();
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentUser, setCurrentUser] = useState(auth().currentUser);
-    const [coffeeShopRef, setCoffeeShopRef] = useState(null);
+    const coffeeShopRef = useRef(null);
     const [coffeeShopObj, setCoffeeShopObj] = useState(null);
 
-    /*
-    Use effect that listens to changes in the coffeeShop. PROBABLY UNNECESSARY, removing caused bugs but this feels
-    unnecesary thanks to new system.
-     */
-  useEffect(() => {
-    const subscriber = firestore()
-        .collection('CoffeeShop')
-        .doc(coffeeShopRef)
-        .onSnapshot(documentSnapshot => {
-          setCoffeeShopObj(documentSnapshot.data());
-        });
+    useEffect(() => {
+        if(coffeeShopRef.current) {
+            const subscriber = firestore()
+                .collection('CoffeeShop')
+                .doc(coffeeShopRef.current)
+                .onSnapshot(querySnapshot => {
+                    setCoffeeShopObj(querySnapshot.data());
+                })
 
-    // Stop listening for updates when no longer required
-    return () => subscriber();
-  }, [coffeeShopRef]);
+            return () => subscriber;
+        }
+    }, [])
+
 
   /*
   Use effect listens to changes in the authentication like logouts or logins and changes states accordingly.
@@ -38,9 +36,11 @@ export default function App() {
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(coffeeShop => {
       if (coffeeShop) {
-        setIsLoggedIn(true);
-        setCurrentUser(coffeeShop);
-        setCoffeeShop();
+          setCoffeeShop().then(() => {
+              setIsLoggedIn(true);
+              setCurrentUser(coffeeShop);
+              console.log('coffee shop set sfswdvwew');
+          });
       } else {
         setIsLoggedIn(false);
         setCurrentUser(null);
@@ -48,7 +48,7 @@ export default function App() {
     });
     // Stop listening for updates when no longer required
     return () => subscriber();
-  });
+  }, []);
 
     /*
     Function to link the authentication entry to the CoffeeShop model via the email.
@@ -68,7 +68,7 @@ export default function App() {
   }
 
   /*
-  Creates the stack over which the pages are laid; enables navigation.
+  Creates the stack overr which the pages are laid; enables navigation.
    */
   const Stack = createNativeStackNavigator();
 
@@ -76,7 +76,7 @@ export default function App() {
       <GlobalContext.Provider
           value={{
               currentUser: currentUser, // Returns the authentication object
-              coffeeShopRef: coffeeShopRef,
+              coffeeShopRef: coffeeShopRef.current,
               coffeeShopObj: coffeeShopObj, // Returns the model object
           }}
       >
