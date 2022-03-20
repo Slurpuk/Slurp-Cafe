@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, SafeAreaView, Text, View, StyleSheet, Image} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {FlatList, Text, View, StyleSheet} from 'react-native';
 import SECTIONS from '../fake-data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
 import OrderCard from '../components/OrderCard';
@@ -9,18 +9,20 @@ import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
 import firebase from "@react-native-firebase/app";
 import OrderStatuses from "../components/OrderStatuses";
-export const OrdersContext = React.createContext();
-import calculateTime from "./etaLogic";
+import {GlobalContext} from '../../App';
 
-const OrdersPage = () => {
+export const OrdersContext = React.createContext();
+
+const OrdersPage = ({navigation}) => {
     const [orders, setOrders] = useState([]);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState(true);
     const [currentShop, setCurrentShop] = useState(null);
+    const globalContext = useContext(GlobalContext);
 
     useEffect(() => {
-        firestore().doc('CoffeeShop/1kHKQX3u3V6JEHLvlWKj').onSnapshot(querySnapshot => {
+        firestore().doc('CoffeeShop/' + globalContext.coffeeShopRef).onSnapshot(querySnapshot => {
             const shop = querySnapshot;
             setCurrentShop(shop);
         });
@@ -41,7 +43,7 @@ const OrdersPage = () => {
 
                 querySnapshot.forEach(documentSnapshot => {
                     const ShopID = documentSnapshot.data().ShopID;
-                    if(ShopID.includes('1kHKQX3u3V6JEHLvlWKj')){
+                    if(ShopID.includes(globalContext.coffeeShopRef)){
                         currentOrders.push({
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
@@ -89,7 +91,7 @@ const OrdersPage = () => {
 
     return (
         <View style={{height: '100%'}}>
-            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop}/>
+            <TopBar navigation={navigation} receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop}/>
                 <View style={{padding: '5%'}}>
                     <OrdersContext.Provider
                         value={{
