@@ -20,7 +20,7 @@ const TopBar = ({receivingOrders, setReceivingOrders, currentShop}) => {
 
     return (
         <View style={styles.container}>
-            <PrimaryButton newStyle={styles.manageButton} buttonText={'Manage Stock'}/>
+            <PrimaryButton color={'#207671'} buttonText={'Manage Stock'}/>
             <View style={styles.manageOrdersHeadline}>
                 <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>
                 <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>{isEnabled ? "Yep" : "Nope"}</Text>
@@ -53,11 +53,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
-    },
-    manageButton: {
-        backgroundColor: '#207671',
-        width: '35%',
-        padding: '2%',
     },
     manageOrdersHeadline: {
         display: 'flex',
