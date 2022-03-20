@@ -78,7 +78,9 @@ const FormField = ({
 
 const styles = StyleSheet.create({
     text: {
-        marginBottom: '2.5%',
+        marginBottom: '1.5%',
+        fontFamily: 'Roboto-Medium',
+        fontSize: 19,
     },
 
     input: {
