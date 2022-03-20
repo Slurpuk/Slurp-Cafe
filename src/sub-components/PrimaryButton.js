@@ -15,6 +15,7 @@ const screenWidth = Dimensions.get('window').width
 const styles = StyleSheet.create({
     button: {
         flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
         shadowColor: "#000",

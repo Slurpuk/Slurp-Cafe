@@ -61,7 +61,8 @@ export default function App() {
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
-              setCoffeeShopRef(documentSnapshot.id);
+                coffeeShopRef.current = documentSnapshot.id;
+                setCoffeeShopObj(documentSnapshot.data());
             });
           });
     }

@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 import firestore from "@react-native-firebase/firestore";
+import {GlobalContext} from "../../App";
 
 const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
     const [isEnabled, setIsEnabled] = useState(receivingOrders);
@@ -10,7 +11,7 @@ const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
     const toggleSwitch = () =>
     {
         setIsEnabled(prevState => !prevState)
-        firestore().collection('CoffeeShop').doc(currentShop.id).update({
+        firestore().collection('CoffeeShop').doc(globalContext.coffeeShopRef).update({
             IsOpen : !isEnabled
         })
     }

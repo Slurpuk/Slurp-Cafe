@@ -19,7 +19,7 @@ const OrdersPage = ({navigation}) => {
     const currTabStatus = useRef(TabStatuses.ALL);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
-    const [receivingOrders, setReceivingOrders] = useState(true);
+    const [receivingOrders, setReceivingOrders] = useState(globalContext.coffeeShopObj.IsOpen);
     const [currentShop, setCurrentShop] = useState(globalContext.coffeeShopObj);
 
     useEffect(() => {
@@ -104,7 +104,7 @@ const OrdersPage = ({navigation}) => {
             }}
         >
         <>
-            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop} navigation={navigation}/>
+            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
                         <Text style={styles.activeOrdersText}>Active orders</Text>
                         <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                         <FlatList
