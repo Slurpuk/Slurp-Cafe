@@ -14,20 +14,12 @@ import {GlobalContext} from '../../App';
 export const OrdersContext = React.createContext();
 
 const OrdersPage = ({navigation}) => {
+    const globalContext = useContext(GlobalContext);
     const [orders, setOrders] = useState([]);
     const [currentStatus, setCurrentStatus] = useState(TabStatuses.ALL);
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState(true);
-    const [currentShop, setCurrentShop] = useState(null);
-    const globalContext = useContext(GlobalContext);
-
-    useEffect(() => {
-        firestore().doc('CoffeeShop/' + globalContext.coffeeShopRef).onSnapshot(querySnapshot => {
-            const shop = querySnapshot;
-            setCurrentShop(shop);
-        });
-        //console.log(currentShop);
-    }, [])
+    const [currentShop, setCurrentShop] = useState(globalContext.coffeeShopObj);
 
 
     useEffect(() => {
@@ -43,7 +35,7 @@ const OrdersPage = ({navigation}) => {
 
                 querySnapshot.forEach(documentSnapshot => {
                     const ShopID = documentSnapshot.data().ShopID;
-                    if(ShopID.includes(globalContext.coffeeShopRef)){
+                    if(ShopID === globalContext.coffeeShopRef){
                         currentOrders.push({
                             ...documentSnapshot.data(),
                             key: documentSnapshot.id,
