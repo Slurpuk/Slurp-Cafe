@@ -1,112 +1,97 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useEffect, useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import auth from '@react-native-firebase/auth';
+import firebase from "@react-native-firebase/app";
+import firestore from "@react-native-firebase/firestore";
+import OrdersPage from "./src/screens/OrdersPage";
+import AuthenticationPage from "./src/screens/AuthenticationPage";
+import AccountManagementPage from "./src/screens/AccountManagementPage";
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+export const GlobalContext = React.createContext();
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentUser, setCurrentUser] = useState(auth().currentUser);
+    const [coffeeShopRef, setCoffeeShopRef] = useState(null);
+    const [coffeeShopObj, setCoffeeShopObj] = useState(null);
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+    /*
+    Use effect that listens to changes in the coffeeShop. PROBABLY UNNECESSARY, removing caused bugs but this feels
+    unnecesary thanks to new system.
+     */
+  useEffect(() => {
+    const subscriber = firestore()
+        .collection('CoffeeShop')
+        .doc(coffeeShopRef)
+        .onSnapshot(documentSnapshot => {
+          setCoffeeShopObj(documentSnapshot.data());
+        });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [coffeeShopRef]);
+
+  /*
+  Use effect listens to changes in the authentication like logouts or logins and changes states accordingly.
+   */
+  useEffect(() => {
+    const subscriber = firebase.auth().onAuthStateChanged(coffeeShop => {
+      if (coffeeShop) {
+        setIsLoggedIn(true);
+        setCurrentUser(coffeeShop);
+        setCoffeeShop();
+      } else {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
+    });
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  });
+
+    /*
+    Function to link the authentication entry to the CoffeeShop model via the email.
+     */
+  async function setCoffeeShop() {
+    if (currentUser) {
+      await firestore()
+          .collection('CoffeeShop')
+          .where('Email', '==', currentUser.email)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+              setCoffeeShopRef(documentSnapshot.id);
+            });
+          });
+    }
+  }
+
+  /*
+  Creates the stack over which the pages are laid; enables navigation.
+   */
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+      <GlobalContext.Provider
+          value={{
+              currentUser: currentUser, // Returns the authentication object
+              coffeeShopRef: coffeeShopRef,
+              coffeeShopObj: coffeeShopObj, // Returns the model object
+          }}
+      >
+        <NavigationContainer>
+          {isLoggedIn ? (
+              <Stack.Navigator screenOptions={{headerShown: false}}>
+                  <Stack.Screen name="Orders Page" component={OrdersPage} />
+                  <Stack.Screen name="Account Management" component={AccountManagementPage} />
+              </Stack.Navigator>
+          ) : (
+              <AuthenticationPage/>
+          )}
+        </NavigationContainer>
+      </GlobalContext.Provider>
   );
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;

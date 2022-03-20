@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useContext, useRef, useState} from 'react';
 import {FlatList, StyleSheet, Text} from 'react-native';
 import SECTIONS from '../fake-data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
@@ -7,22 +7,20 @@ import mapper from '../components/mapper';
 import TabStatuses from '../components/TabStatuses';
 import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
+import firebase from "@react-native-firebase/app";
+import OrderStatuses from "../components/OrderStatuses";
+import {GlobalContext} from '../../App';
 
 export const OrdersContext = React.createContext();
 
-const OrdersPage = () => {
+const OrdersPage = ({navigation}) => {
+    const globalContext = useContext(GlobalContext);
     const [orders, setOrders] = useState([]);
     const currTabStatus = useRef(TabStatuses.ALL);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState(true);
-    const [currentShop, setCurrentShop] = useState(null);
-
-    useEffect(() => {
-        firestore().doc('CoffeeShop/1kHKQX3u3V6JEHLvlWKj').onSnapshot(querySnapshot => {
-            setCurrentShop(querySnapshot);
-        });
-    }, [])
+    const [currentShop, setCurrentShop] = useState(globalContext.coffeeShopObj);
 
     useEffect(() => {
         updateCurrentOrders();
@@ -42,7 +40,7 @@ const OrdersPage = () => {
                 querySnapshot.forEach(async documentSnapshot => {
                     const firebaseOrder = documentSnapshot.data();
                     const ShopID = firebaseOrder.ShopID;
-                    if(ShopID ==='1kHKQX3u3V6JEHLvlWKj'){
+                    if(ShopID === globalContext.coffeeShopRef){
                         let newItems = [];
                         await Promise.all(firebaseOrder.Items.map(async item => {
                             await firestore().collection(item.Type + 's').doc(item.ItemRef).get().then(
@@ -108,7 +106,7 @@ const OrdersPage = () => {
             }}
         >
         <>
-            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop}/>
+            <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} currentShop={currentShop} navigation={navigation}/>
                         <Text style={styles.activeOrdersText}>Active orders</Text>
                         <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                         <FlatList

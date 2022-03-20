@@ -3,7 +3,7 @@ import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 import firestore from "@react-native-firebase/firestore";
 
-const TopBar = ({receivingOrders, setReceivingOrders, currentShop}) => {
+const TopBar = ({navigation, receivingOrders, setReceivingOrders, currentShop}) => {
     const [isEnabled, setIsEnabled] = useState(receivingOrders)
 
     const toggleSwitch = () =>
@@ -18,9 +18,13 @@ const TopBar = ({receivingOrders, setReceivingOrders, currentShop}) => {
         setReceivingOrders(isEnabled)
     }, [isEnabled])
 
+    function goToAccountManagement() {
+        navigation.navigate('Account Management');
+    }
+
     return (
         <View style={styles.container}>
-            <PrimaryButton color={'#207671'} buttonText={'Manage Stock'}/>
+            <PrimaryButton color={'#207671'} buttonText={'Manage Shop'} onPress={goToAccountManagement}/>
             <View style={styles.manageOrdersHeadline}>
                 <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>
                 <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>{isEnabled ? "Yep" : "Nope"}</Text>
