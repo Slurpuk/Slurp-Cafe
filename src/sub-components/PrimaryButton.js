@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     button: {
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         elevation: 5,
         shadowColor: "#000",
         shadowOffset: {
