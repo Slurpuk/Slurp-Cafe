@@ -44,7 +44,7 @@ const OrdersPage = ({navigation}) => {
                         await firestore().collection(item.Type + 's').doc(item.ItemRef).get().then(
                             (retrievedItem) => {
                                 let newItem = retrievedItem.data();
-                                newItems.push({...newItem, amount: item.Quantity});
+                                newItems.push({...newItem, amount: item.Quantity, options: item.Options});
                                 firebaseOrder.Items = newItems;
                             })
                             .catch(error => console.log(error))

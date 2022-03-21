@@ -18,8 +18,11 @@ const ExpandedOrder = ({user}) => {
             data={context.order.Items}
             renderItem={({item}) => (
               <View style={[styles.order, styles.expandedOrder]}>
-                <Text style={styles.amount}>{item.amount}</Text>
-                <Text style={styles.item_name}> {item.Name}</Text>
+                <View style={styles.mainItem}>
+                  <Text style={styles.amount}>{item.amount}</Text>
+                  <Text style={styles.item_name}> {item.Name}</Text>
+                </View>
+                <Text style={styles.options}>{getOptionsText(item)}</Text>
               </View>
             )}
           />
@@ -38,6 +41,18 @@ const ExpandedOrder = ({user}) => {
     </View>
   );
 };
+
+function getOptionsText(item) {
+  console.log(item)
+  let optionsText = '';
+  item.options.forEach(option => {
+    optionsText += option.Name + ' ' + option.Type + ', ';
+  });
+  return optionsText !== ''
+      ? optionsText.substring(0, optionsText.length - 2)
+      : optionsText;
+}
+
 const fullWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   list_of_orders: {
@@ -54,8 +69,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingRight: 14,
     display: 'flex',
+    flexDirection: 'column',
+  },
+  mainItem:{
+    paddingVertical: 5,
+    paddingRight: 14,
+    display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
   },
   left_side: {
     display: 'flex',
@@ -97,6 +117,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: '5%',
     height: '25%'
+  },
+
+  options:{
+    fontFamily: 'Montserrat',
+    fontWeight: '200',
+    fontSize: 18,
+    color: '#000000',
   },
 });
 
