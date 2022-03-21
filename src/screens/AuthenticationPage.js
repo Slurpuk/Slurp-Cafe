@@ -121,7 +121,7 @@ const AuthenticationPage = () => {
                 Email: email,
                 Name: name,
                 Image: 'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
-                Intro: 'At ' + name + 'we make coffee that doesn\'t disappoint. Our hand picked roasts hit different.',
+                Intro: 'At ' + name + ' we make coffee that doesn\'t disappoint. Our hand picked roasts hit different.',
                 IsOpen: false,
                 ItemsOffered: [],
                 Location: new firestore.GeoPoint(51.503223, -0.127500), //Default location: 10 Downing Street.

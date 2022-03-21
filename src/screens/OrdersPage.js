@@ -20,8 +20,7 @@ const OrdersPage = ({navigation}) => {
     const currTabStatus = useRef(TabStatuses.ALL);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
-    const [receivingOrders, setReceivingOrders] = useState(globalContext.coffeeShopObj.IsOpen);
-    const [currentShop, setCurrentShop] = useState(globalContext.coffeeShopObj);
+    const [receivingOrders, setReceivingOrders] = useState();
 
     useEffect(() => {
         updateCurrentOrders();
