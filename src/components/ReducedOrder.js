@@ -1,110 +1,59 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import OrderActionButton from './OrderActionButton';
+import OrderActionButton from './actionButtons/OrderActionButton';
 import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import firestore from "@react-native-firebase/firestore";
+import {CardContext} from "../sub-components/AnimatedCard";
 
-const ReducedOrder = (props) => {
+const ReducedOrder = () => {
   const context = useContext(DetailsContext);
-
+  const animatedContext = useContext(CardContext);
+  const order = context.order;
   return (
-    <View style={[styles.rectangle, {backgroundColor: props.data}]}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
       <View style={styles.left_side}>
         <View style={styles.header}>
-          <Text style={styles.name}>{context.order.customerName}</Text>
-          <Text style={styles.total_price}>
-            £{context.order.total.toFixed(2)}
-          </Text>
+          <Text style={styles.name}>{order.user.FirstName}</Text>
+          <View style={styles.time}>
+            <Icon size={24} color={context.statusColor} name='clock'/>
+            <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
+          </View>
         </View>
         <Text style={styles.order_number}>#{context.order.key}</Text>
-        <Text style={styles.order_size}>{context.order.items.length} items</Text>
-        <View style={styles.list_of_orders}>
-          <FlatList
-            style={styles.list}
-            data={context.order.items.slice(0, 2)}
-            horizontal={true}
-            renderItem={({item}) => (
-              <View style={styles.order}>
-                <Text style={styles.amount}>{item.amount}</Text>
-                <Text style={styles.item_name}>{item.name}</Text>
-              </View>
-            )}
-          />
-
-          {context.order.items.length > 2 ? (
-            <Text style={styles.dots}>...</Text>
-          ) : null}
-        </View>
+         <Text style={[styles.total_price, animatedContext.isExpanded ? styles.invisible: null]}>
+           £{order.Total.toFixed(2)}
+        </Text>
       </View>
-      <View style={styles.right_side}>
-        <View style={styles.time}>
-          <Icon size={24} color={context.statusColor} name='clock'/>
-          <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
-        </View>
+      { !animatedContext.isExpanded ? <View style={styles.right_side}>
         {context.isFinished ? (
           <Text style={styles.finished}>This order is finished</Text>
         ) : (
-          <OrderActionButton />
+          <OrderActionButton/>
         )}
-      </View>
+      </View>: null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  invisible:{
+    opacity: 0,
+  },
   name: {
     fontFamily: 'Montserrat',
     fontSize: 25,
     color: '#000000',
     fontWeight: '700',
-  },
-  rectangle: {
-    marginVertical: '2%',
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: '#F2F2F2',
-    justifyContent: 'space-between',
-    padding: '3%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-
-    elevation: 6,
+    marginRight: '5%',
   },
   order_number: {
     fontFamily: 'Montserrat',
     fontWeight: '400',
     fontSize: 21,
     color: '#9A9A9A',
+    marginTop: '2%',
     marginBottom: '10%',
-  },
-  list_of_orders: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  expandedOrder: {
-    borderColor: '#DEDEDE',
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-  },
-  order: {
-    paddingVertical: 5,
-    paddingRight: 14,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  order_size: {
-    fontFamily: 'Montserrat',
-    fontWeight: '300',
-    fontStyle: 'italic',
-    fontSize: 21,
-    color: '#000000',
   },
   time: {
     display: 'flex',
@@ -121,61 +70,30 @@ const styles = StyleSheet.create({
   left_side: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '50%',
+    maxWidth: '60%',
   },
   right_side: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    width: '35%',
+
   },
   total_price: {
     fontFamily: 'Montserrat',
     fontSize: 25,
     color: '#000000',
-    marginLeft: '5%',
+    marginBottom: '10%',
     fontWeight: '700',
-  },
-  total_text: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
-    fontSize: 25,
-    color: '#000000',
-    marginLeft: '5%',
-  },
-  total: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: '20%',
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
-  amount: {
-    fontFamily: 'Roboto-Black',
-    fontWeight: '700',
-    fontSize: 24,
-    color: '#000000',
-    marginRight: 4,
-  },
-  item_name: {
-    fontFamily: 'Montserrat',
-    fontWeight: '300',
-    fontSize: 24,
-    color: '#000000',
-  },
-  dots: {
-    fontFamily: 'Montserrat',
-    fontWeight: '300',
-    fontSize: 24,
-    color: '#000000',
-    marginTop: 7,
-    marginRight: 4,
-  },
-
   finished: {
     color: 'red',
-    fontSize: 12,
+    fontSize: 20,
     fontFamily: 'Montserrat',
   },
 });

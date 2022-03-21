@@ -1,26 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 import firestore from "@react-native-firebase/firestore";
+import {GlobalContext} from "../../App";
 
-const TopBar = ({receivingOrders, setReceivingOrders, currentShop}) => {
-    const [isEnabled, setIsEnabled] = useState(receivingOrders)
+const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
+    const [isEnabled, setIsEnabled] = useState(receivingOrders);
+    const globalContext = useContext(GlobalContext);
 
     const toggleSwitch = () =>
     {
         setIsEnabled(prevState => !prevState)
-        firestore().collection('CoffeeShop').doc(currentShop.id).update({
+        firestore().collection('CoffeeShop').doc(globalContext.coffeeShopRef).update({
             IsOpen : !isEnabled
-        }).then()
+        })
     }
 
     useEffect (() => {
-        setReceivingOrders(isEnabled)
-    }, [isEnabled])
+        setIsEnabled(globalContext.coffeeShopObj.IsOpen)
+    }, [globalContext.coffeeShopObj])
+
+    function goToAccountManagement() {
+        navigation.navigate('Account Management');
+    }
 
     return (
         <View style={styles.container}>
-            <PrimaryButton newStyle={styles.manageButton} buttonText={'Manage Stock'}/>
+            <PrimaryButton color={'#207671'} buttonText={'Manage Shop'} onPress={goToAccountManagement}/>
             <View style={styles.manageOrdersHeadline}>
                 <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>
                 <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>{isEnabled ? "Yep" : "Nope"}</Text>
@@ -53,11 +59,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
-    },
-    manageButton: {
-        backgroundColor: '#207671',
-        width: '35%',
-        padding: '2%',
     },
     manageOrdersHeadline: {
         display: 'flex',
