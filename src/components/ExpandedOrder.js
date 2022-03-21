@@ -43,7 +43,6 @@ const ExpandedOrder = ({user}) => {
 };
 
 function getOptionsText(item) {
-  console.log(item)
   let optionsText = '';
   item.options.forEach(option => {
     optionsText += option.Name + ' ' + option.Type + ', ';
