@@ -17,7 +17,9 @@ const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
     }
 
     useEffect (() => {
-        setIsEnabled(globalContext.coffeeShopObj.IsOpen)
+        if (globalContext.coffeeShopObj) {
+            setIsEnabled(globalContext.coffeeShopObj.IsOpen)
+        }
     }, [globalContext.coffeeShopObj])
 
     function goToAccountManagement() {

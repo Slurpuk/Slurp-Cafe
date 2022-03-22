@@ -11,6 +11,7 @@ import firebase from "@react-native-firebase/app";
 import OrderStatuses from "../components/OrderStatuses";
 import {GlobalContext} from '../../App';
 import calculateTime from "./etaLogic";
+import auth from "@react-native-firebase/auth";
 
 export const OrdersContext = React.createContext();
 
