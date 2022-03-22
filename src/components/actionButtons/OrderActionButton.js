@@ -1,12 +1,12 @@
 
 import {Pressable, StyleSheet, Text} from 'react-native';
-import OrderStatuses from '../OrderStatuses';
+import OrderStatuses from '../../static-data/OrderStatuses';
 import React, {useContext, useEffect, useState} from 'react';
-import {DetailsContext} from '../OrderCard';
+import {DetailsContext} from '../OrderManagement/OrderCard';
 import PrimaryButton from "../../sub-components/PrimaryButton";
 import {OrdersContext} from "../../screens/OrdersPage";
 import {CardContext} from "../../sub-components/AnimatedCard";
-import TabStatuses from "../TabStatuses";
+import TabStatuses from "../../static-data/TabStatuses";
 
 const OrderActionButton = ({accept}) => {
   const orders = useContext(OrdersContext);

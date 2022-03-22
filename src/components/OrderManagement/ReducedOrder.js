@@ -1,10 +1,10 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import OrderActionButton from './actionButtons/OrderActionButton';
+import OrderActionButton from '../actionButtons/OrderActionButton';
 import React, {useContext, useEffect, useState} from 'react';
 import {DetailsContext} from './OrderCard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import firestore from "@react-native-firebase/firestore";
-import {CardContext} from "../sub-components/AnimatedCard";
+import {CardContext} from "../../sub-components/AnimatedCard";
 
 const ReducedOrder = () => {
   const context = useContext(DetailsContext);

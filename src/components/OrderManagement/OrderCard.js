@@ -10,12 +10,12 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import ReducedOrder from './ReducedOrder';
 import ExpandedOrder from './ExpandedOrder';
-import mapper from './mapper';
-import TabStatuses from './TabStatuses';
-import calculateTime from "../screens/etaLogic";
+import mapper from '../../helpers/mapper';
+import TabStatuses from '../../static-data/TabStatuses';
+import calculateTime from "../../helpers/ETAFunctions";
 import firestore from "@react-native-firebase/firestore";
-import AnimatedCard from "../sub-components/AnimatedCard";
-import {OrdersContext} from "../screens/OrdersPage";
+import AnimatedCard from "../../sub-components/AnimatedCard";
+import {OrdersContext} from "../../screens/OrdersPage";
 export const DetailsContext = React.createContext();
 
 const OrderCard = ({order}) => {

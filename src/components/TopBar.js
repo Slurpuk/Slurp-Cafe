@@ -12,8 +12,8 @@ const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
     {
         setIsEnabled(prevState => !prevState)
         firestore().collection('CoffeeShop').doc(globalContext.coffeeShopRef).update({
-            IsOpen : !isEnabled
-        })
+            IsOpen: !isEnabled
+        }).then(r => console.log('Is shop open: ' + !isEnabled))
     }
 
     useEffect (() => {
