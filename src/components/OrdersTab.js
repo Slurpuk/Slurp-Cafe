@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
 
   badgeContainer:{
     backgroundColor: 'red',
+    minWidth: 20,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

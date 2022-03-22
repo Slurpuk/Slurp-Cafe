@@ -11,7 +11,7 @@ const ExpandedOrder = ({user}) => {
   const context = useContext(DetailsContext);
   const animatedContext = useContext(CardContext);
   return (
-    <View style={[ animatedContext.isExpanded ? {marginTop: '-5%'}: null]}>
+    <View style={[ animatedContext.isExpanded ? {marginTop: '-10%'}: null]}>
       <View style={styles.left_side}>
         <View style={styles.list_of_orders}>
           <FlatList

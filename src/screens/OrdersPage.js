@@ -24,6 +24,7 @@ const OrdersPage = ({navigation}) => {
     const numIncomingOrders = useRef(0);
 
     useEffect(() => {
+        numIncomingOrders.current = orders.filter(order => order.Status === 'incoming').length
         updateCurrentOrders();
     }, [tabStatus, orders]);
 
@@ -40,7 +41,6 @@ const OrdersPage = ({navigation}) => {
                 let newOrders = [];
                 await Promise.all(querySnapshot.docs.map(async documentSnapshot => {
                     const firebaseOrder = documentSnapshot.data();
-                    if(firebaseOrder.Status === 'incoming') numIncomingOrders.current += 1;
                     let newItems = [];
                     await Promise.all(firebaseOrder.Items.map(async item => {
                         await firestore().collection(item.Type + 's').doc(item.ItemRef).get().then(
@@ -63,6 +63,7 @@ const OrdersPage = ({navigation}) => {
                             }).catch(error => console.log(error))
                     }).catch(error => console.log(error))
                 })).then(r => {
+                    numIncomingOrders.current = newOrders.filter(order => order.Status === 'incoming').length
                     setOrders(newOrders)
                     updateCurrentOrders(newOrders);
                 })
