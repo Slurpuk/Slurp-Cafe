@@ -180,6 +180,7 @@ const AuthenticationPage = () => {
                 />
                 <View style={styles.button}>
                     <PrimaryButton
+                        color={'#207671'}
                         buttonText={'Log In'}
                         onPress={authenticateCoffeeShop}
                         widthRatio={0.5}
@@ -224,6 +225,7 @@ const AuthenticationPage = () => {
                 />
                 <View style={styles.button}>
                     <PrimaryButton
+                        color={'#207671'}
                         buttonText={'Create Account'}
                         onPress={registerCoffeeShop}
                         widthRatio={0.5}
@@ -265,7 +267,6 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         marginHorizontal: '22%',
-        backgroundColor: '#207671',
         marginVertical: '5%',
         alignContent: "center",
     },
