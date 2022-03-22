@@ -105,12 +105,14 @@ const AccountManagementPage = ({navigation}) => {
                     <PrimaryButton
                         buttonText={'Save Details'}
                         onPress={updateDetails}
+                        widthRatio={0.36}
                     />
                 </View>
                 <View style={styles.logoutButton}>
                     <PrimaryButton
                         buttonText={'Log Out'}
                         onPress={() => logout()}
+                        widthRatio={0.36}
                     />
                 </View>
             </View>
