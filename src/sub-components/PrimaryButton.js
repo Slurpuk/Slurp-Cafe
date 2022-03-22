@@ -16,10 +16,11 @@ const PrimaryButton = ({color, widthRatio = 0.3, buttonText, onPress}) => {
 
 const styles = StyleSheet.create({
     button: {
+
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 5,
+        elevation: 23,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 25,
         fontFamily: 'Roboto',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
 });
 
