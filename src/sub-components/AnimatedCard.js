@@ -79,7 +79,8 @@ const AnimatedCard = ({
 
                     <View
                         onLayout={event => {
-                            setHidableHeight(event.nativeEvent.layout.height);
+                            let tempHeight = event.nativeEvent.layout.height
+                            setHidableHeight(tempHeight - 0.2 * tempHeight);
                         }}
                         style={styles.hidable}
                     >

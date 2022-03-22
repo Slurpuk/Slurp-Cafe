@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Dimensions, Platform, PixelRatio} from 'react-native';
 import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
+import {OrdersContext} from "../screens/OrdersPage";
 
 const OrdersTab = ({SECTIONS, setStatus}) => {
   const [index, setIndex] = useState(0);
-
+  const context = useContext(OrdersContext)
   const updatePage = newIndex => {
     setIndex(newIndex);
     setStatus(SECTIONS[newIndex]);
@@ -17,6 +18,9 @@ const OrdersTab = ({SECTIONS, setStatus}) => {
       selectedIndex={index}
       onTabPress={updatePage}
       tabStyle={styles.tab}
+      badges={[null,context.numIncomingOrders]}
+      tabBadgeContainerStyle={[styles.badgeContainer]}
+      tabBadgeStyle={styles.badgeNumber}
       tabsContainerStyle={styles.tabContainer}
       tabTextStyle={styles.tabText}
       borderRadius={20}
@@ -47,10 +51,10 @@ const styles = StyleSheet.create({
 
   tab: {
     flex: 0,
-    paddingHorizontal: '3%',
+    paddingHorizontal: '2%',
     borderRadius: 20,
     borderWidth: 0,
-    marginHorizontal: '1%',
+    marginRight: '1%',
     backgroundColor: '#E1E1E1',
     alignSelf: 'baseline',
     alignItems: 'baseline',
@@ -64,6 +68,18 @@ const styles = StyleSheet.create({
 
   activeTab: {
     backgroundColor: '#65ADA9',
+  },
+
+  badgeNumber:{
+    fontSize: 15,
+  },
+
+  badgeContainer:{
+    backgroundColor: 'red',
+    minWidth: 20,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

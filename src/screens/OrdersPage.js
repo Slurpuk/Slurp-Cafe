@@ -21,8 +21,10 @@ const OrdersPage = ({navigation}) => {
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState();
+    const numIncomingOrders = useRef(0);
 
     useEffect(() => {
+        numIncomingOrders.current = orders.filter(order => order.Status === 'incoming').length
         updateCurrentOrders();
     }, [tabStatus, orders]);
 
@@ -61,6 +63,7 @@ const OrdersPage = ({navigation}) => {
                             }).catch(error => console.log(error))
                     }).catch(error => console.log(error))
                 })).then(r => {
+                    numIncomingOrders.current = newOrders.filter(order => order.Status === 'incoming').length
                     setOrders(newOrders)
                     updateCurrentOrders(newOrders);
                 })
@@ -99,6 +102,7 @@ const OrdersPage = ({navigation}) => {
                 orders: orders,
                 setOrderStatus: setOrderStatus,
                 setTabStatus: changeTabStatus,
+                numIncomingOrders: numIncomingOrders.current,
             }}
         >
             <View style={styles.ordersContainer}>
