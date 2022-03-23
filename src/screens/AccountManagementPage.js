@@ -103,6 +103,7 @@ const AccountManagementPage = ({navigation}) => {
             <View style={styles.buttonContainer}>
                 <View style={styles.updateButton}>
                     <PrimaryButton
+                        color={'#4273D3'}
                         buttonText={'Save Details'}
                         onPress={updateDetails}
                         widthRatio={0.36}
@@ -110,6 +111,7 @@ const AccountManagementPage = ({navigation}) => {
                 </View>
                 <View style={styles.logoutButton}>
                     <PrimaryButton
+                        color={'#CE316A'}
                         buttonText={'Log Out'}
                         onPress={() => logout()}
                         widthRatio={0.36}
@@ -170,7 +172,6 @@ const styles = StyleSheet.create({
         width: 300,
         justifyContent: 'center',
         marginHorizontal: '20%',
-        backgroundColor: '#4273D3',
         marginVertical: '5%',
         alignContent: "center",
     },
@@ -179,7 +180,6 @@ const styles = StyleSheet.create({
         width: 300,
         justifyContent: 'center',
         marginHorizontal: '20%',
-        backgroundColor: '#CE316A',
         marginVertical: '5%',
         alignContent: "center",
     },

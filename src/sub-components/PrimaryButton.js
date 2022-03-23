@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Pressable, StyleSheet, Text} from "react-native";
+import {Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
 
 
 
@@ -7,9 +7,11 @@ const PrimaryButton = ({color, widthRatio = 0.3, buttonText, onPress}) => {
     const screenWidth = Dimensions.get('window').width;
 
     return (
-        <Pressable style={[styles.button, {backgroundColor: color, width: screenWidth * widthRatio}]} onPress={onPress}>
-            <Text style={styles.button_text}>{buttonText}</Text>
-        </Pressable>
+        <View style={[styles.button, {backgroundColor: color, width: screenWidth * widthRatio}]}>
+            <Pressable onPress={onPress}>
+                <Text style={styles.button_text}>{buttonText}</Text>
+            </Pressable>
+        </View>
     );
 };
 
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 25,
         fontFamily: 'Roboto',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
 });
 
