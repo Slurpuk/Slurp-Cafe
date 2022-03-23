@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {Dimensions, View} from 'react-native';
 import ReducedOrder from './ReducedOrder';
 import ExpandedOrder from './ExpandedOrder';
 import mapper from './mapper';
@@ -15,45 +15,42 @@ import TabStatuses from './TabStatuses';
 import calculateTime from "../screens/etaLogic";
 import firestore from "@react-native-firebase/firestore";
 import AnimatedCard from "../sub-components/AnimatedCard";
+import {GlobalContext} from "../../App";
 import {OrdersContext} from "../screens/OrdersPage";
 export const DetailsContext = React.createContext();
 
-const OrderCard = ({order}) => {
-  const [finished, setFinished] = useState(
-    mapper(TabStatuses.FINISHED).includes(order.Status),
-  );
-  const context = useContext(OrdersContext)
-  const [statusColor, setStatusColor]=useState('#239DAD');
-    const [userLatitude, setUserLatitude]=useState(0);
-    const [userLongitude, setUserLongitude]=useState(0);
-    const [displayTime, setDisplayTime]=useState(0);
-    const shopLocation = useRef({latitude: 0, longitude: 0});
-    const initialHeight = Dimensions.get('window').height * 0.14
+const OrderCard = ({order, setETA}) => {
+    const context = useContext(GlobalContext);
+    const orderContext = useContext(OrdersContext);
+    const [statusColor, setStatusColor]=useState('#239DAD');
+    const [userLocation, setUserLocation] = useState({latitude: order.user.latitude, longitude: order.user.longitude})
+    const ETA = useMemo(() => refreshETA(), [userLocation]);
+    const initialHeight = Dimensions.get('window').height * 0.14;
 
-    useEffect(() => {
-        const curr = calculateTime(userLatitude, userLongitude,shopLocation.current.latitude ,shopLocation.current.longitude)
-        setDisplayTime(curr);
-        if(curr <= 5){
+    function isFinished(){
+        return mapper(TabStatuses.FINISHED).includes(order.Status)
+    }
+
+    function calcTime(){
+        return calculateTime(userLocation.latitude, userLocation.longitude,context.coffeeShopObj.Location._latitude ,context.coffeeShopObj.Location._longitude)
+    }
+
+    function refreshETA(){
+        let res = calcTime()
+        if(res <= 5){
             setStatusColor('red');
         }
         else{
             setStatusColor('#239DAD');
         }
-    }, [userLatitude,userLongitude]);
+        if(order.eta !== res) setETA(order, res);
+        return res;
+    }
 
     useEffect(() => {
         const subscriber = firestore().doc('Users/' + order.UserID).onSnapshot(querySnapshot => {
             const user = querySnapshot.data()
-            setUserLatitude(user.latitude);
-            setUserLongitude(user.longitude);
-        });
-        return () => subscriber();
-    }, []);
-
-    useEffect(() => {
-        const subscriber =firestore().doc('CoffeeShop/' + order.ShopID).onSnapshot(querySnapshot => {
-            const shop = querySnapshot.data();
-            shopLocation.current = {latitude: shop.Location.latitude, longitude: shop.Location.longitude}
+            setUserLocation({latitude: user.latitude, longitude: user.longitude});
         });
         return () => subscriber();
     }, []);
@@ -63,10 +60,9 @@ const OrderCard = ({order}) => {
       <DetailsContext.Provider
         value={{
           order: order,
-            timerCount:displayTime ,
+            timerCount:ETA ,
             statusColor:statusColor,
-          isFinished: finished,
-          setFinished: setFinished,
+            isFinished: isFinished,
         }}
       >
           <AnimatedCard

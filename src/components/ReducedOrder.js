@@ -15,7 +15,7 @@ const ReducedOrder = () => {
       <View style={styles.left_side}>
         <View style={styles.header}>
           <Text style={styles.name}>{order.user.FirstName}</Text>
-          <View style={styles.time}>
+          <View style={[styles.time, context.isFinished() ? {opacity: 0}: null]}>
             <Icon size={24} color={context.statusColor} name='clock'/>
             <Text style={[styles.clock_number, {color:context.statusColor}]}>{context.timerCount}</Text>
           </View>
@@ -26,8 +26,8 @@ const ReducedOrder = () => {
         </Text>
       </View>
       { !animatedContext.isExpanded ? <View style={styles.right_side}>
-        {context.isFinished ? (
-          <Text style={styles.finished}>This order is finished</Text>
+        {context.isFinished() ? (
+          <Text style={styles.finished}>This order is completed</Text>
         ) : (
           <OrderActionButton/>
         )}
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   finished: {
     color: 'red',
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Montserrat',
   },
 });

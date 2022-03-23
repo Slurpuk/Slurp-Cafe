@@ -7,8 +7,6 @@ import mapper from '../components/mapper';
 import TabStatuses from '../components/TabStatuses';
 import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
-import firebase from "@react-native-firebase/app";
-import OrderStatuses from "../components/OrderStatuses";
 import {GlobalContext} from '../../App';
 import calculateTime from "./etaLogic";
 
@@ -55,8 +53,11 @@ const OrdersPage = ({navigation}) => {
                             (retrievedUser) => {
                                 let user = retrievedUser.data();
                                 firebaseOrder.user = user;
+                                const shoplat =  globalContext.coffeeShopObj.Location._latitude;
+                                const shoplong = globalContext.coffeeShopObj.Location._longitude;
                                 let newOrder = {
                                     ...firebaseOrder,
+                                    eta: calculateTime(user.latitude, user.longitude, shoplat, shoplong),
                                     key: documentSnapshot.id,
                                 }
                                 newOrders.push(newOrder);
@@ -81,18 +82,30 @@ const OrdersPage = ({navigation}) => {
             console.log('status updated')})
     }
 
+    function setOrderETA(target, newETA){
+        setOrders(orders.map(order => order.key === target.key ? {...order, eta: newETA}: order))
+    }
+
+    // Sort the current orders in ascending order of ETA and sets the state.
+    function sortCurrentOrders(currOrders=null){
+        let result = currOrders === null ? currentOrders: currOrders;
+        result.sort((a, b) => (a.eta > b.eta) ? 1 : -1)
+        setCurrentOrders(result);
+    }
+
     // Filters which orders to display
     function updateCurrentOrders(newOrders = null){
         let ordersList = newOrders === null ? orders: newOrders;
+        let result = [];
         if (currTabStatus.current === TabStatuses.ALL){
             let excluded = mapper(TabStatuses.FINISHED);
-            setCurrentOrders(ordersList.filter(order => excluded.indexOf(order.Status) === -1));
+            result = ordersList.filter(order => excluded.indexOf(order.Status) === -1);
         }
         else {
             let target = mapper(currTabStatus.current);
-            let result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
-            setCurrentOrders(result);
+            result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
         }
+        sortCurrentOrders(result);
     }
 
     return (
@@ -100,7 +113,6 @@ const OrdersPage = ({navigation}) => {
             value={{
                 orders: orders,
                 setOrderStatus: setOrderStatus,
-                setTabStatus: changeTabStatus,
                 numIncomingOrders: numIncomingOrders.current,
             }}
         >
@@ -110,7 +122,7 @@ const OrdersPage = ({navigation}) => {
                 <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                 <FlatList
                     data={currentOrders}
-                    renderItem={({item}) => <OrderCard order={item}/>}
+                    renderItem={({item}) => <OrderCard order={item} setETA={setOrderETA}/>}
                     contentContainerStyle={styles.ordersListContainer}
                     style={styles.ordersList}
                 />
