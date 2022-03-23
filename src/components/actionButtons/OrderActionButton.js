@@ -36,15 +36,12 @@ const OrderActionButton = ({accept}) => {
               card.setExpanded(true);
               break;
           case OrderStatuses.ACCEPTED:
-              orders.setOrderStatus(details.order, OrderStatuses.READY).then(() => {
-                  orders.setTabStatus(TabStatuses.READY);
-              });
+              orders.setOrderStatus(details.order, OrderStatuses.READY)
+                  .catch(error => console.log(error + 'when setting as ready'));
               break;
           case OrderStatuses.READY:
-              orders.setOrderStatus(details.order, OrderStatuses.COLLECTED).then(() => {
-                  orders.setTabStatus(TabStatuses.ALL);
-                  details.setFinished(true);
-              });
+              orders.setOrderStatus(details.order, OrderStatuses.COLLECTED)
+                  .catch(error => console.log(error + 'when setting as collected'));
               break;
       }
   }

@@ -5,7 +5,7 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import {OrdersContext} from "../screens/OrdersPage";
 
 const OrdersTab = ({SECTIONS, setStatus}) => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const context = useContext(OrdersContext)
   const updatePage = newIndex => {
     setIndex(newIndex);

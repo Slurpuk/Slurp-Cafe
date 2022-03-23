@@ -17,7 +17,7 @@ export const OrdersContext = React.createContext();
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
     const [orders, setOrders] = useState([]);
-    const currTabStatus = useRef(TabStatuses.ALL);
+    const currTabStatus = useRef(TabStatuses.INCOMING);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState();
@@ -78,7 +78,6 @@ const OrdersPage = ({navigation}) => {
         await firestore().collection('Orders').doc(order.key).update({
             Status: status
         }).then(r =>{
-            updateCurrentOrders();
             console.log('status updated')})
     }
 

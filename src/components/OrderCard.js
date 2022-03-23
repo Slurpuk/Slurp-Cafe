@@ -33,7 +33,7 @@ const OrderCard = ({order}) => {
     useEffect(() => {
         const curr = calculateTime(userLatitude, userLongitude,shopLocation.current.latitude ,shopLocation.current.longitude)
         setDisplayTime(curr);
-        if(curr===0){
+        if(curr <= 5){
             setStatusColor('red');
         }
         else{

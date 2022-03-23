@@ -14,9 +14,12 @@ const AcceptRejectButton = ({accept}) => {
 
     const updateStatus = () => {
             if (accept) {
-                orders.setOrderStatus(details.order, OrderStatuses.ACCEPTED).then(() => card.setExpanded(false));
+                card.setExpanded(false);
+                orders.setOrderStatus(details.order, OrderStatuses.ACCEPTED)
+                    .catch(error => console.log(error + 'when accepting order'));
             } else {
-                orders.setOrderStatus(details.order, OrderStatuses.REJECTED).then(() => details.setFinished(true))
+                orders.setOrderStatus(details.order, OrderStatuses.REJECTED)
+                    .catch(error => console.log(error + 'when rejecting order'));
             }
     };
 
