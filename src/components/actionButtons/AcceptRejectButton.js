@@ -1,8 +1,8 @@
 
 import {Pressable, StyleSheet, Text} from 'react-native';
-import OrderStatuses from '../OrderStatuses';
+import OrderStatuses from '../../data/OrderStatuses';
 import React, {useContext, useEffect, useState} from 'react';
-import {DetailsContext} from '../OrderCard';
+import {DetailsContext} from '../orders/OrderCard';
 import PrimaryButton from "../../sub-components/PrimaryButton";
 import {OrdersContext} from "../../screens/OrdersPage";
 import {CardContext} from "../../sub-components/AnimatedCard";

@@ -1,11 +1,11 @@
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
-import OrderActionButton from './actionButtons/OrderActionButton';
+import OrderActionButton from '../actionButtons/OrderActionButton';
 import {DetailsContext} from './OrderCard';
-import OrderStatuses from './OrderStatuses';
+import OrderStatuses from '../../data/OrderStatuses';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {CardContext} from "../sub-components/AnimatedCard";
-import AcceptRejectButton from "./actionButtons/AcceptRejectButton";
+import {CardContext} from "../../sub-components/AnimatedCard";
+import AcceptRejectButton from "../actionButtons/AcceptRejectButton";
 
 const ExpandedOrder = ({user}) => {
   const context = useContext(DetailsContext);
