@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Dimensions, Platform, PixelRatio} from 'react-native';
 import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import {OrdersContext} from "../screens/OrdersPage";
+import {OrdersContext} from "../contexts";
 
 const OrdersTab = ({SECTIONS, setStatus}) => {
   const [index, setIndex] = useState(1);

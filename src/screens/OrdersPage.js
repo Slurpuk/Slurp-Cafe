@@ -1,16 +1,14 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import SECTIONS from '../fake-data/OrderTabSectionsData';
-import OrdersTab from '../components/OrdersTab';
-import OrderCard from '../components/OrderCard';
-import mapper from '../components/mapper';
-import TabStatuses from '../components/TabStatuses';
-import TopBar from "../components/TopBar";
+import SECTIONS from '../static-data/OrderTabSectionsData';
+import OrdersTab from '../components/OrderManagement /OrdersTab/OrdersTab';
+import OrderCard from '../components/OrderManagement /OrderCard/OrderCard';
+import TabStatuses from '../static-data/TabStatuses';
+import TopBar from "../components/ShopManagement/TopBar";
 import firestore from "@react-native-firebase/firestore";
 import {GlobalContext} from '../../App';
-import calculateTime from "./etaLogic";
-
-export const OrdersContext = React.createContext();
+import {calculateTime, mapper} from "../components/OrderManagement /helpers";
+import {OrdersContext} from "../components/OrderManagement /contexts";
 
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);

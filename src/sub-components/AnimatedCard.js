@@ -9,9 +9,10 @@ import {
     Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {AnimatedCardContext} from "../components/OrderManagement /contexts";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-export const CardContext = React.createContext();
+
 const AnimatedCard = ({
                           initialHeight,
                           collapsableContent,
@@ -53,7 +54,7 @@ const AnimatedCard = ({
     };
 
     return (
-        <CardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleheight}}>
+        <AnimatedCardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleheight}}>
         <View style={styles.container}>
             <Animated.View
                 style={[
@@ -99,7 +100,7 @@ const AnimatedCard = ({
                 <View style={styles.absoluteBottomRight}>{bottomFixed}</View>
             </Animated.View>
         </View>
-        </CardContext.Provider>
+        </AnimatedCardContext.Provider>
     );
 };
 
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
+        marginVertical: '1%',
     },
     fadingContainer: {
         padding: 20,
