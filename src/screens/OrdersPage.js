@@ -112,7 +112,7 @@ const OrdersPage = ({navigation}) => {
     return (
         <OrdersContext.Provider
             value={{
-                orders: orders,
+                orders: orders.current,
                 setOrderStatus: setOrderStatus,
                 numIncomingOrders: numIncomingOrders.current,
             }}

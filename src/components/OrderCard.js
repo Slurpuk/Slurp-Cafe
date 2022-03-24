@@ -21,14 +21,14 @@ export const DetailsContext = React.createContext();
 
 const OrderCard = ({order, setETA}) => {
     const context = useContext(GlobalContext);
-    const orderContext = useContext(OrdersContext);
     const [statusColor, setStatusColor]=useState('#239DAD');
     const [userLocation, setUserLocation] = useState({latitude: order.user.latitude, longitude: order.user.longitude})
     const ETA = useMemo(() => refreshETA(), [userLocation]);
     const initialHeight = Dimensions.get('window').height * 0.14;
+    const [currStatus, setCurrStatus] = useState(order.Status);
 
     function isFinished(){
-        return mapper(TabStatuses.FINISHED).includes(order.Status)
+        return mapper(TabStatuses.FINISHED).includes(currStatus)
     }
 
     function calcTime(){
@@ -55,6 +55,7 @@ const OrderCard = ({order, setETA}) => {
         return () => subscriber();
     }, []);
 
+
   return (
     <View style={{marginVertical: '1%'}}>
       <DetailsContext.Provider
@@ -63,6 +64,8 @@ const OrderCard = ({order, setETA}) => {
             timerCount:ETA ,
             statusColor:statusColor,
             isFinished: isFinished,
+            currStatus: currStatus,
+            setCurrStatus: setCurrStatus,
         }}
       >
           <AnimatedCard

@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CardContext} from "../sub-components/AnimatedCard";
 import AcceptRejectButton from "./actionButtons/AcceptRejectButton";
 
-const ExpandedOrder = ({user}) => {
+const ExpandedOrder = () => {
   const context = useContext(DetailsContext);
   const animatedContext = useContext(CardContext);
   return (
@@ -34,7 +34,7 @@ const ExpandedOrder = ({user}) => {
           </Text>
         </View>
       </View>
-      {context.order.Status === OrderStatuses.INCOMING ? <View style={styles.bottomButtons}>
+      {context.currStatus === OrderStatuses.INCOMING ? <View style={styles.bottomButtons}>
             <AcceptRejectButton accept={true} />
           <AcceptRejectButton accept={false} />
       </View>: null}

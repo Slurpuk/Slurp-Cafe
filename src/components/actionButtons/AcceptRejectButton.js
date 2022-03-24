@@ -16,9 +16,11 @@ const AcceptRejectButton = ({accept}) => {
             if (accept) {
                 card.setExpanded(false);
                 orders.setOrderStatus(details.order, OrderStatuses.ACCEPTED)
+                    .then(() => details.setCurrStatus(OrderStatuses.ACCEPTED))
                     .catch(error => console.log(error + 'when accepting order'));
             } else {
                 orders.setOrderStatus(details.order, OrderStatuses.REJECTED)
+                    .then(() => details.setCurrStatus(OrderStatuses.REJECTED))
                     .catch(error => console.log(error + 'when rejecting order'));
             }
     };
