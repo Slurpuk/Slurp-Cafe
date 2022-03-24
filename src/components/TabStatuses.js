@@ -1,5 +1,5 @@
 const TabStatuses = {
-  ALL: 'All',
+  ALL: 'All active',
   INCOMING: 'Incoming',
   ACCEPTED: 'Accepted',
   READY: 'Ready',

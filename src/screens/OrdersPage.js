@@ -14,7 +14,7 @@ export const OrdersContext = React.createContext();
 
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
-    const [orders, setOrders] = useState([]);
+    const orders = useRef([]);
     const currTabStatus = useRef(TabStatuses.INCOMING);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
@@ -22,9 +22,9 @@ const OrdersPage = ({navigation}) => {
     const numIncomingOrders = useRef(0);
 
     useEffect(() => {
-        numIncomingOrders.current = orders.filter(order => order.Status === 'incoming').length
+        numIncomingOrders.current = orders.current.filter(order => order.Status === 'incoming').length
         updateCurrentOrders();
-    }, [tabStatus, orders]);
+    }, [tabStatus]);
 
     function changeTabStatus(status){
         currTabStatus.current = status;
@@ -65,7 +65,7 @@ const OrdersPage = ({navigation}) => {
                     }).catch(error => console.log(error))
                 })).then(r => {
                     numIncomingOrders.current = newOrders.filter(order => order.Status === 'incoming').length
-                    setOrders(newOrders)
+                    orders.current = newOrders;
                     updateCurrentOrders(newOrders);
                 })
             });
@@ -83,7 +83,8 @@ const OrdersPage = ({navigation}) => {
     }
 
     function setOrderETA(target, newETA){
-        setOrders(orders.map(order => order.key === target.key ? {...order, eta: newETA}: order))
+        orders.current = orders.current.map(order => order.key === target.key ? {...order, eta: newETA}: order);
+        updateCurrentOrders();
     }
 
     // Sort the current orders in ascending order of ETA and sets the state.
@@ -95,7 +96,7 @@ const OrdersPage = ({navigation}) => {
 
     // Filters which orders to display
     function updateCurrentOrders(newOrders = null){
-        let ordersList = newOrders === null ? orders: newOrders;
+        let ordersList = newOrders === null ? orders.current: newOrders;
         let result = [];
         if (currTabStatus.current === TabStatuses.ALL){
             let excluded = mapper(TabStatuses.FINISHED);
@@ -118,7 +119,7 @@ const OrdersPage = ({navigation}) => {
         >
             <View style={styles.ordersContainer}>
                 <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
-                <Text style={styles.activeOrdersText}>Active orders</Text>
+                <Text style={styles.activeOrdersText}>{tabStatus} orders</Text>
                 <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                 <FlatList
                     data={currentOrders}
