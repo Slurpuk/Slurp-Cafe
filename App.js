@@ -24,7 +24,6 @@ export default function App() {
                 .onSnapshot(querySnapshot => {
                     setCoffeeShopObj(querySnapshot.data());
                 })
-
             return () => subscriber;
         }
     }, [])

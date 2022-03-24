@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
-import PrimaryButton from "../sub-components/PrimaryButton";
+import PrimaryButton from "../../sub-components/PrimaryButton";
 import firestore from "@react-native-firebase/firestore";
-import {GlobalContext} from "../../App";
+import {GlobalContext} from "../../../App";
 
 const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
     const [isEnabled, setIsEnabled] = useState(receivingOrders);
