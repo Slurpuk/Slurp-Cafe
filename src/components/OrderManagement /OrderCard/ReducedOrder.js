@@ -16,7 +16,6 @@ const ReducedOrder = () => {
   const statusColor = getStatusColor(order.eta);
   const finished = isFinished(order.currStatus);
 
-
   return (
     <View style={Reduced.container}>
       <View style={Reduced.left_side}>
@@ -24,7 +23,7 @@ const ReducedOrder = () => {
           <Text style={Reduced.name}>{order.data.user.FirstName}</Text>
           <View style={[Reduced.time, finished ? {opacity: 0}: null]}>
             <Icon size={24} color={statusColor} name='clock'/>
-            <Text style={[Reduced.clock_number, {color:statusColor}]}>{order.eta}</Text>
+            <Text style={[Reduced.clock_number, {color:statusColor}]}>{order.data.eta}</Text>
           </View>
         </View>
         <Text style={Reduced.order_number}>#{order.data.key}</Text>
@@ -34,7 +33,7 @@ const ReducedOrder = () => {
       </View>
       { !animatedContext.isExpanded ? <View style={Reduced.right_side}>
         {finished ? (
-          <Text style={Reduced.finished}>This order was {order.currStatus} on {toDateTime(order.data.DateTime.seconds)}</Text>
+          <Text style={Reduced.finished}>This order was {order.currStatus} on {toDateTime(order.data.FinishedTime.seconds)}</Text>
         ) : (
           <ChangeStatusButton/>
         )}

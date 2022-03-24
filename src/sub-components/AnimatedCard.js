@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
 
     absoluteBottomRight: {
         position: 'absolute',
-        bottom: 5,
-        left: 10,
+        bottom: 15,
+        right: 40,
         minWidth: 20,
         minHeight: 20,
     },

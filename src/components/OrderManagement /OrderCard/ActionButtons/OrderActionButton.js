@@ -32,13 +32,12 @@ const OrderActionButton = () => {
               break;
           case OrderStatuses.ACCEPTED:
               ordersContext.setOrderStatus(order.data, OrderStatuses.READY)
-                  .then(order.setCurrStatus(OrderStatuses.READY))
                   .catch(error => console.log(error + 'when setting as ready'));
               break;
           case OrderStatuses.READY:
-              ordersContext.setOrderStatus(order.data, OrderStatuses.COLLECTED)
-                  .then(order.setCurrStatus(OrderStatuses.COLLECTED))
-                  .catch(error => console.log(error + 'when setting as collected'));
+              ordersContext.updateFinishedTime(order.data)
+                  .then(() => ordersContext.setOrderStatus(order.data, OrderStatuses.COLLECTED))
+                  .catch(error => console.log(error + 'when setting as collected'))
               break;
       }
   }

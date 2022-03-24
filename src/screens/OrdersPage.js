@@ -9,15 +9,21 @@ import firestore from "@react-native-firebase/firestore";
 import {GlobalContext} from '../../App';
 import {calculateTime, mapper} from "../components/OrderManagement /helpers";
 import {OrdersContext} from "../components/OrderManagement /contexts";
+import EmptyListText from "../sub-components/EmptyListText";
+import {emptyCurrentOrdersText} from "../static-data";
+
 
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
+    const shopLocation = {latitude: globalContext.coffeeShopObj.Location._latitude,
+        longitude: globalContext.coffeeShopObj.Location._longitude}
     const orders = useRef([]);
+    const [targetUsers, setTargetUsers] = useState([]);
+    const numIncomingOrders = useRef(0);
     const currTabStatus = useRef(TabStatuses.INCOMING);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState();
-    const numIncomingOrders = useRef(0);
 
     useEffect(() => {
         numIncomingOrders.current = orders.current.filter(order => order.Status === 'incoming').length
@@ -33,6 +39,7 @@ const OrdersPage = ({navigation}) => {
         const subscriber = firestore()
             .collection('Orders')
             .where('ShopID', '==', globalContext.coffeeShopRef)
+            .where('IsRequired', '==', true)
             .onSnapshot(async querySnapshot => {
                 let newOrders = [];
                 await Promise.all(querySnapshot.docs.map(async documentSnapshot => {
@@ -51,11 +58,9 @@ const OrdersPage = ({navigation}) => {
                             (retrievedUser) => {
                                 let user = retrievedUser.data();
                                 firebaseOrder.user = user;
-                                const shoplat =  globalContext.coffeeShopObj.Location._latitude;
-                                const shoplong = globalContext.coffeeShopObj.Location._longitude;
                                 let newOrder = {
                                     ...firebaseOrder,
-                                    eta: calculateTime(user.latitude, user.longitude, shoplat, shoplong),
+                                    eta: calculateTime(user.latitude, user.longitude, shopLocation.latitude, shopLocation.longitude),
                                     key: documentSnapshot.id,
                                 }
                                 newOrders.push(newOrder);
@@ -64,6 +69,7 @@ const OrdersPage = ({navigation}) => {
                 })).then(r => {
                     numIncomingOrders.current = newOrders.filter(order => order.Status === 'incoming').length
                     orders.current = newOrders;
+                    setTargetUsers(orders.current.map(order => order.user.Email));
                     updateCurrentOrders(newOrders);
                 })
             });
@@ -72,12 +78,44 @@ const OrdersPage = ({navigation}) => {
         return () => subscriber();
     }, []);
 
+    useEffect(() => {
+        let target = targetUsers.length === 0 ? ['empty']: targetUsers;
+        const subscriber = firestore()
+            .collection('Users')
+            .where('Email', 'in', target)
+            .onSnapshot(querySnapShot => {
+                querySnapShot.forEach(doc => {
+                    let updatedUser = doc.data();
+                    orders.current = orders.current.map(order => order.user.Email === updatedUser.Email ?
+                        {...order,
+                            user: updatedUser,
+                            eta: calculateTime(updatedUser.latitude, updatedUser.longitude, shopLocation.latitude, shopLocation.longitude),
+                        }
+                        : order)
+                })
+                updateCurrentOrders();
+            })
+        return () => subscriber();
+    }, [targetUsers])
+
     async function setOrderStatus(order, status){
         // Update status in backend
         await firestore().collection('Orders').doc(order.key).update({
             Status: status
+        })
+    }
+
+    async function updateFinishedTime(order){
+        await firestore().collection('Orders').doc(order.key).update({
+            FinishedTime: firestore.Timestamp.now(),
+        })
+    }
+
+    async function removeOrder(order){
+        await firestore().collection('Orders').doc(order.key).update({
+            IsRequired: false,
         }).then(r =>{
-            console.log('status updated')})
+            console.log('order removed')})
     }
 
     function setOrderETA(target, newETA){
@@ -113,6 +151,8 @@ const OrdersPage = ({navigation}) => {
                 orders: orders.current,
                 setOrderStatus: setOrderStatus,
                 numIncomingOrders: numIncomingOrders.current,
+                updateFinishedTime: updateFinishedTime,
+                removeOrder: removeOrder,
             }}
         >
             <View style={styles.ordersContainer}>
@@ -124,6 +164,7 @@ const OrdersPage = ({navigation}) => {
                     renderItem={({item}) => <OrderCard order={item} setETA={setOrderETA}/>}
                     contentContainerStyle={styles.ordersListContainer}
                     style={styles.ordersList}
+                    ListEmptyComponent={<EmptyListText text={emptyCurrentOrdersText}/>}
                 />
             </View>
         </OrdersContext.Provider>
