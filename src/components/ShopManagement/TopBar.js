@@ -29,7 +29,7 @@ const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
             <PrimaryButton color={'#207671'} buttonText={'Manage Shop'} onPress={goToAccountManagement}/>
             <View style={styles.manageOrdersHeadline}>
                 <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>
-                <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>{isEnabled ? "Yep" : "Nope"}</Text>
+                <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>{isEnabled ? "Yes" : "No"}</Text>
             </View>
             <Switch trackColor={'#E0E0E0'}
                     thumbColor={isEnabled ? "#218F89" : "#BE1753"}
