@@ -13,7 +13,7 @@ const ReducedOrder = () => {
   const orderCard = useContext(OrderCardContext);
   const animatedContext = useContext(AnimatedCardContext);
   const order = orderCard.order;
-  const statusColor = getStatusColor(order.eta);
+  const statusColor = getStatusColor(order.data.eta);
   const finished = isFinished(order.currStatus);
 
   return (
@@ -23,7 +23,7 @@ const ReducedOrder = () => {
           <Text style={Reduced.name}>{order.data.user.FirstName}</Text>
           <View style={[Reduced.time, finished ? {opacity: 0}: null]}>
             <Icon size={24} color={statusColor} name='clock'/>
-            <Text style={[Reduced.clock_number, {color:statusColor}]}>{order.data.eta}</Text>
+            <Text style={[Reduced.clock_number, {color:statusColor}]}> {order.data.eta} min</Text>
           </View>
         </View>
         <Text style={Reduced.order_number}>#{order.data.key}</Text>

@@ -5,7 +5,7 @@ import ExpandedOrder from './ExpandedOrder';
 import AnimatedCard from "../../../sub-components/AnimatedCard";
 import {OrderCardContext} from "../contexts";
 import {getInitialHeight, isFinished} from "../helpers";
-import DeleteButton from "./ActionButtons/DeleteButton";
+import {DeleteButton} from "./ActionButtons";
 
 
 /**

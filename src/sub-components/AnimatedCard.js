@@ -1,11 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
     Animated,
-    Text,
     View,
     StyleSheet,
-    Button,
-    SafeAreaView,
     Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
