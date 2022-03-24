@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --updateSnapshot && jest",
     "lint": "eslint .",
     "refresh": "git pull && npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link"
   },
@@ -41,6 +41,16 @@
     "preset": "react-native",
     "transform": {
       "node_modules/variables/.+\\.(j|t)sx?$": "react-native"
-    }
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__testingAid__/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__testingAid__/__mocks__/fileMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@react-native|react-native)"
+    ],
+    "setupFiles": [
+      "<rootDir>/__testingAid__/jest.setup.js"
+    ]
   }
 }
