@@ -3,9 +3,8 @@ import {StyleSheet} from "react-native";
 export const orderPageStyles = StyleSheet.create({
     activeOrdersText: {
         fontFamily: 'Montserrat',
-        fontWeight: '600',
         fontSize: 44,
-        color: '#000000',
+        color: 'black',
         marginTop: '5%',
         marginLeft: '6%',
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import SECTIONS from '../data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
 import OrderCard from '../components/orders/OrderCard';
@@ -69,13 +69,13 @@ const OrdersPage = ({navigation}) => {
             value={{
                 orders: orders,
                 setOrderStatus: (order, status) => setOrderStatus(order, status, orders, currTabStatus, setCurrentOrders),
-                setTabStatus: (status) => changeTabStatus(status, currTabStatus, setTabStatus()),
+                setTabStatus: (status) => changeTabStatus(status, currTabStatus, setCurrTabStatus, setTabStatus),
             }}
         >
             <View style={orderPageStyles.ordersContainer}>
                 <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
                 <Text style={orderPageStyles.activeOrdersText}>Active orders</Text>
-                <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
+                <OrdersTab SECTIONS={SECTIONS} setStatus={(status) => changeTabStatus(status, currTabStatus, setCurrTabStatus, setTabStatus)}/>
                 <FlatList
                     data={currentOrders}
                     renderItem={({item}) => <OrderCard order={item}/>}
