@@ -55,7 +55,7 @@ export async function setOrderStatus(order, status, orders, currTabStatus, setCu
  * @param setCurrentOrders a setter function for current orders
  */
 export function updateCurrentOrders(newOrders = null, orders, currTabStatus, setCurrentOrders){
-    let ordersList = newOrders === null ? orders: newOrders;
+    let ordersList = newOrders === null ? orders.current: newOrders;
     if (currTabStatus === TabStatuses.ALL){
         let excluded = mapper(TabStatuses.FINISHED);
         setCurrentOrders(ordersList.filter(order => excluded.indexOf(order.Status) === -1));
