@@ -5,9 +5,9 @@ import {
     Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AnimatedCardContext} from "../components/OrderManagement /contexts";
+import {AnimatedCardContext} from "../components/OrderManagement/contexts";
 import {animatedCard} from "./stylesheets";
-import {toggleHeight} from "./helpers";
+import {changeHeight} from "./helpers";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -21,12 +21,20 @@ const AnimatedCard = ({initialHeight, collapsableContent, hidableContent, bottom
     const [collapsableHeight, setCollapsableHeight] = useState();
     const [hidableHeight, setHidableHeight] = useState();
 
+    /**
+     * Toggle the height of the card
+     */
+   function toggleHeight(){
+       changeHeight(isExpanded, setExpanded, adaptiveHeight, hidableHeight, collapsableHeight);
+   }
+
+
     return (
         <AnimatedCardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleHeight}}>
         <View style={animatedCard.container}>
             <Animated.View
                 style={[
-                    AnimatedCard.expandable,
+                    animatedCard.expandable,
                     {
                         // Bind opacity to animated value
                         height: adaptiveHeight,

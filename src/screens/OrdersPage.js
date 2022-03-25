@@ -1,14 +1,14 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import SECTIONS from '../static-data/OrderTabSectionsData';
-import OrdersTab from '../components/OrderManagement /OrdersTab/OrdersTab';
-import OrderCard from '../components/OrderManagement /OrderCard/OrderCard';
+import OrdersTab from '../components/OrderManagement/OrdersTab/OrdersTab';
+import OrderCard from '../components/OrderManagement/OrderCard/OrderCard';
 import TabStatuses from '../static-data/TabStatuses';
 import TopBar from "../components/ShopManagement/TopBar";
 import firestore from "@react-native-firebase/firestore";
 import {GlobalContext} from '../../App';
-import {calculateTime, mapper} from "../components/OrderManagement /helpers";
-import {OrdersContext} from "../components/OrderManagement /contexts";
+import {calculateTime, mapper} from "../components/OrderManagement/helpers";
+import {OrdersContext} from "../components/OrderManagement/contexts";
 import EmptyListText from "../sub-components/EmptyListText";
 import {emptyCurrentOrdersText} from "../static-data";
 

@@ -1,9 +1,13 @@
 import {Animated} from "react-native";
 
-const toggleHeight = (isExpanded, setExpanded, adaptiveHeight, hidableHeight, collapsableHeight) => {
-    changeHeight()
-};
-
+/**
+ * Change the height of the animated card based on the given parameters
+ * @param isExpanded Is the card expanded
+ * @param setExpanded Function to set the state of the component
+ * @param adaptiveHeight Adaptive height of the animated card
+ * @param hidableHeight The height of the card when expanded
+ * @param collapsableHeight The height of the card when collapsed
+ */
 function changeHeight(isExpanded, setExpanded, adaptiveHeight, hidableHeight, collapsableHeight){
     setExpanded(!isExpanded);
     // Will change fadeAnim value to 1 in 5 seconds
@@ -15,4 +19,4 @@ function changeHeight(isExpanded, setExpanded, adaptiveHeight, hidableHeight, co
     }).start();
 }
 
-export {changeHeight, toggleHeight}
+export {changeHeight}
