@@ -2,60 +2,39 @@ import React, {useRef, useState} from 'react';
 import {
     Animated,
     View,
-    StyleSheet,
     Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AnimatedCardContext} from "../components/OrderManagement /contexts";
+import {AnimatedCardContext} from "../components/OrderManagement/contexts";
+import {animatedCard} from "./stylesheets";
+import {changeHeight} from "./helpers";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const AnimatedCard = ({
-                          initialHeight,
-                          collapsableContent,
-                          hidableContent,
-                          bottomFixed = null,
-                      }) => {
+/**
+ * Reusable animated card with 2 states (collapsed and expanded)
+ */
+const AnimatedCard = ({initialHeight, collapsableContent, hidableContent, bottomFixed = null}) => {
     // fadeAnim will be used as the value for opacity. Initial Value: 0
     const adaptiveHeight = useRef(new Animated.Value(initialHeight)).current;
     const [isExpanded, setExpanded] = useState(false);
-
     const [collapsableHeight, setCollapsableHeight] = useState();
     const [hidableHeight, setHidableHeight] = useState();
 
-    const growHeight = () => {
-        setExpanded(!isExpanded);
+    /**
+     * Toggle the height of the card
+     */
+   function toggleHeight(){
+       changeHeight(isExpanded, setExpanded, adaptiveHeight, hidableHeight, collapsableHeight);
+   }
 
-        // Will change fadeAnim value to 1 in 5 seconds
-        Animated.timing(adaptiveHeight, {
-            toValue: hidableHeight + collapsableHeight + 10,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
-    };
-
-    const toggleheight = () => {
-        isExpanded ? shrinkHeight() : growHeight();
-    };
-
-    const shrinkHeight = () => {
-        setExpanded(!isExpanded);
-        let isFlipped = '180deg';
-
-        // Will change fadeAnim value to 0 in 3 seconds
-        Animated.timing(adaptiveHeight, {
-            toValue: collapsableHeight + 10,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
-    };
 
     return (
-        <AnimatedCardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleheight}}>
-        <View style={styles.container}>
+        <AnimatedCardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleHeight}}>
+        <View style={animatedCard.container}>
             <Animated.View
                 style={[
-                    styles.expandable,
+                    animatedCard.expandable,
                     {
                         // Bind opacity to animated value
                         height: adaptiveHeight,
@@ -65,12 +44,12 @@ const AnimatedCard = ({
                     let {x, y, width, height} = event.nativeEvent.layout;
                 }}
             >
-                <AnimatedPressable onPress={toggleheight}>
+                <AnimatedPressable onPress={toggleHeight}>
                     <View
                         onLayout={event => {
                             setCollapsableHeight(event.nativeEvent.layout.height);
                         }}
-                        style={styles.collapsable}
+                        style={animatedCard.collapsable}
                     >
                         {collapsableContent}
                     </View>
@@ -80,90 +59,24 @@ const AnimatedCard = ({
                             let tempHeight = event.nativeEvent.layout.height
                             setHidableHeight(tempHeight - 0.2 * tempHeight);
                         }}
-                        style={styles.hidable}
+                        style={animatedCard.hidable}
                     >
                         {hidableContent}
                     </View>
                     <View
                         style={[
-                            styles.topRightIcon,
+                            animatedCard.topRightIcon,
                             {transform: [{rotateZ: isExpanded ? '180deg' : '0deg'}]},
                         ]}
                     >
                         <Icon size={30} color="black" name="chevron-down" />
                     </View>
                 </AnimatedPressable>
-
-                <View style={styles.absoluteBottomRight}>{bottomFixed}</View>
+                <View style={animatedCard.absoluteBottomRight}>{bottomFixed}</View>
             </Animated.View>
         </View>
         </AnimatedCardContext.Provider>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        marginVertical: '1%',
-    },
-    fadingContainer: {
-        padding: 20,
-        backgroundColor: 'powderblue',
-    },
-    fadingText: {
-        fontSize: 28,
-    },
-    buttonRow: {
-        flexBasis: 100,
-        justifyContent: 'space-evenly',
-        marginVertical: 16,
-        color: 'black',
-    },
-
-    expandable: {
-        backgroundColor: '#F2F2F2',
-        display: 'flex',
-        flexShrink: 0,
-        height: 100,
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden',
-        borderRadius: 13,
-        padding: '3%',
-    },
-
-    hidable: {
-        maxWidth: '100%',
-    },
-
-    collapsable: {
-        paddingBottom: 10,
-        maxWidth: '85%',
-    },
-
-    absoluteBottomRight: {
-        position: 'absolute',
-        bottom: 15,
-        right: 40,
-        minWidth: 20,
-        minHeight: 20,
-    },
-
-    topRightIcon: {
-        position: 'absolute',
-        top: -3,
-        right: -3,
-        minWidth: 20,
-        minHeight: 20,
-        transform: [{rotateZ: '0deg'}],
-    },
-
-    flipped: {
-        transform: [{rotateZ: '180deg'}],
-    },
-});
 
 export default AnimatedCard;

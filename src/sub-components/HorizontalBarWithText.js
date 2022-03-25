@@ -1,16 +1,22 @@
 import {Text, View} from "react-native";
 import React from "react";
+import {separationBar} from "./stylesheets";
 
+/**
+ * Reusable separation bar
+ */
 const HorizontalBarWithText = ({text}) => {
     return (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+        <View style={separationBar.container}>
+            <View style={separationBar.line} />
             <View>
-                <Text style={{width: 50, textAlign: 'center', color: 'black'}}>{text}</Text>
+                <Text style={separationBar.middleText}>{text}</Text>
             </View>
-            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+            <View style={separationBar.line} />
         </View>
     );
 }
+
+
 
 export default HorizontalBarWithText;
