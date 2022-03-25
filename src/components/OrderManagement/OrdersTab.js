@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import {updatePage} from '../helpers/functions';
-import {ordersTabStyles} from "../styles/OrdersTab";
+import {updatePage} from '../../helpers/functions';
+import {ordersTabStyles} from "../../styles/OrdersTab";
 
 const OrdersTab = ({SECTIONS, setStatus}) => {
   const [index, setIndex] = useState(0);

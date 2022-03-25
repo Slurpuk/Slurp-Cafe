@@ -1,5 +1,5 @@
-import OrderStatuses from '../data/OrderStatuses';
-import TabStatuses from '../data/TabStatuses';
+import OrderStatuses from '../static-data/OrderStatuses';
+import TabStatuses from '../static-data/TabStatuses';
 
 const mapper = section => {
   switch (section) {

@@ -1,9 +1,9 @@
-import SECTIONS from "../data/OrderTabSectionsData";
+import SECTIONS from "../static-data/OrderTabSectionsData";
 import {Dimensions, PixelRatio, Platform} from "react-native";
 import firestore from "@react-native-firebase/firestore";
-import TabStatuses from "../data/TabStatuses";
+import TabStatuses from "../static-data/TabStatuses";
 import mapper from "./mapper";
-import {Alerts} from '../data/Alerts';
+import {Alerts} from '../static-data/Alerts';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
