@@ -3,33 +3,26 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import SECTIONS from '../data/OrderTabSectionsData';
 import OrdersTab from '../components/OrdersTab';
 import OrderCard from '../components/orders/OrderCard';
-import mapper from '../helpers/mapper';
 import TabStatuses from '../data/TabStatuses';
 import TopBar from "../components/TopBar";
 import firestore from "@react-native-firebase/firestore";
-import firebase from "@react-native-firebase/app";
-import OrderStatuses from "../data/OrderStatuses";
 import {GlobalContext} from '../../App';
-import calculateTime from "./etaLogic";
+import {setOrderStatus, changeTabStatus, updateCurrentOrders} from "../helpers/functions";
+import {orderPageStyles} from "../styles/OrdersPage";
 
 export const OrdersContext = React.createContext();
 
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
     const [orders, setOrders] = useState([]);
-    const currTabStatus = useRef(TabStatuses.ALL);
+    const [currTabStatus, setCurrTabStatus] = useState(TabStatuses.ALL);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState();
 
     useEffect(() => {
-        updateCurrentOrders();
+        updateCurrentOrders(orders, currTabStatus, setCurrTabStatus, setCurrentOrders);
     }, [tabStatus, orders]);
-
-    function changeTabStatus(status){
-        currTabStatus.current = status;
-        setTabStatus(status);
-    }
 
     useEffect(() => {
         const subscriber = firestore()
@@ -62,7 +55,7 @@ const OrdersPage = ({navigation}) => {
                     }).catch(error => console.log(error))
                 })).then(r => {
                     setOrders(newOrders)
-                    updateCurrentOrders(newOrders);
+                    updateCurrentOrders(newOrders, currTabStatus, setCurrTabStatus, setCurrentOrders);
                 })
             });
 
@@ -70,77 +63,29 @@ const OrdersPage = ({navigation}) => {
         return () => subscriber();
     }, []);
 
-    async function setOrderStatus(order, status){
-        // Update status in backend
-        await firestore().collection('Orders').doc(order.key).update({
-            Status: status
-        }).then(r =>{
-            updateCurrentOrders();
-            console.log('status updated')})
-    }
-
-    // Filters which orders to display
-    function updateCurrentOrders(newOrders = null){
-        let ordersList = newOrders === null ? orders: newOrders;
-        if (currTabStatus.current === TabStatuses.ALL){
-            let excluded = mapper(TabStatuses.FINISHED);
-            setCurrentOrders(ordersList.filter(order => excluded.indexOf(order.Status) === -1));
-        }
-        else {
-            let target = mapper(currTabStatus.current);
-            let result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
-            setCurrentOrders(result);
-        }
-    }
 
     return (
         <OrdersContext.Provider
             value={{
                 orders: orders,
-                setOrderStatus: setOrderStatus,
-                setTabStatus: changeTabStatus,
+                setOrderStatus: (order, status) => setOrderStatus(order, status, orders, currTabStatus, setCurrentOrders),
+                setTabStatus: (status) => changeTabStatus(status, currTabStatus, setTabStatus()),
             }}
         >
-            <View style={styles.ordersContainer}>
+            <View style={orderPageStyles.ordersContainer}>
                 <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
-                <Text style={styles.activeOrdersText}>Active orders</Text>
+                <Text style={orderPageStyles.activeOrdersText}>Active orders</Text>
                 <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                 <FlatList
                     data={currentOrders}
                     renderItem={({item}) => <OrderCard order={item}/>}
-                    contentContainerStyle={styles.ordersListContainer}
-                    style={styles.ordersList}
+                    contentContainerStyle={orderPageStyles.ordersListContainer}
+                    style={orderPageStyles.ordersList}
                 />
             </View>
         </OrdersContext.Provider>
     );
 };
-
-const styles = StyleSheet.create({
-    activeOrdersText: {
-        fontFamily: 'Montserrat',
-        fontWeight: '600',
-        fontSize: 44,
-        color: '#000000',
-        marginTop: '5%',
-        marginLeft: '6%',
-
-    },
-    ordersList:{
-        marginTop: '5%',
-        marginBottom: '4%',
-    },
-
-    ordersListContainer:{
-        paddingHorizontal: '5%',
-    },
-
-    ordersContainer:{
-        backgroundColor: 'white',
-        flex: 1,
-    },
-
-});
 
 export default OrdersPage;
 

@@ -3,15 +3,15 @@ import {Switch, Text, View} from "react-native";
 import PrimaryButton from "../sub-components/PrimaryButton";
 import {GlobalContext} from "../../App";
 import {goToAccountManagement, toggleSwitch} from "../helpers/functions";
-import {topBarStyles} from "../../styles/TopBar";
+import {topBarStyles} from "../styles/TopBar";
 
 const TopBar = ({navigation, receivingOrders}) => {
     const [isEnabled, setIsEnabled] = useState(receivingOrders);
     const globalContext = useContext(GlobalContext);
 
-    useEffect (() => {
-        setIsEnabled(globalContext.coffeeShopObj.IsOpen)
-    }, [globalContext.coffeeShopObj])
+    // useEffect (() => {
+    //     setIsEnabled(globalContext.coffeeShopObj.IsOpen)
+    // }, [globalContext.coffeeShopObj])
 
     return (
         <View style={topBarStyles.container}>
