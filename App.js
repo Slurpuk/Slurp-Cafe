@@ -12,7 +12,7 @@ export const GlobalContext = React.createContext();
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [currentUser, setCurrentUser] = useState(auth().currentUser);
+    const [currentShop, setCurrentShop] = useState(auth().currentUser);
     const coffeeShopRef = useRef(null);
     const [coffeeShopObj, setCoffeeShopObj] = useState(null);
 
@@ -24,7 +24,6 @@ export default function App() {
                 .onSnapshot(querySnapshot => {
                     setCoffeeShopObj(querySnapshot.data());
                 })
-
             return () => subscriber;
         }
     }, [])
@@ -38,11 +37,11 @@ export default function App() {
       if (coffeeShop) {
           setCoffeeShop().then(() => {
               setIsLoggedIn(true);
-              setCurrentUser(coffeeShop);
+              setCurrentShop(coffeeShop);
           });
       } else {
         setIsLoggedIn(false);
-        setCurrentUser(null);
+        setCurrentShop(null);
       }
     });
     // Stop listening for updates when no longer required
@@ -53,10 +52,10 @@ export default function App() {
     Function to link the authentication entry to the CoffeeShop model via the email.
      */
   async function setCoffeeShop() {
-    if (currentUser) {
+    if (currentShop) {
       await firestore()
           .collection('CoffeeShop')
-          .where('Email', '==', currentUser.email)
+          .where('Email', '==', currentShop.email)
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
@@ -75,7 +74,7 @@ export default function App() {
   return (
       <GlobalContext.Provider
           value={{
-              currentUser: currentUser, // Returns the authentication object
+              currentUser: currentShop, // Returns the authentication object
               coffeeShopRef: coffeeShopRef.current,
               coffeeShopObj: coffeeShopObj, // Returns the model object
           }}

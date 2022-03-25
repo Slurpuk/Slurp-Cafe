@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --updateSnapshot && jest",
     "lint": "eslint .",
     "refresh": "git pull && npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link"
   },
@@ -17,6 +17,7 @@
     "@react-native-firebase/functions": "^14.5.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
+    "@testing-library/react-native": "^9.0.0",
     "react": "17.0.2",
     "react-native": "0.67.2",
     "react-native-gesture-handler": "^2.3.2",
@@ -37,6 +38,19 @@
     "react-test-renderer": "17.0.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transform": {
+      "node_modules/variables/.+\\.(j|t)sx?$": "react-native"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__testingAid__/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__testingAid__/__mocks__/fileMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@react-native|react-native)"
+    ],
+    "setupFiles": [
+      "<rootDir>/__testingAid__/jest.setup.js"
+    ]
   }
 }

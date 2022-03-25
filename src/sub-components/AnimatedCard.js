@@ -1,17 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
     Animated,
-    Text,
     View,
     StyleSheet,
-    Button,
-    SafeAreaView,
     Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {AnimatedCardContext} from "../components/OrderManagement /contexts";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-export const CardContext = React.createContext();
+
 const AnimatedCard = ({
                           initialHeight,
                           collapsableContent,
@@ -53,7 +51,7 @@ const AnimatedCard = ({
     };
 
     return (
-        <CardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleheight}}>
+        <AnimatedCardContext.Provider value={{isExpanded: isExpanded, setExpanded:toggleheight}}>
         <View style={styles.container}>
             <Animated.View
                 style={[
@@ -79,7 +77,8 @@ const AnimatedCard = ({
 
                     <View
                         onLayout={event => {
-                            setHidableHeight(event.nativeEvent.layout.height);
+                            let tempHeight = event.nativeEvent.layout.height
+                            setHidableHeight(tempHeight - 0.2 * tempHeight);
                         }}
                         style={styles.hidable}
                     >
@@ -98,7 +97,7 @@ const AnimatedCard = ({
                 <View style={styles.absoluteBottomRight}>{bottomFixed}</View>
             </Animated.View>
         </View>
-        </CardContext.Provider>
+        </AnimatedCardContext.Provider>
     );
 };
 
@@ -108,6 +107,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
+        marginVertical: '1%',
     },
     fadingContainer: {
         padding: 20,
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
 
     absoluteBottomRight: {
         position: 'absolute',
-        bottom: 5,
-        left: 10,
+        bottom: 15,
+        right: 40,
         minWidth: 20,
         minHeight: 20,
     },
