@@ -3,7 +3,6 @@ import TabStatuses from "../../static-data/TabStatuses";
 import OrderStatuses from "../../static-data/OrderStatuses";
 import {Dimensions} from "react-native";
 import {months} from "../../static-data";
-import {setOrderStatus, updateFinishedTime} from "../../firebase";
 
 
 /**

@@ -1,5 +1,20 @@
-import {StyleSheet} from "react-native";
-import {normalize} from "../OrdersTab/OrdersTab";
+import {Platform, StyleSheet, PixelRatio, Dimensions} from "react-native";
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const scale = SCREEN_WIDTH / 300;
+
+/**
+ * Scales the size to the size of the screen
+ * @param size of the object/component
+ * @returns {number} the new, scaled size
+ */
+function normalize(size) {
+    const newSize = size * scale;
+    if (Platform.OS === 'ios') {
+        return Math.round(PixelRatio.roundToNearestPixel(newSize));
+    } else {
+        return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+    }
+}
 
 export const styles = StyleSheet.create({
     tabContainer: {

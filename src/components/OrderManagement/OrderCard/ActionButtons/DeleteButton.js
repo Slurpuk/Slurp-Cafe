@@ -6,10 +6,16 @@ import {OrderCardContext} from "../../contexts";
 import {StyleSheet} from "react-native";
 import {removeOrder} from "../../../../firebase";
 
+/**
+ * Button for removing finished orders from the list of required orders
+ */
 const DeleteButton = () => {
     const orderCardContext = useContext(OrderCardContext);
     const order = orderCardContext.order;
 
+    /**
+     * Remove the order from the list of required orders
+     */
     function deleteOrder(){
         removeOrder(order.data);
     }
