@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {Dimensions, Platform, PixelRatio} from 'react-native';
-import {StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import {OrdersContext} from "../contexts";
+import {styles} from "../stylesheets/ordersTabStyles";
 
 const OrdersTab = ({SECTIONS, setStatus}) => {
   const [index, setIndex] = useState(1);
@@ -29,7 +29,7 @@ const OrdersTab = ({SECTIONS, setStatus}) => {
   );
 };
 
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 const scale = SCREEN_WIDTH / 300;
 
@@ -42,45 +42,6 @@ export function normalize(size) {
   }
 }
 
-const styles = StyleSheet.create({
-  tabContainer: {
-    justifyContent: 'flex-start',
-    marginTop: '5%',
-    marginLeft: '5%',
-  },
 
-  tab: {
-    flex: 0,
-    paddingHorizontal: '2%',
-    borderRadius: 20,
-    borderWidth: 0,
-    marginRight: '1%',
-    backgroundColor: '#E1E1E1',
-    alignSelf: 'baseline',
-    alignItems: 'baseline',
-  },
-
-  tabText: {
-    color: 'black',
-    fontSize: normalize(7),
-    fontFamily: 'Montserrat-Bold',
-  },
-
-  activeTab: {
-    backgroundColor: '#65ADA9',
-  },
-
-  badgeNumber:{
-    fontSize: 15,
-  },
-
-  badgeContainer:{
-    backgroundColor: 'red',
-    minWidth: 20,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 export default OrdersTab;

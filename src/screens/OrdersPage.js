@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import SECTIONS from '../static-data/OrderTabSectionsData';
 import OrdersTab from '../components/OrderManagement/OrdersTab/OrdersTab';
 import OrderCard from '../components/OrderManagement/OrderCard/OrderCard';
@@ -7,11 +7,18 @@ import TabStatuses from '../static-data/TabStatuses';
 import TopBar from "../components/ShopManagement/TopBar";
 import firestore from "@react-native-firebase/firestore";
 import {GlobalContext} from '../../App';
-import {calculateTime, mapper} from "../components/OrderManagement/helpers";
+import {calculateTime} from "../components/OrderManagement/helpers";
 import {OrdersContext} from "../components/OrderManagement/contexts";
 import EmptyListText from "../sub-components/EmptyListText";
 import {emptyCurrentOrdersText} from "../static-data";
-
+import {styles} from "./stylesheets/OrdersPage";
+import {
+    changeTabStatus,
+    removeOrder, setOrderETA,
+    setOrderStatus,
+    updateCurrentOrders,
+    updateFinishedTime
+} from "./helpers/functions";
 
 const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
@@ -20,20 +27,15 @@ const OrdersPage = ({navigation}) => {
     const orders = useRef([]);
     const [targetUsers, setTargetUsers] = useState([]);
     const numIncomingOrders = useRef(0);
-    const currTabStatus = useRef(TabStatuses.INCOMING);
+    const [currTabStatus, setCurrTabStatus] = useState(TabStatuses.INCOMING);
     const [tabStatus, setTabStatus] = useState(currTabStatus.current)
     const [currentOrders, setCurrentOrders] = useState([]);
     const [receivingOrders, setReceivingOrders] = useState();
 
     useEffect(() => {
         numIncomingOrders.current = orders.current.filter(order => order.Status === 'incoming').length
-        updateCurrentOrders();
+        updateCurrentOrders(null, orders, currTabStatus, setCurrentOrders);
     }, [tabStatus]);
-
-    function changeTabStatus(status){
-        currTabStatus.current = status;
-        setTabStatus(status);
-    }
 
     useEffect(() => {
         const subscriber = firestore()
@@ -70,7 +72,7 @@ const OrdersPage = ({navigation}) => {
                     numIncomingOrders.current = newOrders.filter(order => order.Status === 'incoming').length
                     orders.current = newOrders;
                     setTargetUsers(orders.current.map(order => order.user.Email));
-                    updateCurrentOrders(newOrders);
+                    updateCurrentOrders(newOrders, orders, currTabStatus, setCurrentOrders);
                 })
             });
 
@@ -93,75 +95,28 @@ const OrdersPage = ({navigation}) => {
                         }
                         : order)
                 })
-                updateCurrentOrders();
+                updateCurrentOrders(null, orders, currTabStatus, setCurrentOrders);
             })
         return () => subscriber();
     }, [targetUsers])
-
-    async function setOrderStatus(order, status){
-        // Update status in backend
-        await firestore().collection('Orders').doc(order.key).update({
-            Status: status
-        })
-    }
-
-    async function updateFinishedTime(order){
-        await firestore().collection('Orders').doc(order.key).update({
-            FinishedTime: firestore.Timestamp.now(),
-        })
-    }
-
-    async function removeOrder(order){
-        await firestore().collection('Orders').doc(order.key).update({
-            IsRequired: false,
-        }).then(r =>{
-            console.log('order removed')})
-    }
-
-    function setOrderETA(target, newETA){
-        orders.current = orders.current.map(order => order.key === target.key ? {...order, eta: newETA}: order);
-        updateCurrentOrders();
-    }
-
-    // Sort the current orders in ascending order of ETA and sets the state.
-    function sortCurrentOrders(currOrders=null){
-        let result = currOrders === null ? currentOrders: currOrders;
-        result.sort((a, b) => (a.eta > b.eta) ? 1 : -1)
-        setCurrentOrders(result);
-    }
-
-    // Filters which orders to display
-    function updateCurrentOrders(newOrders = null){
-        let ordersList = newOrders === null ? orders.current: newOrders;
-        let result = [];
-        if (currTabStatus.current === TabStatuses.ALL){
-            let excluded = mapper(TabStatuses.FINISHED);
-            result = ordersList.filter(order => excluded.indexOf(order.Status) === -1);
-        }
-        else {
-            let target = mapper(currTabStatus.current);
-            result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
-        }
-        sortCurrentOrders(result);
-    }
 
     return (
         <OrdersContext.Provider
             value={{
                 orders: orders.current,
-                setOrderStatus: setOrderStatus,
+                setOrderStatus: (order, status) => setOrderStatus(order, status, orders, currTabStatus, setCurrentOrders),
                 numIncomingOrders: numIncomingOrders.current,
-                updateFinishedTime: updateFinishedTime,
-                removeOrder: removeOrder,
+                updateFinishedTime: (order) => updateFinishedTime(order),
+                removeOrder: (order) => removeOrder(order),
             }}
         >
             <View style={styles.ordersContainer}>
                 <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
                 <Text style={styles.activeOrdersText}>{tabStatus} orders</Text>
-                <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
+                <OrdersTab SECTIONS={SECTIONS} setStatus={(status) => changeTabStatus(status, currTabStatus, setCurrTabStatus, setTabStatus)}/>
                 <FlatList
                     data={currentOrders}
-                    renderItem={({item}) => <OrderCard order={item} setETA={setOrderETA}/>}
+                    renderItem={({item}) => <OrderCard order={item} setETA={(target, newETA) => setOrderETA(target, newETA, orders, currTabStatus, setCurrentOrders)}/>}
                     contentContainerStyle={styles.ordersListContainer}
                     style={styles.ordersList}
                     ListEmptyComponent={<EmptyListText text={emptyCurrentOrdersText}/>}
@@ -171,31 +126,6 @@ const OrdersPage = ({navigation}) => {
     );
 };
 
-const styles = StyleSheet.create({
-    activeOrdersText: {
-        fontFamily: 'Montserrat',
-        fontWeight: '600',
-        fontSize: 44,
-        color: '#000000',
-        marginTop: '5%',
-        marginLeft: '6%',
-
-    },
-    ordersList:{
-        marginTop: '5%',
-        marginBottom: '4%',
-    },
-
-    ordersListContainer:{
-        paddingHorizontal: '5%',
-    },
-
-    ordersContainer:{
-        backgroundColor: 'white',
-        flex: 1,
-    },
-
-});
 
 export default OrdersPage;
 
