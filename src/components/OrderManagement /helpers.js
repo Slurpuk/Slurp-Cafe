@@ -2,11 +2,12 @@
 import TabStatuses from "../../static-data/TabStatuses";
 import OrderStatuses from "../../static-data/OrderStatuses";
 import {Dimensions} from "react-native";
-import {months} from "../../static-data/Months";
+import {months} from "../../static-data";
 
 
 /**
  * Maps the tab status with the corresponding order status(es)
+ * @param section the tab section in question
  * @return orderStatuses the matching order status(es)
  */
 function mapper(section){
@@ -24,6 +25,7 @@ function mapper(section){
 
 /**
  * Return whether an order is finished (collected or rejected)
+ * @param status the order's status
  * @return isFinished is the order finished
  */
 function isFinished(status){
@@ -32,6 +34,10 @@ function isFinished(status){
 
 /**
  * Calculate the euclidean distance between 2 coordinates
+ * @param userLatitude the user's latitude
+ * @param userLongitude the user's longitude
+ * @param shopLatitude the shop's latitude
+ * @param shopLongitude the shop's longitude
  * @return distance the distance between the 2 points
  */
 function calculateDistance(userLatitude, userLongitude, shopLatitude,shopLongitude){
@@ -50,6 +56,10 @@ function calculateDistance(userLatitude, userLongitude, shopLatitude,shopLongitu
 
 /**
  * Calculate the time between 2 coordinates with an average walking speed
+ * @param userLatitude the user's latitude
+ * @param userLongitude the user's longitude
+ * @param shopLatitude the shop's latitude
+ * @param shopLongitude the shop's longitude
  * @return time the walking time between the 2 points
  */
 function calculateTime(userLatitude, userLongitude, shopLatitude,shopLongitude){
@@ -61,6 +71,7 @@ function calculateTime(userLatitude, userLongitude, shopLatitude,shopLongitude){
 
 /**
  * Return status color based on ETA value
+ * @param eta the ETA in question
  * @return color the appropriate color
  */
 function getStatusColor(eta){
@@ -69,6 +80,7 @@ function getStatusColor(eta){
 
 /**
  * Return formatted options text display for an item's options
+ * @param item the item in question
  * @return optionsText the text
  */
 function getOptionsText(item) {
@@ -83,6 +95,7 @@ function getOptionsText(item) {
 
 /**
  * Convert seconds into an actual date
+ * @param secs the time in seconds
  * @return date the formatted date
  */
 function toDateTime(secs) {
@@ -95,20 +108,6 @@ function toDateTime(secs) {
 }
 
 /**
- * Calculate the ETA based on the new user location and the shop location
- * @return ETA the new ETA
- */
-function refreshETA(userLocation, shopLocation, order, setETA){
-    let userLat = userLocation.latitude;
-    let userLong = userLocation.longitude;
-    let shopLat = shopLocation._latitude;
-    let shopLong = shopLocation._longitude;
-    let newETA = calculateTime(userLat, userLong, shopLat, shopLong)
-    if(order.eta !== newETA) setETA(order, newETA);
-    return newETA;
-}
-
-/**
  * Returns the initial height for a collapsed order based on the screen height
  * @return initialHeight the initial height
  */
@@ -116,4 +115,4 @@ function getInitialHeight(){
     return Dimensions.get('window').height * 0.14;
 }
 
-export {isFinished, mapper, calculateTime, getStatusColor, getOptionsText, toDateTime, refreshETA, getInitialHeight};
+export {isFinished, mapper, calculateTime, getStatusColor, getOptionsText, toDateTime, getInitialHeight};

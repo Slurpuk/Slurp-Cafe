@@ -1,5 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
+import {formField} from "./stylesheets";
+
+/**
+ * Reusable from field
+ */
 const FormField = ({
                        style,
                        title = 'Title',
@@ -39,11 +44,11 @@ const FormField = ({
         <View style={style}>
             <Text style={[
                 //textStyles.bluePoppinsSubHeading,
-                styles.text]}>
+                formField.text]}>
                 {title}
             </Text>
             <TextInput
-                style={[styles.input, {height: multiline ? 90 : 37}]}
+                style={[formField.input, {height: multiline ? 90 : 37}]}
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
                 onChangeText={text => setField(text)}
@@ -59,19 +64,6 @@ const FormField = ({
     );
 };
 
-const styles = StyleSheet.create({
-    text: {
-        marginBottom: '1.5%',
-        fontFamily: 'Roboto-Medium',
-        fontSize: 20,
-    },
 
-    input: {
-        backgroundColor: '#F9F9F9',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: '3.5%',
-    },
-});
 
 export default FormField;
