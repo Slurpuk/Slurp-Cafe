@@ -1,11 +1,11 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 import PrimaryButton from "../../../../sub-components/PrimaryButton";
-import {AnimatedCardContext, OrderCardContext, OrdersContext} from "../../contexts";
+import {AnimatedCardContext, OrderCardContext} from "../../contexts";
 import {OrderStatuses} from "../../../../static-data";
+import {setOrderStatus, updateFinishedTime} from "../../../../firebase";
 
 const OrderActionButton = () => {
-  const ordersContext = useContext(OrdersContext);
   const orderCardContext = useContext(OrderCardContext);
   const order = orderCardContext.order;
     const animatedCardContext = useContext(AnimatedCardContext);
@@ -31,13 +31,11 @@ const OrderActionButton = () => {
               animatedCardContext.setExpanded(true);
               break;
           case OrderStatuses.ACCEPTED:
-              ordersContext.setOrderStatus(order.data, OrderStatuses.READY)
-                  .catch(error => console.log(error + 'when setting as ready'));
+              setOrderStatus(order.data, OrderStatuses.READY);
               break;
           case OrderStatuses.READY:
-              ordersContext.updateFinishedTime(order.data)
-                  .then(() => ordersContext.setOrderStatus(order.data, OrderStatuses.COLLECTED))
-                  .catch(error => console.log(error + 'when setting as collected'))
+              updateFinishedTime(order.data)
+                  .then(() => setOrderStatus(order.data, OrderStatuses.COLLECTED))
               break;
       }
   }

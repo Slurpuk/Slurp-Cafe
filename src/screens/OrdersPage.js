@@ -17,23 +17,11 @@ const OrdersPage = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
     const shopLocation = {latitude: globalContext.coffeeShopObj.Location._latitude,
         longitude: globalContext.coffeeShopObj.Location._longitude}
-    const orders = useRef([]);
-    const [targetUsers, setTargetUsers] = useState([]);
-    const numIncomingOrders = useRef(0);
-    const currTabStatus = useRef(TabStatuses.INCOMING);
-    const [tabStatus, setTabStatus] = useState(currTabStatus.current)
-    const [currentOrders, setCurrentOrders] = useState([]);
-    const [receivingOrders, setReceivingOrders] = useState();
-
-    useEffect(() => {
-        numIncomingOrders.current = orders.current.filter(order => order.Status === 'incoming').length
-        updateCurrentOrders();
-    }, [tabStatus]);
-
-    function changeTabStatus(status){
-        currTabStatus.current = status;
-        setTabStatus(status);
-    }
+    const orders = useRef([]); // The full list of orders received and required by the shop
+    const numIncomingOrders = useRef(0); // The number of pending orders
+    const currTabStatus = useRef(TabStatuses.INCOMING); // Current tab selected
+    const [targetUsers, setTargetUsers] = useState([]); // List of users having an order in the shop
+    const [currentOrders, setCurrentOrders] = useState([]); // List of orders to render in current tab
 
     useEffect(() => {
         const subscriber = firestore()
@@ -98,28 +86,9 @@ const OrdersPage = ({navigation}) => {
         return () => subscriber();
     }, [targetUsers])
 
-    async function setOrderStatus(order, status){
-        // Update status in backend
-        await firestore().collection('Orders').doc(order.key).update({
-            Status: status
-        })
-    }
 
-    async function updateFinishedTime(order){
-        await firestore().collection('Orders').doc(order.key).update({
-            FinishedTime: firestore.Timestamp.now(),
-        })
-    }
-
-    async function removeOrder(order){
-        await firestore().collection('Orders').doc(order.key).update({
-            IsRequired: false,
-        }).then(r =>{
-            console.log('order removed')})
-    }
-
-    function setOrderETA(target, newETA){
-        orders.current = orders.current.map(order => order.key === target.key ? {...order, eta: newETA}: order);
+    function changeTabStatus(status){
+        currTabStatus.current = status;
         updateCurrentOrders();
     }
 
@@ -146,22 +115,14 @@ const OrdersPage = ({navigation}) => {
     }
 
     return (
-        <OrdersContext.Provider
-            value={{
-                orders: orders.current,
-                setOrderStatus: setOrderStatus,
-                numIncomingOrders: numIncomingOrders.current,
-                updateFinishedTime: updateFinishedTime,
-                removeOrder: removeOrder,
-            }}
-        >
+        <OrdersContext.Provider value={{orders: orders.current, numIncomingOrders: numIncomingOrders.current}}>
             <View style={styles.ordersContainer}>
-                <TopBar receivingOrders={receivingOrders} setReceivingOrders={setReceivingOrders} navigation={navigation}/>
-                <Text style={styles.activeOrdersText}>{tabStatus} orders</Text>
+                <TopBar navigation={navigation}/>
+                <Text style={styles.activeOrdersText}>{currTabStatus.current} orders</Text>
                 <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus}/>
                 <FlatList
                     data={currentOrders}
-                    renderItem={({item}) => <OrderCard order={item} setETA={setOrderETA}/>}
+                    renderItem={({item}) => <OrderCard order={item}/>}
                     contentContainerStyle={styles.ordersListContainer}
                     style={styles.ordersList}
                     ListEmptyComponent={<EmptyListText text={emptyCurrentOrdersText}/>}
