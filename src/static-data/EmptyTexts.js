@@ -1,5 +1,4 @@
+const emptyCurrentOrdersText =
+  'No orders here for now... \n\nMake sure you check the other tabs.';
 
-const emptyCurrentOrdersText = "No orders here for now... \n\nMake sure you check the other tabs.";
-
-
-export {emptyCurrentOrdersText}
+export {emptyCurrentOrdersText};
