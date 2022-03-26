@@ -1,17 +1,23 @@
 import React from "react";
-import {Alert, Pressable, Text} from "react-native";
+import {Pressable, Text} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useContext} from "react";
-import {OrderCardContext, OrdersContext} from "../../contexts";
+import {OrderCardContext} from "../../contexts";
 import {StyleSheet} from "react-native";
+import {removeOrder} from "../../../../firebase";
 
+/**
+ * Button for removing finished orders from the list of required orders
+ */
 const DeleteButton = () => {
-    const ordersContext = useContext(OrdersContext);
     const orderCardContext = useContext(OrderCardContext);
     const order = orderCardContext.order;
 
+    /**
+     * Remove the order from the list of required orders
+     */
     function deleteOrder(){
-        ordersContext.removeOrder(order.data).catch(error => {console.log(error)});
+        removeOrder(order.data);
     }
 
     return(

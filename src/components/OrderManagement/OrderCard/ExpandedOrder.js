@@ -13,6 +13,7 @@ const ExpandedOrder = () => {
   const orderCardContext = useContext(OrderCardContext);
   const order = orderCardContext.order;
   const animatedContext = useContext(AnimatedCardContext);
+
   return (
     <View style={[ animatedContext.isExpanded ? Expanded.elevate: null]}>
       <View style={Expanded.left_side}>

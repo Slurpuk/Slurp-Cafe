@@ -4,7 +4,7 @@ import {
     View,
     Text,
     Alert,
-    StatusBar,
+    StatusBar, Platform,
 } from 'react-native';
 import FormField from '../sub-components/FormField';
 import PrimaryButton from "../sub-components/PrimaryButton";
@@ -121,7 +121,7 @@ const AuthenticationPage = () => {
                 Email: email,
                 Name: name,
                 Image: 'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
-                Intro: 'At ' + name + ' Fix smallwe make coffee that doesn\'t disappoint. Our hand picked roasts hit different.',
+                Intro: 'At ' + name + ' Fix small we make coffee that doesn\'t disappoint. Our hand picked roasts hit different.',
                 IsOpen: false,
                 ItemsOffered: [],
                 Location: new firestore.GeoPoint(51.503223, -0.127500), //Default location: 10 Downing Street.
@@ -240,17 +240,15 @@ const AuthenticationPage = () => {
 const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
-        flex: 1,
         backgroundColor: '#F2F2F2',
         padding: '5%',
+        height: '100%',
     },
     signUpForm: {
         display: 'flex',
-        flex: 3,
     },
     logInForm: {
         display: 'flex',
-        flex: 2,
         paddingBottom: '4%',
     },
     formTitle: {
@@ -258,16 +256,24 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Bold',
         color: 'black',
         textAlign: 'center',
-        paddingVertical: '4%',
+        ...Platform.select({
+            ios:{
+                paddingVertical: '4%',
+            }
+        }),
+
     },
     element: {
         display: 'flex',
-        flex: 1,
     },
     button: {
         justifyContent: 'center',
         marginHorizontal: '22%',
-        marginVertical: '5%',
+        ...Platform.select({
+            ios:{
+                marginVertical: '5%',
+            }
+        }),
         alignContent: "center",
     },
 });

@@ -1,25 +1,29 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Switch, Text, View} from "react-native";
+import React, {useContext, useState} from 'react';
+import {StyleSheet, Switch, Text, View} from "react-native";
 import PrimaryButton from "../../sub-components/PrimaryButton";
-import firestore from "@react-native-firebase/firestore";
 import {GlobalContext} from "../../../App";
+import {setIsOpen} from "../../firebase/queries";
 
-const TopBar = ({navigation, receivingOrders, setReceivingOrders}) => {
-    const [isEnabled, setIsEnabled] = useState(receivingOrders);
+/**
+ * Top bar for navigating through the app
+ * @param navigation The navigation object
+ */
+const TopBar = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
+    const [isEnabled, setIsEnabled] = useState(globalContext.coffeeShopObj.IsOpen);
 
-    const toggleSwitch = () =>
+    /**
+     * Toggles the switch and opens/closes shop accordingly
+     */
+    function toggleSwitch()
     {
-        setIsEnabled(prevState => !prevState)
-        firestore().collection('CoffeeShop').doc(globalContext.coffeeShopRef).update({
-            IsOpen : !isEnabled
-        })
+        setIsEnabled(prevState => !prevState);
+        setIsOpen(!isEnabled, globalContext.coffeeShopRef)
     }
 
-    useEffect (() => {
-        setIsEnabled(globalContext.coffeeShopObj.IsOpen)
-    }, [globalContext.coffeeShopObj])
-
+    /**
+     * Navigate to account management page
+     */
     function goToAccountManagement() {
         navigation.navigate('Account Management');
     }
