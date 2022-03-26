@@ -5,6 +5,8 @@ import {styles} from "../stylesheets/ordersTabStyles";
 
 /**
  * Tab bar for displaying orders of similar status.
+ * @param SECTIONS the names of the tabs to render
+ * @param setStatus the setState of the OrdersPage
  */
 const OrdersTab = ({SECTIONS, setStatus}) => {
     const [index, setIndex] = useState(1);
@@ -12,6 +14,7 @@ const OrdersTab = ({SECTIONS, setStatus}) => {
 
     /**
      * Change the selected tab
+     * @param newIndex the index of the selected tab
      */
     function updatePage(newIndex){
       setIndex(newIndex);

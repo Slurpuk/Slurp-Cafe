@@ -43,7 +43,6 @@ const FormField = ({
     return (
         <View style={style}>
             <Text style={[
-                //textStyles.bluePoppinsSubHeading,
                 formField.text]}>
                 {title}
             </Text>
