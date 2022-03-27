@@ -52,13 +52,6 @@ const AccountManagementPage = ({navigation}) => {
       .catch(e => console.log(e));
   }
 
-  /*
-    Navigation functionality: go back.
-     */
-  function goBack() {
-    navigation.goBack();
-  }
-
   return (
     <View style={styles.wrapper}>
       <StatusBar translucent={true} backgroundColor="transparent" />

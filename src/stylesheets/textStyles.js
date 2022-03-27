@@ -33,6 +33,13 @@ const textStyles = StyleSheet.create({
         fontFamily: 'Roboto',
     },
 
+    genericBlackText:{
+        fontSize: 25,
+        fontFamily: 'Roboto',
+        fontWeight: '400',
+        color: 'black',
+    }
+
 
 });
 

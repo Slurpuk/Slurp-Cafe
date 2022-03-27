@@ -61,7 +61,7 @@ const SignUpPage = ({navigation}) => {
         } else if (passwordConfirmation === '') {
             validity = false;
             Alert.alert('Empty Password Confirmation', 'Please enter the password confirmation.');
-        } else if (passwordConfirmation === password) {
+        } else if (password!==passwordConfirmation) {
             validity = false;
             Alert.alert('Password dont match up', 'Please make sure you password confirmation is the same as you password.');
         }
@@ -105,7 +105,7 @@ const SignUpPage = ({navigation}) => {
                 Intro:
                     'At ' +
                     name +
-                    " Fix small we make coffee that doesn't disappoint. Our hand picked roasts hit different.",
+                    "  we make coffee that doesn't disappoint. Our hand picked roasts hit different.",
                 IsOpen: false,
                 ItemsOffered: [],
                 Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.

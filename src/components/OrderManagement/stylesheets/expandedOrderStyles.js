@@ -51,14 +51,14 @@ const expandedOrderStyles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: '700',
     fontSize: 24,
-    color: '#000000',
+    color: 'black',
     marginRight: 4,
   },
   item_name: {
     fontFamily: 'Montserrat',
     fontWeight: '300',
     fontSize: 24,
-    color: '#000000',
+    color: 'black',
   },
   bottomButtons: {
     flexDirection: 'row',

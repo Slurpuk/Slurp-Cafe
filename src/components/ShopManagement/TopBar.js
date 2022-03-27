@@ -3,6 +3,7 @@ import {StyleSheet, Switch, Text, View} from 'react-native';
 import {GlobalContext} from '../../../App';
 import {setIsOpen} from '../../firebase/queries';
 import CustomButton from "../../sub-components/CustomButton";
+import textStyles from "../../stylesheets/textStyles";
 
 /**
  * Top bar for navigating through the app
@@ -39,8 +40,8 @@ const TopBar = ({navigation}) => {
           buttonHeight={60}
       />
       <View style={styles.manageOrdersHeadline}>
-        <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>
-        <Text style={[styles.manageOrdersHeadlineText, {fontWeight: '900'}]}>
+        <Text style={textStyles.genericBlackText}>Accepting Orders: </Text>
+        <Text style={[textStyles.genericBlackText, {fontWeight: '900'}]}>
           {isEnabled ? 'Yes' : 'No'}
         </Text>
       </View>
@@ -78,12 +79,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignSelf: 'center',
-  },
-  manageOrdersHeadlineText: {
-    fontSize: 25,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
-    color: 'black',
   },
 });
 
