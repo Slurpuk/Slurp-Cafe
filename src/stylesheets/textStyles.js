@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native';
 
 const textStyles = StyleSheet.create({
     headingText: {
-        fontFamily: 'Montserrat',
-        fontWeight: '600',
+        fontFamily: 'Montserrat-SemiBold',
+        letterSpacing:0.2,
         fontSize: 44,
         color: 'black',
         marginTop: '5%',
@@ -12,7 +12,7 @@ const textStyles = StyleSheet.create({
     formTitle: {
         fontSize: 50,
         textAlign: 'center',
-        fontFamily: 'Roboto-Bold',
+        fontFamily: 'Montserrat-SemiBold',
         color: 'black',
         paddingVertical: '4%',
     },
@@ -29,14 +29,19 @@ const textStyles = StyleSheet.create({
         marginVertical: '1%',
         textDecorationLine: 'underline',
         textAlignVertical: 'bottom',
-        fontSize: 17,
+        fontSize: 20,
         fontFamily: 'Roboto',
     },
 
     genericBlackText:{
-        fontSize: 25,
+        fontSize: 26,
         fontFamily: 'Roboto',
-        fontWeight: '400',
+        fontWeight:'400',
+        color: 'black',
+    },
+    genericBoldBlackText:{
+        fontSize: 26,
+        fontFamily: 'Roboto-Bold',
         color: 'black',
     }
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
+import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -7,6 +7,7 @@ import {Alerts} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
+import {launchImageLibrary} from "react-native-image-picker";
 
 const SignUpPage = ({navigation}) => {
     const [name, setName] = useState('');
@@ -16,6 +17,7 @@ const SignUpPage = ({navigation}) => {
     const emailRegex = new RegExp(
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
+    const [imageUriGallery, setImageUriGallery] = useState('');
 
 
     // Display a confirmation message to the user
@@ -118,6 +120,17 @@ const SignUpPage = ({navigation}) => {
             });
     }
 
+    const openGallery = () => {
+        const options = {
+            mediaType:'photo',
+            includeBase64: false,
+    };
+
+        launchImageLibrary(options, response => {
+                setImageUriGallery(response.assets[0].uri);
+        });
+    };
+
 
 
     return (
@@ -139,6 +152,7 @@ const SignUpPage = ({navigation}) => {
                     type={'email'}
                     value={email}
                 />
+
                 <FormField
                     title={'Password'}
                     setField={setPassword}
@@ -187,6 +201,12 @@ const styles = StyleSheet.create({
         marginBottom: '4%',
         flex:2,
         justifyContent: 'flex-end',
+    },
+    picture: {
+        borderRadius: 5,
+        width: 95,
+        height: 74,
+        marginRight: 15,
     },
 });
 

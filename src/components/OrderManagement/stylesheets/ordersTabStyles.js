@@ -21,28 +21,30 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: '5%',
     marginLeft: '5%',
+    marginRight: '5%',
   },
 
   tab: {
-    flex: 0,
+    flex: 1,
     paddingHorizontal: '2%',
     borderRadius: 20,
     borderWidth: 0,
     marginRight: '1%',
     backgroundColor: '#E1E1E1',
     alignSelf: 'baseline',
-    alignItems: 'baseline',
+    alignItems: 'center',
   },
 
   tabText: {
     color: 'black',
-    fontSize: normalize(7),
+    fontSize: normalize(8.4),
     fontFamily: 'Montserrat-Bold',
   },
 
   activeTab: {
     backgroundColor: '#65ADA9',
   },
+
 
   badgeNumber: {
     fontSize: 15,

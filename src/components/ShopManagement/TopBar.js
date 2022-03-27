@@ -36,12 +36,12 @@ const TopBar = ({navigation}) => {
           color={'green'}
           text={'Manage Shop'}
           onPress={goToAccountManagement}
-          widthRatio={0.36}
-          buttonHeight={60}
+          widthRatio={0.30}
+          buttonHeight={75}
       />
       <View style={styles.manageOrdersHeadline}>
         <Text style={textStyles.genericBlackText}>Accepting Orders: </Text>
-        <Text style={[textStyles.genericBlackText, {fontWeight: '900'}]}>
+        <Text style={[textStyles.genericBoldBlackText]}>
           {isEnabled ? 'Yes' : 'No'}
         </Text>
       </View>
