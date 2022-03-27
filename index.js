@@ -9,6 +9,6 @@ import LogInPage from "./src/screens/LogInPage";
 import SignUpPage from "./src/screens/SignUpPage";
 import LogInPageFromUser from "./src/screens/LogInPageFromUser";
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => SignUpPage);
 
 

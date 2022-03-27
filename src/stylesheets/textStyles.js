@@ -10,10 +10,27 @@ const textStyles = StyleSheet.create({
         marginLeft: '6%',
     },
     formTitle: {
-        fontSize: 42,
+        fontSize: 53,
+        textAlign: 'center',
         fontFamily: 'Roboto-Bold',
         color: 'black',
         paddingVertical: '4%',
+    },
+
+    formText: {
+        fontSize: 53,
+        textAlign: 'center',
+        fontFamily: 'Roboto-Bold',
+        color: 'black',
+        paddingVertical: '4%',
+    },
+
+    hyperlink: {
+        marginVertical: '1%',
+        textDecorationLine: 'underline',
+        textAlignVertical: 'bottom',
+        fontSize: 17,
+        fontFamily: 'Roboto',
     },
 
 

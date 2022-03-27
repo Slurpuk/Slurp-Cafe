@@ -104,9 +104,10 @@ const LogInPage = () => {
     return (
         <View style={styles.wrapper}>
             <StatusBar translucent={true} backgroundColor="transparent" />
-            <Text style={textStyles.headingText}>Log In</Text>
+            <Text style={textStyles.formTitle}>Log In</Text>
             <View style={styles.form}>
                 <FormField
+
                     title={'Email'}
                     placeholder={'business@coolcoffee.com'}
                     setField={setEmail}
@@ -120,12 +121,12 @@ const LogInPage = () => {
                     value={password}
                 />
                 <Text
-                    style={[ styles.hyperlink]}
+                    style={[ textStyles.hyperlink]}
                     onPress={forgotPassword}>
                     Forgot your password?
                 </Text>
                 <Text
-                    style={[ styles.hyperlink]}
+                    style={[textStyles.hyperlink]}
                     >
                     New? Create an account
                 </Text>
@@ -146,22 +147,16 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         paddingTop: getCushyPaddingTop(),
-        backgroundColor: '#EDEBE7',
+        backgroundColor: '#F2F2F2',
         paddingBottom: '5%',
         paddingHorizontal: '5%',
     },
     form: {
         flex: 3,
-        paddingVertical: '5%',
+        paddingVertical: '10%',
     },
     buttonContainer: {
-        justifyContent: 'flex-end',
         marginBottom: '4%',
-    },
-    hyperlink: {
-        marginVertical: '2%',
-        textDecorationLine: 'underline',
-        textAlignVertical: 'bottom',
     },
 });
 

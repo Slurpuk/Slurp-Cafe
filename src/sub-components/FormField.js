@@ -43,7 +43,7 @@ const FormField = ({
     <View style={style}>
       <Text style={[formField.text]}>{title}</Text>
       <TextInput
-        style={[formField.input, {height: multiline ? 90 : 37}]}
+        style={[formField.input, {height: multiline ? 90 : 45}]}
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         onChangeText={text => setField(text)}

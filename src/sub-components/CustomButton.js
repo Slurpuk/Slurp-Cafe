@@ -100,14 +100,14 @@ const buttonStyles = StyleSheet.create({
 
     bubbletertiary: {
         backgroundColor: 'whitesmoke',
-        color: 'red',
+        color:'#CE316A',
     },
 
     buttonText: {
         color: '#EFEFEF',
-        fontFamily: 'Poppins-SemiBold',
+        fontFamily: 'Roboto',
         letterSpacing: 0.5,
-        fontSize: 17,
+        fontSize: 20,
     },
 
     outer: {
@@ -115,6 +115,6 @@ const buttonStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 43,
+        height: 47,
     },
 });
