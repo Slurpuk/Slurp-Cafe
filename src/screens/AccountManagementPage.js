@@ -14,6 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
 import PrimaryButton from '../sub-components/PrimaryButton';
+import textStyles from "../stylesheets/textStyles";
 
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
@@ -63,7 +64,7 @@ const AccountManagementPage = ({navigation}) => {
     <View style={styles.wrapper}>
       <StatusBar translucent={true} backgroundColor="transparent" />
       <View style={styles.logInForm}>
-        <Text style={styles.formTitle}>{globalContext.coffeeShopObj.Name}</Text>
+        <Text style={[textStyles.formTitle, {textAlign: 'center'}]}>{globalContext.coffeeShopObj.Name}</Text>
         <FormField
           style={styles.element}
           title={'Name'}
@@ -145,13 +146,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F2F2F2',
     padding: '5%',
-  },
-  formTitle: {
-    fontSize: 40,
-    fontFamily: 'Roboto-Bold',
-    color: 'black',
-    textAlign: 'center',
-    paddingVertical: '4%',
   },
   element: {
     display: 'flex',

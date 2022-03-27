@@ -12,6 +12,7 @@ import {OrdersContext} from '../components/OrderManagement/contexts';
 import EmptyListText from '../sub-components/EmptyListText';
 import {emptyCurrentOrdersText, OrderStatuses} from '../static-data';
 import {getFormattedOrders} from '../firebase/queries';
+import textStyles from "../stylesheets/textStyles";
 
 /**
  * Scales the size to the size of the screen
@@ -135,7 +136,7 @@ const OrdersPage = ({navigation}) => {
     >
       <View style={styles.ordersContainer}>
         <TopBar navigation={navigation} />
-        <Text style={styles.activeOrdersText}>
+        <Text style={textStyles.headingText}>
           {currTabStatus.current} orders
         </Text>
         <OrdersTab SECTIONS={SECTIONS} setStatus={changeTabStatus} />
@@ -152,14 +153,6 @@ const OrdersPage = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  activeOrdersText: {
-    fontFamily: 'Montserrat',
-    fontWeight: '600',
-    fontSize: 44,
-    color: '#000000',
-    marginTop: '5%',
-    marginLeft: '6%',
-  },
   ordersList: {
     marginTop: '5%',
     marginBottom: '4%',
