@@ -4,108 +4,138 @@ import FormField from '../sub-components/FormField';
 import PrimaryButton from '../sub-components/PrimaryButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import CustomButton from "../sub-components/CustomButton";
+import textStyles from "../stylesheets/textStyles";
+import firebase from "@react-native-firebase/app";
+import {Alerts} from "../static-data";
+import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 
 const LogInPage = () => {
-    const [emailLogIn, setEmailLogIn] = useState('');
-    const [passwordLogIn, setPasswordLogIn] = useState('');
-
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const emailRegex = new RegExp(
+        '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
 
     /*
-    Before attempting authentication, this function checks if there is a coffee shop registered with
-    the input email. If there is, but authentication fails, the only alternative is they entered an
-    incorrect password and an Alert will show.
+    Manage response to database failure
      */
-    async function authenticateCoffeeShop() {
-        let foundCoffeeShop = false;
-
-        await firestore()
-            .collection('CoffeeShop')
-            .get()
-            .then(coffeeShops => {
-                coffeeShops.forEach(shop => {
-                    if (shop.data().Email === emailLogIn) {
-                        foundCoffeeShop = true;
-                    }
-                });
-            })
-            .catch(function (error) {
-                console.log(
-                    'There has been a problem with your fetch operation: ' +
-                    error.message,
-                );
-                throw error;
-            });
-
-        if (foundCoffeeShop) {
-            await auth()
-                .signInWithEmailAndPassword(emailLogIn, passwordLogIn)
-                .catch(error => processBackEndErrors(error));
+    function handleForgotPasswordErrorsBackEnd(errorCode) {
+        if (errorCode === 'auth/network-request-failed') {
+            Alerts.connectionErrorAlert();
+        } else if (errorCode === 'auth/invalid-email') {
+            Alerts.badEmailAlert();
+        } else if (errorCode === 'auth/user-not-found') {
+            /*
+            We send the same success message if user not found to avoid letting
+            malicious users that there is or isn't a user with a certain email.
+             */
+            Alerts.resetPasswordAlert();
         } else {
-            Alert.alert(
-                'Coffee Shop Not Registered',
-                'Are you new or did you make a typo in the email?',
-                [{text: 'Dismiss'}],
-            );
+            //Anything else
+            Alerts.elseAlert();
         }
     }
 
     /*
-  This function provides a variety of error handling once received an error code from the database.
-   */
-    function processBackEndErrors(error) {
-        if (error.code === 'auth/network-request-failed') {
+    Send verification email to user to reset their password
+     */
+    async function forgotPassword() {
+        if (!emailRegex.test(email)) {
             Alert.alert(
-                'Network Error',
-                'Make sure you are connected to the internet!',
+                'Add Email',
+                'Please enter your email correctly in the field above to reset your password.',
             );
+        } else {
+            await firebase
+                .auth()
+                .sendPasswordResetEmail(email)
+                .then(() => Alerts.resetPasswordAlert())
+                .catch(error => handleForgotPasswordErrorsBackEnd(error.code));
         }
-        else if (error.code === 'auth/wrong-password') {
-            Alert.alert('Wrong Password', 'Woops! It seems your password is not correct');
-        } else if (error.code === 'auth/too-many-requests') {
-            Alert.alert(
-                'Too Many Requests',
-                'We set a maximum limit of requests per hour for safety. ' +
-                'Sorry for the inconvenience!',
-            );
+    }
+
+    /*
+    Deal with bad or empty inputs before sending request
+     */
+    function handleLogInErrorsFrontEnd() {
+        let validity = true;
+        if (email === '') {
+            validity = false;
+            Alert.alert('Empty Email', 'Please enter your email.');
+        } else if (!emailRegex.test(email)) {
+            validity = false;
+            Alerts.badEmailAlert();
+        } else if (password === '') {
+            validity = false;
+            Alert.alert('Empty Password', 'Please enter your password.');
         }
-         else {
-            Alert.alert(
-                'Rare Error!',
-                'This is a funky error! Might be a one off but please' +
-                ' report it to technical support. Please quote: ' +
-                error.code,
-            );
+        return validity;
+    }
+
+    /*
+    Manage response to database failure
+     */
+    function handleLogInErrorsBackEnd(errorCode) {
+        if (
+            errorCode === 'auth/wrong-password' ||
+            errorCode === 'auth/user-not-found'
+        ) {
+            Alerts.wrongCredentialsAlert();
+        } else if (errorCode === 'auth/invalid-email') {
+            Alerts.badEmailAlert();
+        } else if (errorCode === 'auth/network-request-failed') {
+            Alerts.connectionErrorAlert();
+        } else {
+            //Anything else
+            Alerts.elseAlert();
+        }
+    }
+
+    async function authenticateCoffeeShop() {
+        if (handleLogInErrorsFrontEnd()) {
+            await firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .catch(error => handleLogInErrorsBackEnd(error.code));
         }
     }
 
     return (
-        <View>
+        <View style={styles.wrapper}>
             <StatusBar translucent={true} backgroundColor="transparent" />
-            <View style={styles.logInForm}>
-                <Text style={styles.formTitle}>Log In</Text>
+            <Text style={textStyles.headingText}>Log In</Text>
+            <View style={styles.form}>
                 <FormField
-                    style={styles.element}
                     title={'Email'}
                     placeholder={'business@coolcoffee.com'}
-                    setField={setEmailLogIn}
+                    setField={setEmail}
                     type={'email'}
-                    value={emailLogIn}
+                    value={email}
                 />
                 <FormField
-                    style={styles.element}
                     title={'Password'}
-                    setField={setPasswordLogIn}
+                    setField={setPassword}
                     type={'password'}
-                    value={passwordLogIn}
+                    value={password}
                 />
-                <View style={styles.button}>
-                    <PrimaryButton
-                        color={'#207671'}
-                        buttonText={'Log In'}
-                        onPress={authenticateCoffeeShop}
-                        widthRatio={0.5}
-                    />
-                </View>
+                <Text
+                    style={[ styles.hyperlink]}
+                    onPress={forgotPassword}>
+                    Forgot your password?
+                </Text>
+                <Text
+                    style={[ styles.hyperlink]}
+                    >
+                    New? Create an account
+                </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <CustomButton
+                    priority={'primary'}
+                    text={'Log In'}
+                    onPress={authenticateCoffeeShop}
+                />
             </View>
         </View>
     );
@@ -114,37 +144,24 @@ const LogInPage = () => {
 const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
-        backgroundColor: '#F2F2F2',
-        padding: '5%',
-        height: '100%',
+        flex: 1,
+        paddingTop: getCushyPaddingTop(),
+        backgroundColor: '#EDEBE7',
+        paddingBottom: '5%',
+        paddingHorizontal: '5%',
     },
-    logInForm: {
-        display: 'flex',
-        paddingBottom: '4%',
+    form: {
+        flex: 3,
+        paddingVertical: '5%',
     },
-    formTitle: {
-        fontSize: 40,
-        fontFamily: 'Roboto-Bold',
-        color: 'black',
-        textAlign: 'center',
-        ...Platform.select({
-            ios: {
-                paddingVertical: '4%',
-            },
-        }),
+    buttonContainer: {
+        justifyContent: 'flex-end',
+        marginBottom: '4%',
     },
-    element: {
-        display: 'flex',
-    },
-    button: {
-        justifyContent: 'center',
-        marginHorizontal: '22%',
-        ...Platform.select({
-            ios: {
-                marginVertical: '5%',
-            },
-        }),
-        alignContent: 'center',
+    hyperlink: {
+        marginVertical: '2%',
+        textDecorationLine: 'underline',
+        textAlignVertical: 'bottom',
     },
 });
 

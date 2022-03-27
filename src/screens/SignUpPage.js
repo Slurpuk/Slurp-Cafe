@@ -4,64 +4,91 @@ import FormField from '../sub-components/FormField';
 import PrimaryButton from '../sub-components/PrimaryButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {KeyboardAvoidingView} from 'react-native';
-import HorizontalBarWithText from '../sub-components/HorizontalBarWithText';
+import {Alerts} from "../static-data";
+import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
+import textStyles from "../stylesheets/textStyles";
 
 const SignUpPage = () => {
-    const [emailLogIn, setEmailLogIn] = useState('');
-    const [passwordLogIn, setPasswordLogIn] = useState('');
-
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [passwordConfirmation, setPasswordConfirmation] = useState();
+    const emailRegex = new RegExp(
+        '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
 
 
-    /*
-      This function provides some basic Front End validation including coffee shop name, email and password strength.
-       */
-    function validateRegistration() {
-        const emailRegex = new RegExp(
-            '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
-        );
+    // Display a confirmation message to the user
+    const registeredMessage = () => {
+        Alert.alert('Congratulations', 'Registered Successfully', [
+            {
+                text: 'OK',
+            },
+        ]);
+    };
 
-        if (name.length === 0) {
-            Alert.alert('Empty Name', 'Give yor Coffee Shop a name.');
-            return false;
-        } else if (!emailRegex.test(email)) {
-            Alert.alert('Bad Email', "That doesn't look like a valid email.");
-            return false;
-        } else if (password.length < 8 && password.search(/[0-9]/) < 0) {
-            Alert.alert(
-                'Weak Password',
-                'Passwords must be 8 characters long and have a number.',
-            );
-            return false;
-        } else if (password !== passwordConfirmation) {
-            Alert.alert("Passwords Don't Match");
-            return false;
-        }
-        return true;
-    }
 
-    /*
-      Creates the authentication entry for the coffee shop account with email and password. Calls method for
-      validation and clean up.
-       */
+    // Register the user to the database after checking their credentials
     async function registerCoffeeShop() {
-        if (validateRegistration()) {
+        if (processErrorsFrontEnd()) {
             await auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
-                    addCoffeeShop();
-                    Alert.alert('Congratulations', 'Registered Successfully');
+                    let newCoffeeShop = auth().currentUser;
+                    addCoffeeShop(newCoffeeShop);
+                    registeredMessage();
                 })
                 .catch(error => {
-                    processBackEndErrors(error);
+                    processBackEndErrors(error.code);
                 });
         }
     }
 
+    /*
+ Deal with bad or empty inputs before sending request
+  */
+    function processErrorsFrontEnd() {
+        let validity = true;
+        if (email === '') {
+            validity = false;
+            Alert.alert('Empty Email', 'Please enter your email.');
+        } else if (!emailRegex.test(email)) {
+            validity = false;
+            Alerts.badEmailAlert();
+        } else if (password === '') {
+            validity = false;
+            Alert.alert('Empty Password', 'Please enter your password.');
+        } else if (passwordConfirmation === '') {
+            validity = false;
+            Alert.alert('Empty Password Confirmation', 'Please enter the password confirmation.');
+        } else if (passwordConfirmation === password) {
+            validity = false;
+            Alert.alert('Password dont match up', 'Please make sure you password confirmation is the same as you password.');
+        }
+
+        return validity;
+    }
+
+
+
+    /*
+        Manage response to database failure
+         */
+    function processBackEndErrors(errorCode) {
+        if (
+            errorCode === 'auth/wrong-password' ||
+            errorCode === 'auth/user-not-found'
+        ) {
+            Alerts.wrongCredentialsAlert();
+        } else if (errorCode === 'auth/invalid-email') {
+            Alerts.badEmailAlert();
+        } else if (errorCode === 'auth/network-request-failed') {
+            Alerts.connectionErrorAlert();
+        } else {
+            //Anything else
+            Alerts.elseAlert();
+        }
+    }
     /*
       We have already created the authentication entry but now we need to imput the values for the Coffee Shop model.
       Some of these are default, others are defined by the user input.
@@ -90,46 +117,13 @@ const SignUpPage = () => {
             });
     }
 
-    /*
-      This function provides a variety of error handling once received an error code from the database.
-       */
-    function processBackEndErrors(error) {
-        if (error.code === 'auth/network-request-failed') {
-            Alert.alert(
-                'Network Error',
-                'Make sure you are connected to the internet!',
-            );
-        } else if (error.code === 'auth/email-already-in-use') {
-            Alert.alert('Account Already Exists', 'You can log in above.');
-        } else if (error.code === 'auth/wrong-password') {
-            Alert.alert('Wrong Password', 'Woops! Passwords suck am I right?');
-        } else if (error.code === 'auth/too-many-requests') {
-            Alert.alert(
-                'Too Many Requests',
-                'We set a maximum limit of requests per hour for safety. ' +
-                'Sorry for the inconvenience!',
-            );
-        } else if (error.code === 'auth/user-not-found') {
-            Alert.alert(
-                'Registration Error',
-                'This is our bad, we made a mistake in ' +
-                'registration, contact technical support. Error code #0001',
-            );
-        } else {
-            Alert.alert(
-                'Rare Error!',
-                'This is a funky error! Might be a one off but please' +
-                ' report it to technical support. Please quote: ' +
-                error.code,
-            );
-        }
-    }
+
 
     return (
-        <View>
+        <View style={styles.wrapper}>
             <StatusBar translucent={true} backgroundColor="transparent" />
-            <View style={styles.signUpForm}>
-                <Text style={styles.formTitle}>Sign Up</Text>
+            <Text style={textStyles.headingText}>Sign Up</Text>
+            <View style={styles.formContainer}>
                 <FormField
                     style={styles.element}
                     title={'Coffee Shop Name'}
@@ -160,14 +154,19 @@ const SignUpPage = () => {
                     type={'password'}
                     value={passwordConfirmation}
                 />
-                <View style={styles.button}>
-                    <PrimaryButton
-                        color={'#207671'}
-                        buttonText={'Create Account'}
-                        onPress={registerCoffeeShop}
-                        widthRatio={0.5}
-                    />
-                </View>
+                <Text
+                    style={[ styles.hyperlink]}
+                >
+                    Already have an account? Log in
+                </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <PrimaryButton
+                    color={'#207671'}
+                    buttonText={'Create Account'}
+                    onPress={registerCoffeeShop}
+                    widthRatio={0.5}
+                />
             </View>
         </View>
     );
@@ -176,40 +175,38 @@ const SignUpPage = () => {
 const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
-        backgroundColor: '#F2F2F2',
-        padding: '5%',
-        height: '100%',
+        flex: 1,
+        backgroundColor: '#EDEBE7',
+        paddingTop: getCushyPaddingTop(),
+        paddingBottom: '5%',
+        paddingHorizontal: '5%',
     },
-    signUpForm: {
+    formContainer: {
+        flex: 1,
+        paddingTop: '5%',
+    },
+
+    namesContainer: {
+        flexDirection: 'row',
         display: 'flex',
+        paddingVertical: '2%',
     },
-    logInForm: {
-        display: 'flex',
-        paddingBottom: '4%',
+    subNameContainer: {
+        flex: 1,
     },
-    formTitle: {
-        fontSize: 40,
-        fontFamily: 'Roboto-Bold',
-        color: 'black',
-        textAlign: 'center',
-        ...Platform.select({
-            ios: {
-                paddingVertical: '4%',
-            },
-        }),
+    subNameContainerLeft: {
+        marginRight: '5%',
     },
-    element: {
-        display: 'flex',
+
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: '4%',
     },
-    button: {
-        justifyContent: 'center',
-        marginHorizontal: '22%',
-        ...Platform.select({
-            ios: {
-                marginVertical: '5%',
-            },
-        }),
-        alignContent: 'center',
+    hyperlink: {
+        marginVertical: '2%',
+        textDecorationLine: 'underline',
+        textAlignVertical: 'bottom',
     },
 });
 
