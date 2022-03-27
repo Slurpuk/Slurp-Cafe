@@ -13,8 +13,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
-import PrimaryButton from '../sub-components/PrimaryButton';
-
+import textStyles from "../stylesheets/textStyles";
+import CustomButton from "../sub-components/CustomButton";
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -52,18 +52,11 @@ const AccountManagementPage = ({navigation}) => {
       .catch(e => console.log(e));
   }
 
-  /*
-    Navigation functionality: go back.
-     */
-  function goBack() {
-    navigation.goBack();
-  }
-
   return (
     <View style={styles.wrapper}>
       <StatusBar translucent={true} backgroundColor="transparent" />
       <View style={styles.logInForm}>
-        <Text style={styles.formTitle}>{globalContext.coffeeShopObj.Name}</Text>
+        <Text style={[textStyles.formTitle, {textAlign: 'center'}]}>{globalContext.coffeeShopObj.Name}</Text>
         <FormField
           style={styles.element}
           title={'Name'}
@@ -119,19 +112,21 @@ const AccountManagementPage = ({navigation}) => {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.updateButton}>
-          <PrimaryButton
-            color={'#4273D3'}
-            buttonText={'Save Details'}
-            onPress={updateDetails}
-            widthRatio={0.36}
+          <CustomButton
+              color={'blue'}
+              text={'Save Details'}
+              onPress={updateDetails}
+              widthRatio={0.36}
+              buttonHeight={60}
           />
         </View>
         <View style={styles.logoutButton}>
-          <PrimaryButton
-            color={'#CE316A'}
-            buttonText={'Log Out'}
-            onPress={() => logout()}
-            widthRatio={0.36}
+          <CustomButton
+              color={'red'}
+              text={'Log Out'}
+              onPress={() => logout()}
+              widthRatio={0.36}
+              buttonHeight={60}
           />
         </View>
       </View>
@@ -145,13 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F2F2F2',
     padding: '5%',
-  },
-  formTitle: {
-    fontSize: 40,
-    fontFamily: 'Roboto-Bold',
-    color: 'black',
-    textAlign: 'center',
-    paddingVertical: '4%',
   },
   element: {
     display: 'flex',
