@@ -100,6 +100,7 @@ const SignUpPage = ({navigation}) => {
             .add({
                 Email: email,
                 Name: name,
+                //will be an actual image
                 Image:
                     'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
                 Intro:
