@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar, Platform} from 'react-native';
+import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
-import PrimaryButton from '../sub-components/PrimaryButton';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import CustomButton from "../sub-components/CustomButton";
 import textStyles from "../stylesheets/textStyles";
 import firebase from "@react-native-firebase/app";
 import {Alerts} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 
-const LogInPage = () => {
+const LogInPage = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const emailRegex = new RegExp(
@@ -127,15 +124,16 @@ const LogInPage = () => {
                 </Text>
                 <Text
                     style={[textStyles.hyperlink]}
-                    >
+                    onPress={() => navigation.navigate('Sign Up Page')}>
                     New? Create an account
                 </Text>
             </View>
             <View style={styles.buttonContainer}>
                 <CustomButton
-                    priority={'primary'}
+                    color={'green'}
                     text={'Log In'}
                     onPress={authenticateCoffeeShop}
+                    widthRatio={0.91}
                 />
             </View>
         </View>

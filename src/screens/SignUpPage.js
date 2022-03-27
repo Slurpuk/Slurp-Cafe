@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar, Platform} from 'react-native';
+import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
-import PrimaryButton from '../sub-components/PrimaryButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Alerts} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
+import CustomButton from "../sub-components/CustomButton";
 
-const SignUpPage = () => {
+const SignUpPage = ({navigation}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -122,10 +122,9 @@ const SignUpPage = () => {
     return (
         <View style={styles.wrapper}>
             <StatusBar translucent={true} backgroundColor="transparent" />
-            <Text style={textStyles.headingText}>Sign Up</Text>
+            <Text style={textStyles.formTitle}>Sign Up</Text>
             <View style={styles.formContainer}>
                 <FormField
-                    style={styles.element}
                     title={'Coffee Shop Name'}
                     placeholder={'Cool Coffee'}
                     setField={setName}
@@ -133,7 +132,6 @@ const SignUpPage = () => {
                     value={name}
                 />
                 <FormField
-                    style={styles.element}
                     title={'Email'}
                     placeholder={'business@coolcoffee.com'}
                     setField={setEmail}
@@ -141,31 +139,29 @@ const SignUpPage = () => {
                     value={email}
                 />
                 <FormField
-                    style={styles.element}
                     title={'Password'}
                     setField={setPassword}
                     type={'password'}
                     value={password}
                 />
                 <FormField
-                    style={styles.element}
                     title={'Confirm Password'}
                     setField={setPasswordConfirmation}
                     type={'password'}
                     value={passwordConfirmation}
                 />
                 <Text
-                    style={[ styles.hyperlink]}
-                >
-                    Already have an account? Log in
+                    style={[ textStyles.hyperlink]}
+                    onPress={() => navigation.navigate('Log In Page')}
+                >Already have an account? Log in
                 </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <PrimaryButton
-                    color={'#207671'}
-                    buttonText={'Create Account'}
+                <CustomButton
+                    color={'green'}
+                    text={'Create Account'}
                     onPress={registerCoffeeShop}
-                    widthRatio={0.5}
+                    widthRatio={0.91}
                 />
             </View>
         </View>
@@ -176,37 +172,20 @@ const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
         flex: 1,
-        backgroundColor: '#EDEBE7',
+        backgroundColor: '#F2F2F2',
         paddingTop: getCushyPaddingTop(),
         paddingBottom: '5%',
         paddingHorizontal: '5%',
     },
     formContainer: {
         flex: 1,
-        paddingTop: '5%',
-    },
-
-    namesContainer: {
-        flexDirection: 'row',
-        display: 'flex',
-        paddingVertical: '2%',
-    },
-    subNameContainer: {
-        flex: 1,
-    },
-    subNameContainerLeft: {
-        marginRight: '5%',
+        paddingVertical: '10%',
     },
 
     buttonContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
         marginBottom: '4%',
-    },
-    hyperlink: {
-        marginVertical: '2%',
-        textDecorationLine: 'underline',
-        textAlignVertical: 'bottom',
+        flex:2,
+        justifyContent: 'flex-end',
     },
 });
 

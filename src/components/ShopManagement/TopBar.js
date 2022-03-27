@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
-import PrimaryButton from '../../sub-components/PrimaryButton';
 import {GlobalContext} from '../../../App';
 import {setIsOpen} from '../../firebase/queries';
+import CustomButton from "../../sub-components/CustomButton";
 
 /**
  * Top bar for navigating through the app
@@ -31,10 +31,12 @@ const TopBar = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <PrimaryButton
-        color={'#207671'}
-        buttonText={'Manage Shop'}
-        onPress={goToAccountManagement}
+      <CustomButton
+          color={'green'}
+          text={'Manage Shop'}
+          onPress={goToAccountManagement}
+          widthRatio={0.36}
+          buttonHeight={60}
       />
       <View style={styles.manageOrdersHeadline}>
         <Text style={styles.manageOrdersHeadlineText}>Accepting Orders: </Text>

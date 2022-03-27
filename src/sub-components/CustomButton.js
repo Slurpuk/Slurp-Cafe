@@ -10,10 +10,10 @@ import {
 
 export default function CustomButton(props) {
     const {
-        priority,
+        color,
         text,
         optionalNumber = null,
-        width = screenWidth * 0.91,
+        widthRatio = 0.36,
         onPress,
     } = props;
 
@@ -21,7 +21,7 @@ export default function CustomButton(props) {
         <View>
             <Animated.View style={{transform: [{scale}]}}>
                 <TouchableOpacity
-                    style={[buttonStyles.outer, buttonStyles[priority], {width: width}]}
+                    style={[buttonStyles.outer, buttonStyles[color], {width: screenWidth*widthRatio}]}
                     activeOpacity={1}
                     onPressIn={onPressIn}
                     onPressOut={onPressOut}
@@ -32,7 +32,7 @@ export default function CustomButton(props) {
                         <Text
                             style={[
                                 buttonStyles.optionalNumber,
-                                buttonStyles[`bubble${priority}`],
+                                buttonStyles[`bubble${color}`],
                             ]}
                         >
                             {optionalNumber}
@@ -66,16 +66,20 @@ const onPressOut = () => {
 const screenWidth = Dimensions.get('window').width;
 
 const buttonStyles = StyleSheet.create({
-    primary: {
-        backgroundColor: '#087562',
+    green: {
+        backgroundColor: '#207671',
     },
 
-    secondary: {
-        backgroundColor: '#2D466B',
+    blue: {
+        backgroundColor: '#4273D3',
     },
 
-    tertiary: {
-        backgroundColor: 'red',
+    red: {
+        backgroundColor: '#CE316A',
+    },
+
+    yellow: {
+        backgroundColor: '#D2AD20',
     },
 
     optionalNumber: {
@@ -87,27 +91,32 @@ const buttonStyles = StyleSheet.create({
         marginLeft: 8,
     },
 
-    bubbleprimary: {
+    bubblegreen: {
         backgroundColor: '#183342',
         color: '#E9E5D8',
         fontFamily: 'Poppins-SemiBold',
     },
 
-    bubblesecondary: {
+    bubbleblue: {
         backgroundColor: 'whitesmoke',
         color: '#555555',
     },
 
-    bubbletertiary: {
+    bubblered: {
+        backgroundColor: 'whitesmoke',
+        color:'#CE316A',
+    },
+
+    bubbleyellow: {
         backgroundColor: 'whitesmoke',
         color:'#CE316A',
     },
 
     buttonText: {
         color: '#EFEFEF',
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto-Medium',
         letterSpacing: 0.5,
-        fontSize: 20,
+        fontSize:24,
     },
 
     outer: {
@@ -115,6 +124,6 @@ const buttonStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 47,
+        height:60,
     },
 });

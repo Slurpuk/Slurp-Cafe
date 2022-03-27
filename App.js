@@ -5,9 +5,10 @@ import auth from '@react-native-firebase/auth';
 import firebase from "@react-native-firebase/app";
 import firestore from "@react-native-firebase/firestore";
 import OrdersPage from "./src/screens/OrdersPage";
-import AuthenticationPage from "./src/screens/AuthenticationPage";
 import AccountManagementPage from "./src/screens/AccountManagementPage";
 import {Alerts} from "./src/static-data";
+import LogInPage from "./src/screens/LogInPage";
+import SignUpPage from "./src/screens/SignUpPage";
 
 export const GlobalContext = React.createContext();
 
@@ -84,7 +85,10 @@ export default function App() {
                   <Stack.Screen name="Account Management" component={AccountManagementPage} />
               </Stack.Navigator>
           ) : (
-              <AuthenticationPage/>
+              <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Sign Up Page" component={SignUpPage} />
+              <Stack.Screen name="Log In Page" component={LogInPage} />
+              </Stack.Navigator>
           )}
         </NavigationContainer>
       </GlobalContext.Provider>

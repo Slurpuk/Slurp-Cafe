@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import PrimaryButton from '../../../../sub-components/PrimaryButton';
 import {AnimatedCardContext, OrderCardContext} from '../../contexts';
 import {OrderStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
+import CustomButton from "../../../../sub-components/CustomButton";
 
 /**
  * Button for changing the status of an accepted order
@@ -11,7 +11,7 @@ const OrderActionButton = () => {
   const orderCardContext = useContext(OrderCardContext);
   const order = orderCardContext.order;
   const animatedCardContext = useContext(AnimatedCardContext);
-  const [customStyle, setStyle] = useState('#D2AD2B');
+  const [customStyle, setStyle] = useState('yellow');
   const [buttonText, setButtonText] = useState('View Order');
 
   /**
@@ -21,11 +21,11 @@ const OrderActionButton = () => {
     switch (order.currStatus) {
       case OrderStatuses.ACCEPTED:
         setButtonText('Mark as Ready');
-        setStyle('#4273D3');
+        setStyle('blue');
         break;
       case OrderStatuses.READY:
         setButtonText('Mark as Collected');
-        setStyle('#218F89');
+        setStyle('green');
         break;
     }
   }, [order.currStatus]);
@@ -50,11 +50,11 @@ const OrderActionButton = () => {
   }
 
   return (
-    <PrimaryButton
+  <CustomButton
       color={customStyle}
-      buttonText={buttonText}
+      text={buttonText}
       onPress={updateStatus}
-    />
+  />
   );
 };
 

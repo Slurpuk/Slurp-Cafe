@@ -13,9 +13,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
-import PrimaryButton from '../sub-components/PrimaryButton';
 import textStyles from "../stylesheets/textStyles";
-
+import CustomButton from "../sub-components/CustomButton";
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -120,19 +119,21 @@ const AccountManagementPage = ({navigation}) => {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.updateButton}>
-          <PrimaryButton
-            color={'#4273D3'}
-            buttonText={'Save Details'}
-            onPress={updateDetails}
-            widthRatio={0.36}
+          <CustomButton
+              color={'blue'}
+              text={'Save Details'}
+              onPress={updateDetails}
+              widthRatio={0.36}
+              buttonHeight={60}
           />
         </View>
         <View style={styles.logoutButton}>
-          <PrimaryButton
-            color={'#CE316A'}
-            buttonText={'Log Out'}
-            onPress={() => logout()}
-            widthRatio={0.36}
+          <CustomButton
+              color={'red'}
+              text={'Log Out'}
+              onPress={() => logout()}
+              widthRatio={0.36}
+              buttonHeight={60}
           />
         </View>
       </View>
