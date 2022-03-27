@@ -134,8 +134,6 @@ const AuthenticationPage = () => {
         IsOpen: false,
         ItemsOffered: [],
         Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
-        Likeness: 69,
-        Queue: 42,
       })
       .catch(error => {
         console.log(error);
