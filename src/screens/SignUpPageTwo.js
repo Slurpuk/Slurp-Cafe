@@ -151,21 +151,21 @@ const SignUpPageTwo = ({navigation}) => {
                     >Already have an account? Log in
                     </Text>
                 </View>
-                <View style={styles.horizontalContainer}>
+                <View style={styles.buttonContainer}>
                     <CustomButton
-                        style={[styles.subButtonContainerLeft]}
+                        style={[styles.leftButton]}
                         color={'blue'}
                         text={'Go Back'}
                         onPress={()=>navigation.navigate('Sign Up Page One')}
-                        widthRatio={0.45}
+                        widthRatio={0.40}
                         buttonHeight={70}
                     />
                     <CustomButton
-                        style={styles.subButtonContainer}
+                        style={styles.rightButton}
                         color={'green'}
                         text={'Register'}
                         onPress={registerCoffeeShop}
-                        widthRatio={0.45}
+                        widthRatio={0.40}
                         buttonHeight={70}
                     />
                 </View>
@@ -209,24 +209,18 @@ const styles = StyleSheet.create({
         flex:1,
         paddingHorizontal: '5%',
     },
-    text: {
-        marginBottom: '2%',
-        fontFamily: 'Roboto-Medium',
-        fontSize: 27,
-        color:'black',
-    },
-    horizontalContainer: {
-        flexDirection: 'row',
+    buttonContainer: {
         display: 'flex',
-        paddingVertical: '2%',
-        justifyContent:'center',
-        flex:0,
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: '4%',
     },
-    subButtonContainer: {
+    leftButton: {
         flex:1,
     },
-    subButtonContainerLeft: {
-        marginRight: '30%',
+    rightButton: {
+        marginHorizontal:'40%',
         flex:1,
     },
 });

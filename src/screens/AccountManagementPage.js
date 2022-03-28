@@ -16,6 +16,7 @@ import FormField from '../sub-components/FormField';
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
 import {Alerts} from "../static-data";
+import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -98,92 +99,127 @@ const AccountManagementPage = ({navigation}) => {
 
   return (
     <View style={styles.wrapper}>
-      <StatusBar translucent={true} backgroundColor="transparent" />
-      <View style={styles.logInForm}>
-        <Text style={[textStyles.formTitle, {textAlign: 'center'}]}>{globalContext.coffeeShopObj.Name}</Text>
-        <FormField
-          style={styles.element}
-          title={'Shop Name'}
-          setField={setName}
-          type={'name'}
-          value={name}
-        />
-        <FormField
-          style={styles.element}
-          title={'Shop Description'}
-          setField={setIntro}
-          type={'multiline'}
-          value={intro}
-        />
-        <View style={styles.namesContainer}>
+      <View  style={styles.topBar}>
+        <StatusBar translucent={true} backgroundColor="white" />
+        <Text style={[textStyles.formTitle]}>{globalContext.coffeeShopObj.Name}</Text>
+      </View>
+      <View style={styles.paddedContainer}>
+        <View style={styles.formContainer}>
           <FormField
-            style={[styles.subNameContainer, styles.subNameContainerLeft]}
-            title={'Latitude'}
-            setField={value =>
-              setLocation({
-                latitude: parseFloat(value),
-                longitude: location.longitude,
-              })
-            }
-            value={location.latitude.toString()}
+              style={styles.element}
+              title={'Shop Name'}
+              setField={setName}
+              type={'name'}
+              value={name}
           />
           <FormField
-            style={[styles.subNameContainer]}
-            title={'Longitude'}
-            setField={value =>
-              setLocation({
-                latitude: location.latitude,
-                longitude: parseFloat(value),
-              })
-            }
-            value={location.longitude.toString()}
+              style={styles.element}
+              title={'Shop Description'}
+              setField={setIntro}
+              type={'multiline'}
+              value={intro}
           />
+          <View style={styles.namesContainer}>
+            <FormField
+                style={[styles.subNameContainer, styles.subNameContainerLeft]}
+                title={'Latitude'}
+                setField={value =>
+                    setLocation({
+                      latitude: parseFloat(value),
+                      longitude: location.longitude,
+                    })
+                }
+                value={location.latitude.toString()}
+            />
+            <FormField
+                style={[styles.subNameContainer]}
+                title={'Longitude'}
+                setField={value =>
+                    setLocation({
+                      latitude: location.latitude,
+                      longitude: parseFloat(value),
+                    })
+                }
+                value={location.longitude.toString()}
+            />
+          </View>
+          <Pressable
+              onPress={() =>
+                  Linking.openURL(
+                      'http://www.google.com/maps/place/' +
+                      location.latitude +
+                      ',' +
+                      location.longitude,
+                  )
+              }
+              style={[textStyles.hyperlink,{display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',}]}
+          >
+            <Icon size={30} color="black" name="map-marker" />
+            <Text style={[textStyles.hyperlink, {color: '#3366BB'}]}> Open in Google Maps</Text>
+          </Pressable>
         </View>
-        <Pressable
-          onPress={() =>
-            Linking.openURL(
-              'http://www.google.com/maps/place/' +
-                location.latitude +
-                ',' +
-                location.longitude,
-            )
-          }
-          style={styles.hyperlink}
-        >
-          <Icon size={30} color="black" name="map-marker" />
-          <Text style={styles.hyperlinkText}> Open in Google Maps</Text>
-        </Pressable>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.updateButton}>
-          <CustomButton
-              color={'blue'}
-              text={'Save Details'}
-              onPress={updateDetails}
-              widthRatio={0.36}
-              buttonHeight={60}
-          />
+        <View style={styles.buttonContainer}>
+          <View style={styles.updateButton}>
+            <CustomButton
+                color={'blue'}
+                text={'Save Details'}
+                onPress={updateDetails}
+                widthRatio={0.42}
+                buttonHeight={70}
+            />
+          </View>
+          <View style={styles.logoutButton}>
+            <CustomButton
+                color={'red'}
+                text={'Log Out'}
+                onPress={() => logout()}
+                widthRatio={0.42}
+                buttonHeight={70}
+            />
+          </View>
         </View>
-        <View style={styles.logoutButton}>
-          <CustomButton
-              color={'red'}
-              text={'Log Out'}
-              onPress={() => logout()}
-              widthRatio={0.36}
-              buttonHeight={60}
-          />
         </View>
-      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  topBar: {
+    height: '12%',
+    paddingHorizontal: '5%',
+    width:'100%',
+    alignItems: 'center',
+    backgroundColor: '#F6F6F6',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+  },
   wrapper: {
     display: 'flex',
     flex: 1,
-    backgroundColor: '#F2F2F2',
-    padding: '5%',
+    backgroundColor: 'white',
+    paddingTop: getCushyPaddingTop(),
+    paddingBottom: '5%',
+  },
+  formContainer: {
+    flex: 1,
+    paddingVertical: '10%',
+  },
+  paddedContainer: {
+    display:"flex",
+    flex:1,
+    paddingHorizontal: '5%',
   },
   element: {
     display: 'flex',
@@ -201,36 +237,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  hyperlink: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    color: '#3366BB',
-  },
-  hyperlinkText: {
-    color: '#3366BB',
-    textDecorationLine: 'underline',
+    justifyContent: 'flex-start',
+    marginBottom: '4%',
   },
   updateButton: {
-    height: 65,
-    width: 300,
-    justifyContent: 'center',
-    marginHorizontal: '20%',
-    marginVertical: '5%',
-    alignContent: 'center',
+    marginRight: '7%',
   },
   logoutButton: {
-    height: 65,
-    width: 300,
-    justifyContent: 'center',
-    marginHorizontal: '20%',
-    marginVertical: '5%',
-    alignContent: 'center',
   },
 });
 
