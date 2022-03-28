@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image} from 'react-native';
+import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image, Platform} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -9,6 +9,8 @@ import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
 import {launchImageLibrary} from "react-native-image-picker";
 import {SignUpContext} from "../../App";
+import storage from '@react-native-firebase/storage';
+import firebase from "@react-native-firebase/app";
 
 const SignUpPageTwo = ({navigation}) => {
     const signUpContext = useContext(SignUpContext);
@@ -16,6 +18,20 @@ const SignUpPageTwo = ({navigation}) => {
     const[imageName,setImageName]=useState(signUpContext.shopImageName);
     const [shopName, setShopName] = useState(signUpContext.shopName);
     const [shopIntro, setShopIntro] = useState(signUpContext.shopDescription);
+    const uploadUri = Platform.OS === 'ios' ? imageUriGallery.replace('file://', '') : imageUriGallery;
+
+    function uploadImageToStorage() {
+        firebase
+            .storage()
+            .ref('CoffeeShops')
+            .putFile(uploadUri)
+            .then((snapshot) => {
+                //You can check the image is now uploaded in the storage bucket
+                console.log(`Image has been successfully uploaded.`);
+            })
+            .catch((e) => console.log('uploading image error => ', e));
+    }
+
 
     useEffect(() => {
         signUpContext.shopImageName=imageName;
@@ -102,6 +118,7 @@ const SignUpPageTwo = ({navigation}) => {
       WARNING: email and name must be checked to not be undefined before calling.
        */
     async function addCoffeeShop() {
+        uploadImageToStorage();
         await firestore()
             .collection('CoffeeShop')
             .add({
@@ -127,6 +144,10 @@ const SignUpPageTwo = ({navigation}) => {
         const options = {
             mediaType:'photo',
             includeBase64: false,
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
         };
 
         launchImageLibrary(options, response => {
@@ -139,7 +160,7 @@ const SignUpPageTwo = ({navigation}) => {
             } else {
                 //console.log(response);
                 console.log(response.assets[0].fileName);
-                setImageUriGallery(response.assets[0].uri);
+                setImageUriGallery(response.assets[0].uri.substring(response.assets[0].uri.lastIndexOf('/') + 1));
                 setImageName(response.assets[0].fileName);
             }
         });
