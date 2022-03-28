@@ -29,7 +29,7 @@ const textStyles = StyleSheet.create({
         marginVertical: '1%',
         textDecorationLine: 'underline',
         textAlignVertical: 'bottom',
-        fontSize: 20,
+        fontSize: 22,
         fontFamily: 'Roboto',
     },
 

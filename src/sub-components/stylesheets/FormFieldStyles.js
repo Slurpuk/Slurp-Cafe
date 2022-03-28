@@ -4,14 +4,16 @@ export const FormFieldStyles = StyleSheet.create({
   text: {
     marginBottom: '2%',
     fontFamily: 'Roboto-Medium',
-    fontSize: 25,
+    fontSize: 27,
+    color:'black',
   },
 
   input: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#E1E1E1',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: '4.5%',
     fontSize: 17,
+    fontStyle: 'italic'
   },
 });

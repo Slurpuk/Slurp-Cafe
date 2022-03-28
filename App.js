@@ -8,7 +8,9 @@ import OrdersPage from "./src/screens/OrdersPage";
 import AccountManagementPage from "./src/screens/AccountManagementPage";
 import {Alerts} from "./src/static-data";
 import LogInPage from "./src/screens/LogInPage";
-import SignUpPage from "./src/screens/SignUpPage";
+import SignUpPage from "./src/screens/SignUpPageOne";
+import SignUpPageOne from "./src/screens/SignUpPageOne";
+import SignUpPageTwo from "./src/screens/SignUpPageTwo";
 
 export const GlobalContext = React.createContext();
 
@@ -86,7 +88,8 @@ export default function App() {
               </Stack.Navigator>
           ) : (
               <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="Sign Up Page" component={SignUpPage} />
+              <Stack.Screen name="Sign Up Page One" component={SignUpPageOne} />
+              <Stack.Screen name="Sign Up Page Two" component={SignUpPageTwo} />
               <Stack.Screen name="Log In Page" component={LogInPage} />
               </Stack.Navigator>
           )}

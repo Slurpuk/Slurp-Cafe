@@ -124,7 +124,7 @@ const LogInPage = ({navigation}) => {
                 </Text>
                 <Text
                     style={[textStyles.hyperlink]}
-                    onPress={() => navigation.navigate('Sign Up Page')}>
+                    onPress={() => navigation.navigate('Sign Up Page One')}>
                     New? Create an account
                 </Text>
             </View>
