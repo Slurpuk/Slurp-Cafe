@@ -92,10 +92,7 @@ const SignUpPageTwo = ({navigation}) => {
         } else if (errorCode === 'auth/invalid-email') {
             Alerts.badEmailAlert();
             navigation.navigate('Sign Up Page One');
-        }else if (errorCode === 'auth/email-already-in-use') {
-            Alerts.emailInUseAlert();
-            navigation.navigate('Sign Up Page One');
-        } else if (errorCode === 'auth/network-request-failed') {
+        }else if (errorCode === 'auth/network-request-failed') {
             Alerts.connectionErrorAlert();
         } else {
             //Anything else
