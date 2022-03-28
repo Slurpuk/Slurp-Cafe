@@ -1,22 +1,26 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
-import {Alerts} from "../static-data";
+import {Alerts, OrderStatuses} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
+import {SignUpContext} from "../../App";
 
-export const SignUpContext = React.createContext();
 const SignUpPageOne = ({navigation}) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const signUpContext = useContext(SignUpContext);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState();
     const emailRegex = new RegExp(
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
+    useEffect(() => {
+        signUpContext.email=email;
+        signUpContext.password=password;
+    }, [email,password]);
 
     // Display a confirmation message to the user
     const registeredMessage = () => {
@@ -61,11 +65,6 @@ const SignUpPageOne = ({navigation}) => {
     }
 
     return (
-        <SignUpContext.Provider
-            value={{
-                    email:email,
-                    password:password,
-            }}>
             <View style={styles.wrapper}>
                 <View  style={styles.topBar}>
                     <StatusBar translucent={true} backgroundColor="white" />
@@ -79,7 +78,6 @@ const SignUpPageOne = ({navigation}) => {
                             setField={setEmail}
                             type={'email'}
                             value={email}
-                            onChangeText={() => processErrorsFrontEnd()}
                         />
 
                         <FormField
@@ -111,7 +109,6 @@ const SignUpPageOne = ({navigation}) => {
                     </View>
                 </View>
             </View>
-        </SignUpContext.Provider>
     );
 };
 

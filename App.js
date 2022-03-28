@@ -13,6 +13,7 @@ import SignUpPageOne from "./src/screens/SignUpPageOne";
 import SignUpPageTwo from "./src/screens/SignUpPageTwo";
 
 export const GlobalContext = React.createContext();
+export const SignUpContext = React.createContext();
 
 /**
  * Root app component initially rendered when the app boots.
@@ -87,11 +88,21 @@ export default function App() {
                   <Stack.Screen name="Account Management" component={AccountManagementPage} />
               </Stack.Navigator>
           ) : (
-              <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="Sign Up Page One" component={SignUpPageOne} />
-              <Stack.Screen name="Sign Up Page Two" component={SignUpPageTwo} />
-              <Stack.Screen name="Log In Page" component={LogInPage} />
-              </Stack.Navigator>
+              <SignUpContext.Provider
+                  value={{
+                      email:'',
+                      password:'',
+                      shopName:'',
+                      shopImageName:'',
+                      shopImageUri:'',
+                      shopDescription:'',
+                  }}>
+                  <Stack.Navigator screenOptions={{headerShown: false}}>
+                  <Stack.Screen name="Sign Up Page One" component={SignUpPageOne} />
+                  <Stack.Screen name="Sign Up Page Two" component={SignUpPageTwo} />
+                  <Stack.Screen name="Log In Page" component={LogInPage} />
+                  </Stack.Navigator>
+                  </SignUpContext.Provider>
           )}
         </NavigationContainer>
       </GlobalContext.Provider>
