@@ -23,6 +23,12 @@ export const Alerts = {
   badEmailAlert: () => {
     Alert.alert(AlertMessage.BAD_EMAIL.title, AlertMessage.BAD_EMAIL.message);
   },
+  emailInUseAlert: () => {
+    Alert.alert(AlertMessage.EMAIL_IN_USE.title, AlertMessage.EMAIL_IN_USE.message);
+  },
+  weakPasswordAlert: () => {
+    Alert.alert(AlertMessage.WEAK_PASSWORD.title, AlertMessage.WEAK_PASSWORD.message);
+  },
   wrongPasswordAlert: () => {
     Alert.alert(
         AlertMessage.WRONG_PASSWORD.title,

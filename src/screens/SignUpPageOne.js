@@ -1,13 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
-import auth from '@react-native-firebase/auth';
 import {Alerts, OrderStatuses} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
 import {SignUpContext} from "../../App";
 
+/**
+ * Renders the first page of the signing up process
+ */
 const SignUpPageOne = ({navigation}) => {
     const signUpContext = useContext(SignUpContext);
     const [email, setEmail] = useState('');
@@ -17,31 +19,28 @@ const SignUpPageOne = ({navigation}) => {
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
+    /**
+     * Listens to changes in the email and password to update the context
+     */
     useEffect(() => {
         signUpContext.email=email;
         signUpContext.password=password;
     }, [email,password]);
 
-    // Display a confirmation message to the user
-    const registeredMessage = () => {
-        Alert.alert('Congratulations', 'Registered Successfully', [
-            {
-                text: 'OK',
-            },
-        ]);
-    };
 
-
-    // Register the user to the database after checking their credentials
+    /**
+     * Navigates to the second page if some front ends checks are valid
+     */
     async function registerCoffeeShop() {
         if (processErrorsFrontEnd()) {
             navigation.navigate('Sign Up Page Two');
         }
     }
 
-    /*
- Deal with bad or empty inputs before sending request
-  */
+    /**
+     * Checks for simple form requirements
+     * @return boolean Expressing the valididty of the email and password front-end wise
+     */
     function processErrorsFrontEnd() {
         let validity = true;
         if (email === '') {
@@ -79,7 +78,6 @@ const SignUpPageOne = ({navigation}) => {
                             type={'email'}
                             value={email}
                         />
-
                         <FormField
                             title={'Password'}
                             setField={setPassword}
@@ -152,12 +150,6 @@ const styles = StyleSheet.create({
         marginBottom: '4%',
         flex:2,
         justifyContent: 'flex-end',
-    },
-    picture: {
-        borderRadius: 5,
-        width: 95,
-        height: 74,
-        marginRight: 15,
     },
 });
 

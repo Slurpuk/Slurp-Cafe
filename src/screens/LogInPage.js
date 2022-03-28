@@ -14,7 +14,7 @@ const LogInPage = ({navigation}) => {
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
-    /*
+    /**
     Manage response to database failure
      */
     function handleForgotPasswordErrorsBackEnd(errorCode) {
@@ -23,7 +23,7 @@ const LogInPage = ({navigation}) => {
         } else if (errorCode === 'auth/invalid-email') {
             Alerts.badEmailAlert();
         } else if (errorCode === 'auth/user-not-found') {
-            /*
+            /**
             We send the same success message if user not found to avoid letting
             malicious users that there is or isn't a user with a certain email.
              */
@@ -34,7 +34,7 @@ const LogInPage = ({navigation}) => {
         }
     }
 
-    /*
+    /**
     Send verification email to user to reset their password
      */
     async function forgotPassword() {
@@ -52,8 +52,9 @@ const LogInPage = ({navigation}) => {
         }
     }
 
-    /*
-    Deal with bad or empty inputs before sending request
+    /**
+    *Deal with bad or empty inputs before sending request
+     * @return boolean Expressing the validity of the fields front-end wise
      */
     function handleLogInErrorsFrontEnd() {
         let validity = true;
@@ -70,7 +71,7 @@ const LogInPage = ({navigation}) => {
         return validity;
     }
 
-    /*
+    /**
     Manage response to database failure
      */
     function handleLogInErrorsBackEnd(errorCode) {
@@ -89,6 +90,10 @@ const LogInPage = ({navigation}) => {
         }
     }
 
+    /**
+     * Sign the coffee shop in if everything if verified front end wise.
+     * It will catch the errors and show them in form of alerts
+     */
     async function authenticateCoffeeShop() {
         if (handleLogInErrorsFrontEnd()) {
             await firebase

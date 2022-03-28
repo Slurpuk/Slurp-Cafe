@@ -7,25 +7,28 @@ import {Alerts} from "../static-data";
 import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
-import {launchImageLibrary} from "react-native-image-picker";
 import {SignUpContext} from "../../App";
 
+/**
+ * Renders the second page of the signing up process
+ */
 const SignUpPageTwo = ({navigation}) => {
     const signUpContext = useContext(SignUpContext);
-    const [imageUriGallery, setImageUriGallery] = useState(signUpContext.shopImageUri);
-    const[imageName,setImageName]=useState(signUpContext.shopImageName);
     const [shopName, setShopName] = useState(signUpContext.shopName);
     const [shopIntro, setShopIntro] = useState(signUpContext.shopDescription);
 
+    /**
+     * Listens to changes in the shop name and shop description to update the context
+     */
     useEffect(() => {
-        signUpContext.shopImageName=imageName;
         signUpContext.shopName=shopName;
         signUpContext.shopDescription=shopIntro;
-        signUpContext.shopImageUri=imageUriGallery;
-    }, [imageName,shopName,shopIntro,imageUriGallery]);
+    }, [shopName,shopIntro]);
 
 
-    // Display a confirmation message to the user
+    /**
+     * Displays a confirmation message to the user in the form of an alert
+     */
     const registeredMessage = () => {
         Alert.alert('Congratulations', 'Registered Successfully', [
             {
@@ -35,7 +38,9 @@ const SignUpPageTwo = ({navigation}) => {
     };
 
 
-    // Register the user to the database after checking their credentials
+    /**
+     * Registers user to the database after checking for front end form requirements
+     */
     async function registerCoffeeShop() {
         if (processErrorsFrontEnd()) {
             await auth()
@@ -50,9 +55,11 @@ const SignUpPageTwo = ({navigation}) => {
                 });
         }
     }
-    /*
- Deal with bad or empty inputs before sending request
-  */
+
+    /**
+     * Checks for simple form requirements
+     * @return boolean Expressing the validity of the email and password front-end wise
+     */
     function processErrorsFrontEnd() {
         let validity = true;
         if (shopName === '') {
@@ -63,13 +70,9 @@ const SignUpPageTwo = ({navigation}) => {
             validity = false;
             Alert.alert('Empty Description', 'Please enter your shop description.');
         }
-        else if (shopIntro.length>100) {
+        else if (shopIntro.length>100 || shopIntro.length<20) {
             validity = false;
-            Alert.alert('Long description', 'Please dont write more than 100 characters for the shop description.');
-        }
-        else if (imageName==='') {
-            validity = false;
-            Alert.alert('Empty Image', 'Please choose and image for your coffee shop.');
+            Alert.alert('Description length', 'The shop description must be between 20 and 100 characters long.');
         }
 
         return validity;
@@ -77,73 +80,50 @@ const SignUpPageTwo = ({navigation}) => {
 
 
 
-    /*
-        Manage response to database failure
-         */
+    /**
+     * Manages the response to database failure and shows
+     * errors in the form of alerts to the user
+     */
     function processBackEndErrors(errorCode) {
-        if (
-            errorCode === 'auth/wrong-password' ||
-            errorCode === 'auth/user-not-found'
+        if (errorCode === 'auth/weak-password'
         ) {
-            Alerts.wrongCredentialsAlert();
+            Alerts.weakPasswordAlert();
+            navigation.navigate('Sign Up Page One');
         } else if (errorCode === 'auth/invalid-email') {
             Alerts.badEmailAlert();
+            navigation.navigate('Sign Up Page One');
+        }else if (errorCode === 'auth/email-already-in-use') {
+            Alerts.emailInUseAlert();
+            navigation.navigate('Sign Up Page One');
         } else if (errorCode === 'auth/network-request-failed') {
             Alerts.connectionErrorAlert();
         } else {
-            console.log(errorCode);
             //Anything else
             Alerts.elseAlert();
         }
     }
-    /*
-      We have already created the authentication entry but now we need to imput the values for the Coffee Shop model.
-      Some of these are default, others are defined by the user input.
-      WARNING: email and name must be checked to not be undefined before calling.
-       */
+
+    /**
+     * Adds all the form field values to a newly create coffee shop
+     */
     async function addCoffeeShop() {
         await firestore()
             .collection('CoffeeShop')
             .add({
                 Email: signUpContext.email,
-                Name: shopName,
-                //will be an actual image
-                Image :imageUriGallery,
-/*                Image:
-                    'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',*/
-                Intro: shopIntro,
+                Name: signUpContext.shopName,
+                Image:
+                    'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
+                Intro: signUpContext.shopDescription,
                 IsOpen: false,
                 ItemsOffered: [],
                 Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
-                Likeness: 69,
-                Queue: 42,
             })
             .catch(error => {
                 console.log(error);
             });
     }
 
-    const openGallery = () => {
-        const options = {
-            mediaType:'photo',
-            includeBase64: false,
-        };
-
-        launchImageLibrary(options, response => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.errorCode) {
-                console.log('ImagePicker Error: ', response.errorCode)
-            } else if (response.assets[0].height>response.assets[0].width) {
-                Alert.alert('Image must be horizontal', 'Please only upload horizontal images.');
-            } else {
-                //console.log(response);
-                console.log(response.assets[0].fileName);
-                setImageUriGallery(response.assets[0].uri);
-                setImageName(response.assets[0].fileName);
-            }
-        });
-    };
 
 
     return (
@@ -161,24 +141,10 @@ const SignUpPageTwo = ({navigation}) => {
                         type={'name'}
                         value={shopName}
                     />
-                    <Text style={[styles.text]}>Shop Image</Text>
-                    <View style={styles.horizontalContainer}>
-                        <View style={[styles.greyRectangle,styles.subImageContainerLeft]} >
-                            <Text>{imageName}</Text>
-                        </View>
-                        <CustomButton
-                            style={styles.subImageContainer}
-                            color={'blue'}
-                            text={'Browse'}
-                            onPress={openGallery}
-                            widthRatio={0.17}
-                            buttonHeight={64}
-                        />
-                    </View>
                     <FormField
                         title={'Shop Description'}
                         setField={setShopIntro}
-                        placeholder={'100 chars describing the qualities of your coffee shop'}
+                        placeholder={'100 characters describing the qualities of your coffee shop'}
                         type={'multiline'}
                         value={shopIntro}
                     />
@@ -246,25 +212,11 @@ const styles = StyleSheet.create({
         flex:1,
         paddingHorizontal: '5%',
     },
-    picture: {
-        borderRadius: 5,
-        width: 95,
-        height: 74,
-        marginRight: 15,
-    },
     text: {
         marginBottom: '2%',
         fontFamily: 'Roboto-Medium',
         fontSize: 27,
         color:'black',
-    },
-
-    greyRectangle: {
-        backgroundColor: '#E1E1E1',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: '4.5%',
-        height:58,
     },
     horizontalContainer: {
         flexDirection: 'row',
@@ -272,13 +224,6 @@ const styles = StyleSheet.create({
         paddingVertical: '2%',
         justifyContent:'center',
         flex:0,
-    },
-    subImageContainer: {
-        flex: 1,
-    },
-    subImageContainerLeft: {
-        marginRight: '3%',
-        flex:1,
     },
     subButtonContainer: {
         flex:1,

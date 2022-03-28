@@ -93,8 +93,6 @@ export default function App() {
                       email:'',
                       password:'',
                       shopName:'',
-                      shopImageName:'',
-                      shopImageUri:'',
                       shopDescription:'',
                   }}>
                   <Stack.Navigator screenOptions={{headerShown: false}}>
