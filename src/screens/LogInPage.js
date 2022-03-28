@@ -105,61 +105,92 @@ const LogInPage = ({navigation}) => {
 
     return (
         <View style={styles.wrapper}>
-            <StatusBar translucent={true} backgroundColor="transparent" />
-            <Text style={textStyles.formTitle}>Log In</Text>
-            <View style={styles.form}>
-                <FormField
+            <View  style={styles.topBar}>
+                <StatusBar translucent={true} backgroundColor="white" />
+                <Text style={textStyles.formTitle}>Log In</Text>
+            </View>
+            <View style={styles.paddedContainer}>
+                <View style={styles.formContainer}>
+                    <FormField
 
-                    title={'Email'}
-                    placeholder={'business@coolcoffee.com'}
-                    setField={setEmail}
-                    type={'email'}
-                    value={email}
-                />
-                <FormField
-                    title={'Password'}
-                    setField={setPassword}
-                    type={'password'}
-                    value={password}
-                />
-                <Text
-                    style={[ textStyles.hyperlink]}
-                    onPress={forgotPassword}>
-                    Forgot your password?
-                </Text>
-                <Text
-                    style={[textStyles.hyperlink]}
-                    onPress={() => navigation.navigate('Sign Up Page One')}>
-                    New? Create an account
-                </Text>
+                        title={'Email'}
+                        placeholder={'business@coolcoffee.com'}
+                        setField={setEmail}
+                        type={'email'}
+                        value={email}
+                    />
+                    <FormField
+                        title={'Password'}
+                        setField={setPassword}
+                        type={'password'}
+                        value={password}
+                    />
+                    <Text
+                        style={[ textStyles.hyperlink]}
+                        onPress={forgotPassword}>
+                        Forgot your password?
+                    </Text>
+                    <Text
+                        style={[textStyles.hyperlink]}
+                        onPress={() => navigation.navigate('Sign Up Page One')}>
+                        New? Create an account
+                    </Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        color={'green'}
+                        text={'Log In'}
+                        onPress={authenticateCoffeeShop}
+                        widthRatio={0.91}
+                        buttonHeight={70}
+                    />
+                </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <CustomButton
-                    color={'green'}
-                    text={'Log In'}
-                    onPress={authenticateCoffeeShop}
-                    widthRatio={0.91}
-                />
-            </View>
+
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    topBar: {
+        height: '12%',
+        paddingHorizontal: '5%',
+        width:'100%',
+        alignItems: 'center',
+        backgroundColor: '#F6F6F6',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+    },
     wrapper: {
         display: 'flex',
         flex: 1,
+        backgroundColor: 'white',
         paddingTop: getCushyPaddingTop(),
-        backgroundColor: '#F2F2F2',
         paddingBottom: '5%',
-        paddingHorizontal: '5%',
     },
-    form: {
-        flex: 3,
+    formContainer: {
+        flex: 1,
         paddingVertical: '10%',
     },
+    paddedContainer: {
+        display:"flex",
+        flex:1,
+        paddingHorizontal: '5%',
+    },
+
     buttonContainer: {
         marginBottom: '4%',
+        flex:2,
+        justifyContent: 'flex-end',
     },
 });
 

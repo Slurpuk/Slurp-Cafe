@@ -15,6 +15,7 @@ import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
+import {Alerts} from "../static-data";
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -24,7 +25,7 @@ const AccountManagementPage = ({navigation}) => {
     longitude: globalContext.coffeeShopObj.Location.longitude,
   });
 
-  /*
+  /**
     Simple function to log out, triggers state changes in App.
      */
   async function logout() {
@@ -32,24 +33,67 @@ const AccountManagementPage = ({navigation}) => {
       .signOut()
       .catch(e => alert(e.message));
   }
+  /**
+   * Checks for simple form requirements
+   * @return boolean Expressing the validity of the fields front-end wise
+   */
+  function processErrorsFrontEnd() {
+    let validity = true;
+    if (name === '') {
+      validity = false;
+      Alert.alert('Empty Shop name', 'Please enter your shop name.');
+    }
+    else if (intro === '') {
+      validity = false;
+      Alert.alert('Empty Description', 'Please enter your shop description.');
+    }
+    else if (intro.length>200 || intro.length<20) {
+      validity = false;
+      Alert.alert('Description length', 'The shop description must be between 20 and 200 characters long.');
+    } else if (location.latitude>90 || location.latitude<-90 || location.longitude>180 || location.longitude<-180) {
+      validity = false;
+      Alert.alert('Location is not valid', 'The latitude or longitude values are not valid.');
+    }
 
-  /*
+    return validity;
+  }
+
+
+
+  /**
+   * Manages the response to database failure and shows
+   * errors in the form of alerts to the user
+   */
+  function processBackEndErrors(errorCode) {
+     if (errorCode === 'auth/network-request-failed') {
+      Alerts.connectionErrorAlert();
+    } else {
+      //Anything else
+      Alerts.elseAlert();
+    }
+  }
+
+  /**
     Function to change details of a CoffeeShop model in the database. Recomputes de location with the new coordinates.
      */
   async function updateDetails() {
-    await firestore()
-      .collection('CoffeeShop')
-      .doc(globalContext.coffeeShopRef)
-      .update({
-        Name: name,
-        Intro: intro,
-        Location: new firestore.GeoPoint(location.latitude, location.longitude), //Default location: 10 Downing Street.
-      })
-      .then(r => {
-        Alert.alert('Success', 'Details Updated.');
-        navigation.navigate('Orders Page');
-      })
-      .catch(e => console.log(e));
+    if (processErrorsFrontEnd()) {
+      await firestore()
+          .collection('CoffeeShop')
+          .doc(globalContext.coffeeShopRef)
+          .update({
+            Name: name,
+            Intro: intro,
+            Location: new firestore.GeoPoint(location.latitude, location.longitude), //Default location: 10 Downing Street.
+          })
+          .then(r => {
+            Alert.alert('Success', 'Details Updated.');
+            navigation.navigate('Orders Page');
+          })
+          .catch(error => {
+            processBackEndErrors(error.code);
+          });
+    }
   }
 
   return (
@@ -59,14 +103,14 @@ const AccountManagementPage = ({navigation}) => {
         <Text style={[textStyles.formTitle, {textAlign: 'center'}]}>{globalContext.coffeeShopObj.Name}</Text>
         <FormField
           style={styles.element}
-          title={'Name'}
+          title={'Shop Name'}
           setField={setName}
           type={'name'}
           value={name}
         />
         <FormField
           style={styles.element}
-          title={'Intro'}
+          title={'Shop Description'}
           setField={setIntro}
           type={'multiline'}
           value={intro}
