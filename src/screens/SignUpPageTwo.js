@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Alerts} from "../static-data";
-import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
 import {SignUpContext} from "../../App";
@@ -116,7 +115,7 @@ const SignUpPageTwo = ({navigation}) => {
             .catch(errorCode => {
                 if (errorCode === 'auth/network-request-failed') {
                     Alerts.connectionErrorAlert();
-                };
+                }
             });
     }
 
@@ -125,7 +124,7 @@ const SignUpPageTwo = ({navigation}) => {
     return (
         <View style={styles.wrapper}>
             <View  style={styles.topBar}>
-                <StatusBar translucent={true} backgroundColor="white" />
+                <StatusBar translucent={true} backgroundColor="transparent" />
                 <Text style={textStyles.formTitle}>Sign Up</Text>
             </View>
             <View style={styles.paddedContainer}>
@@ -196,7 +195,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         backgroundColor: 'white',
-        paddingTop: getCushyPaddingTop(),
         paddingBottom: '5%',
     },
     formContainer: {

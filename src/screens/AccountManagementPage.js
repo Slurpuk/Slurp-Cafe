@@ -16,7 +16,6 @@ import FormField from '../sub-components/FormField';
 import textStyles from "../stylesheets/textStyles";
 import CustomButton from "../sub-components/CustomButton";
 import {Alerts} from "../static-data";
-import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -32,7 +31,7 @@ const AccountManagementPage = ({navigation}) => {
   async function logout() {
     await auth()
       .signOut()
-      .catch(e => alert(e.message));
+      .catch(e => processBackEndErrors(e));
   }
   /**
    * Checks for simple form requirements
@@ -100,7 +99,7 @@ const AccountManagementPage = ({navigation}) => {
   return (
     <View style={styles.wrapper}>
       <View  style={styles.topBar}>
-        <StatusBar translucent={true} backgroundColor="white" />
+        <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={[textStyles.formTitle]}>{globalContext.coffeeShopObj.Name}</Text>
       </View>
       <View style={styles.paddedContainer}>
@@ -209,7 +208,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: getCushyPaddingTop(),
     paddingBottom: '5%',
   },
   formContainer: {

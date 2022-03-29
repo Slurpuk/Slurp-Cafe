@@ -5,7 +5,6 @@ import CustomButton from "../sub-components/CustomButton";
 import textStyles from "../stylesheets/textStyles";
 import firebase from "@react-native-firebase/app";
 import {Alerts} from "../static-data";
-import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 
 const LogInPage = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -106,7 +105,7 @@ const LogInPage = ({navigation}) => {
     return (
         <View style={styles.wrapper}>
             <View  style={styles.topBar}>
-                <StatusBar translucent={true} backgroundColor="white" />
+                <StatusBar translucent={true} backgroundColor="transparent" />
                 <Text style={textStyles.formTitle}>Log In</Text>
             </View>
             <View style={styles.paddedContainer}>
@@ -174,7 +173,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         backgroundColor: 'white',
-        paddingTop: getCushyPaddingTop(),
         paddingBottom: '5%',
     },
     formContainer: {
