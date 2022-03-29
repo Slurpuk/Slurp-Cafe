@@ -80,19 +80,65 @@ describe('Account Management Page', function () {
             expect(spyAlert).toHaveBeenCalled();
             expect(spyAlert.mock.calls[0][0]).toBe('Location is not valid');
         });
-        it('should raise alert on latitude more than 90', async function () {
+        it('should raise alert on latitude les than -90', async function () {
             const {getByText, getAllByPlaceholderText} = render(<GlobalContext.Provider value={globalContextMock}>
                 <AccountManagementPage />
             </GlobalContext.Provider>);
             const inputs=getAllByPlaceholderText('');
             const latitude=inputs[2];
             expect(latitude).toBeTruthy();
-            fireEvent.changeText(latitude, '95');
+            fireEvent.changeText(latitude, '-95');
 
             fireEvent(getByText('Save Details'), 'press');
 
             expect(spyAlert).toHaveBeenCalled();
             expect(spyAlert.mock.calls[0][0]).toBe('Location is not valid');
+        });
+        it('should  raise alert on longitude more than 180', async function () {
+            const {getByText, getAllByPlaceholderText} = render(<GlobalContext.Provider value={globalContextMock}>
+                <AccountManagementPage />
+            </GlobalContext.Provider>);
+            const inputs=getAllByPlaceholderText('');
+            const longitude=inputs[3];
+            expect(longitude).toBeTruthy();
+            fireEvent.changeText(longitude, '185');
+
+            fireEvent(getByText('Save Details'), 'press');
+
+            expect(spyAlert).toHaveBeenCalled();
+            expect(spyAlert.mock.calls[0][0]).toBe('Location is not valid');
+        });
+        it('should  raise alert on longitude less than -180', async function () {
+            const {getByText, getAllByPlaceholderText} = render(<GlobalContext.Provider value={globalContextMock}>
+                <AccountManagementPage />
+            </GlobalContext.Provider>);
+            const inputs=getAllByPlaceholderText('');
+            const longitude=inputs[3];
+            expect(longitude).toBeTruthy();
+            fireEvent.changeText(longitude, '-185');
+
+            fireEvent(getByText('Save Details'), 'press');
+
+            expect(spyAlert).toHaveBeenCalled();
+            expect(spyAlert.mock.calls[0][0]).toBe('Location is not valid');
+        });
+        it('should  not raise alert on valid input', async function () {
+            const {getByText, getAllByPlaceholderText} = render(<GlobalContext.Provider value={globalContextMock}>
+                <AccountManagementPage />
+            </GlobalContext.Provider>);
+            const inputs=getAllByPlaceholderText('');
+            const shopName=inputs[0];
+            const description=inputs[1];
+            const latitude=inputs[2];
+            const longitude=inputs[3];
+            expect(shopName).toBeTruthy();
+            expect(description).toBeTruthy();
+            expect(longitude).toBeTruthy();
+            expect(latitude).toBeTruthy();
+
+            fireEvent(getByText('Save Details'), 'press');
+
+            expect(spyAlert).toHaveBeenCalledTimes(0);
         });
     });
 });
