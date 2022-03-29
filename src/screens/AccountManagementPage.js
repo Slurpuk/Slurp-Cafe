@@ -42,7 +42,7 @@ const AccountManagementPage = ({navigation}) => {
     let validity = true;
     if (name === '') {
       validity = false;
-      Alert.alert('Empty Shop name', 'Please enter your shop name.');
+      Alert.alert('Empty Shop Name', 'Please enter your shop name.');
     }
     else if (intro === '') {
       validity = false;

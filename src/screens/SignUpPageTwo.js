@@ -64,11 +64,7 @@ const SignUpPageTwo = ({navigation}) => {
         let validity = true;
         if (shopName === '') {
             validity = false;
-            Alert.alert('Empty ShopName', 'Please enter your shop name.');
-        }
-        else if (shopIntro === '') {
-            validity = false;
-            Alert.alert('Empty Description', 'Please enter your shop description.');
+            Alert.alert('Empty Shop Name', 'Please enter your shop name.');
         }
         else if (shopIntro.length>100 || shopIntro.length<20) {
             validity = false;
