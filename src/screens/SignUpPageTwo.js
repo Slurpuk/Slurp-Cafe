@@ -17,24 +17,21 @@ const SignUpPageTwo = ({navigation}) => {
     const [shopName, setShopName] = useState(signUpContext.shopName);
     const [shopIntro, setShopIntro] = useState(signUpContext.shopDescription);
 
+
     /**
-     * Listens to changes in the shop name and shop description to update the context
+     * Navigates to the first page and update global context values
      */
-    useEffect(() => {
+    async function navigatePreviousPage() {
+        navigation.navigate('Sign Up Page One')
         signUpContext.shopName=shopName;
         signUpContext.shopDescription=shopIntro;
-    }, [shopName,shopIntro]);
-
+    }
 
     /**
      * Displays a confirmation message to the user in the form of an alert
      */
     const registeredMessage = () => {
-        Alert.alert('Congratulations', 'Registered Successfully', [
-            {
-                text: 'OK',
-            },
-        ]);
+        Alert.alert('Congratulations', 'Registered Successfully');
     };
 
 
@@ -66,7 +63,7 @@ const SignUpPageTwo = ({navigation}) => {
             validity = false;
             Alert.alert('Empty Shop Name', 'Please enter your shop name.');
         }
-        else if (shopIntro.length>100 || shopIntro.length<20) {
+        else if (shopIntro.length>150 || shopIntro.length<20) {
             validity = false;
             Alert.alert('Description length', 'The shop description must be between 20 and 100 characters long.');
         }
@@ -112,8 +109,10 @@ const SignUpPageTwo = ({navigation}) => {
                 ItemsOffered: [],
                 Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
             })
-            .catch(error => {
-                console.log(error);
+            .catch(errorCode => {
+                if (errorCode === 'auth/network-request-failed') {
+                    Alerts.connectionErrorAlert();
+                };
             });
     }
 
@@ -137,7 +136,7 @@ const SignUpPageTwo = ({navigation}) => {
                     <FormField
                         title={'Shop Description'}
                         setField={setShopIntro}
-                        placeholder={'100 characters describing the qualities of your coffee shop'}
+                        placeholder={'150 characters describing the qualities of your coffee shop'}
                         type={'multiline'}
                         value={shopIntro}
                     />
@@ -152,8 +151,8 @@ const SignUpPageTwo = ({navigation}) => {
                         style={[styles.leftButton]}
                         color={'blue'}
                         text={'Go Back'}
-                        onPress={()=>navigation.navigate('Sign Up Page One')}
-                        widthRatio={0.40}
+                        onPress={navigatePreviousPage}
+                        widthRatio={0.42}
                         buttonHeight={70}
                     />
                     <CustomButton
@@ -161,7 +160,7 @@ const SignUpPageTwo = ({navigation}) => {
                         color={'green'}
                         text={'Register'}
                         onPress={registerCoffeeShop}
-                        widthRatio={0.40}
+                        widthRatio={0.42}
                         buttonHeight={70}
                     />
                 </View>
@@ -207,17 +206,15 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         display: 'flex',
-        flex: 0,
         flexDirection: 'row',
-        justifyContent: 'center',
         marginBottom: '4%',
+        justifyContent:'space-between',
     },
     leftButton: {
-        flex:1,
+        flexGrow:0,
     },
     rightButton: {
-        marginHorizontal:'40%',
-        flex:1,
+        flexGrow:0,
     },
 });
 

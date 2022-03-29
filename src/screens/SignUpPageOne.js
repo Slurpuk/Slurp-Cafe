@@ -19,21 +19,15 @@ const SignUpPageOne = ({navigation}) => {
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
-    /**
-     * Listens to changes in the email and password to update the context
-     */
-    useEffect(() => {
-        signUpContext.email=email;
-        signUpContext.password=password;
-    }, [email,password]);
-
 
     /**
      * Navigates to the second page if some front ends checks are valid
      */
-    async function registerCoffeeShop() {
+    async function navigateNextPage() {
         if (processErrorsFrontEnd()) {
             navigation.navigate('Sign Up Page Two');
+            signUpContext.email=email;
+            signUpContext.password=password;
         }
     }
 
@@ -100,7 +94,7 @@ const SignUpPageOne = ({navigation}) => {
                         <CustomButton
                             color={'green'}
                             text={'Next'}
-                            onPress={registerCoffeeShop}
+                            onPress={navigateNextPage}
                             widthRatio={0.91}
                             buttonHeight={70}
                         />
