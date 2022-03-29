@@ -3,6 +3,10 @@ export const AlertMessage = {
     title: "Can't connect to the database",
     message: "That's embarrassing - something went completely wrong...",
   },
+  WEAK_PASSWORD: {
+    title: "Weak password",
+    message: "Please enter a more robust password",
+  },
   CONNECTION: {
     title: 'No connection',
     message:
@@ -12,6 +16,11 @@ export const AlertMessage = {
     title: 'Too many requests',
     message:
         "It looks like you've tried that too many times, you will be able to try again later.",
+  },
+  EMAIL_IN_USE: {
+    title: 'Email in use',
+    message:
+        "Please use a different email to sign up.",
   },
   WRONG_CREDENTIALS: {
     title: 'Wrong Password',

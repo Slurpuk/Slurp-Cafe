@@ -15,13 +15,14 @@ export default function CustomButton(props) {
         optionalNumber = null,
         widthRatio = 0.36,
         onPress,
+        buttonHeight=60,
     } = props;
 
     return (
         <View>
             <Animated.View style={{transform: [{scale}]}}>
                 <TouchableOpacity
-                    style={[buttonStyles.outer, buttonStyles[color], {width: screenWidth*widthRatio}]}
+                    style={[buttonStyles.outer, buttonStyles[color], {width: screenWidth*widthRatio, height:buttonHeight}]}
                     activeOpacity={1}
                     onPressIn={onPressIn}
                     onPressOut={onPressOut}
@@ -70,6 +71,11 @@ const buttonStyles = StyleSheet.create({
         backgroundColor: '#207671',
     },
 
+    grey: {
+        backgroundColor: '#E1E1E1',
+    },
+
+
     blue: {
         backgroundColor: '#4273D3',
     },
@@ -117,6 +123,7 @@ const buttonStyles = StyleSheet.create({
         fontFamily: 'Roboto-Medium',
         letterSpacing: 0.5,
         fontSize:24,
+        fontWeight:'700',
     },
 
     outer: {
@@ -124,6 +131,5 @@ const buttonStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height:60,
     },
 });

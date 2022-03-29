@@ -5,7 +5,6 @@ import CustomButton from "../sub-components/CustomButton";
 import textStyles from "../stylesheets/textStyles";
 import firebase from "@react-native-firebase/app";
 import {Alerts} from "../static-data";
-import {getCushyPaddingTop} from "../stylesheets/StyleFunction";
 
 const LogInPage = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -14,7 +13,7 @@ const LogInPage = ({navigation}) => {
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
-    /*
+    /**
     Manage response to database failure
      */
     function handleForgotPasswordErrorsBackEnd(errorCode) {
@@ -23,7 +22,7 @@ const LogInPage = ({navigation}) => {
         } else if (errorCode === 'auth/invalid-email') {
             Alerts.badEmailAlert();
         } else if (errorCode === 'auth/user-not-found') {
-            /*
+            /**
             We send the same success message if user not found to avoid letting
             malicious users that there is or isn't a user with a certain email.
              */
@@ -34,7 +33,7 @@ const LogInPage = ({navigation}) => {
         }
     }
 
-    /*
+    /**
     Send verification email to user to reset their password
      */
     async function forgotPassword() {
@@ -52,8 +51,9 @@ const LogInPage = ({navigation}) => {
         }
     }
 
-    /*
-    Deal with bad or empty inputs before sending request
+    /**
+    *Deal with bad or empty inputs before sending request
+     * @return boolean Expressing the validity of the fields front-end wise
      */
     function handleLogInErrorsFrontEnd() {
         let validity = true;
@@ -70,7 +70,7 @@ const LogInPage = ({navigation}) => {
         return validity;
     }
 
-    /*
+    /**
     Manage response to database failure
      */
     function handleLogInErrorsBackEnd(errorCode) {
@@ -89,6 +89,10 @@ const LogInPage = ({navigation}) => {
         }
     }
 
+    /**
+     * Sign the coffee shop in if everything if verified front end wise.
+     * It will catch the errors and show them in form of alerts
+     */
     async function authenticateCoffeeShop() {
         if (handleLogInErrorsFrontEnd()) {
             await firebase
@@ -100,61 +104,91 @@ const LogInPage = ({navigation}) => {
 
     return (
         <View style={styles.wrapper}>
-            <StatusBar translucent={true} backgroundColor="transparent" />
-            <Text style={textStyles.formTitle}>Log In</Text>
-            <View style={styles.form}>
-                <FormField
+            <View  style={styles.topBar}>
+                <StatusBar translucent={true} backgroundColor="transparent" />
+                <Text style={textStyles.formTitle}>Log In</Text>
+            </View>
+            <View style={styles.paddedContainer}>
+                <View style={styles.formContainer}>
+                    <FormField
 
-                    title={'Email'}
-                    placeholder={'business@coolcoffee.com'}
-                    setField={setEmail}
-                    type={'email'}
-                    value={email}
-                />
-                <FormField
-                    title={'Password'}
-                    setField={setPassword}
-                    type={'password'}
-                    value={password}
-                />
-                <Text
-                    style={[ textStyles.hyperlink]}
-                    onPress={forgotPassword}>
-                    Forgot your password?
-                </Text>
-                <Text
-                    style={[textStyles.hyperlink]}
-                    onPress={() => navigation.navigate('Sign Up Page')}>
-                    New? Create an account
-                </Text>
+                        title={'Email'}
+                        placeholder={'business@coolcoffee.com'}
+                        setField={setEmail}
+                        type={'email'}
+                        value={email}
+                    />
+                    <FormField
+                        title={'Password'}
+                        setField={setPassword}
+                        type={'password'}
+                        value={password}
+                    />
+                    <Text
+                        style={[ textStyles.hyperlink]}
+                        onPress={forgotPassword}>
+                        Forgot your password?
+                    </Text>
+                    <Text
+                        style={[textStyles.hyperlink]}
+                        onPress={() => navigation.navigate('Sign Up Page One')}>
+                        New? Create an account
+                    </Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        color={'green'}
+                        text={'Log In'}
+                        onPress={authenticateCoffeeShop}
+                        widthRatio={0.91}
+                        buttonHeight={70}
+                    />
+                </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <CustomButton
-                    color={'green'}
-                    text={'Log In'}
-                    onPress={authenticateCoffeeShop}
-                    widthRatio={0.91}
-                />
-            </View>
+
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    topBar: {
+        height: '12%',
+        paddingHorizontal: '5%',
+        width:'100%',
+        alignItems: 'center',
+        backgroundColor: '#F6F6F6',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+    },
     wrapper: {
         display: 'flex',
         flex: 1,
-        paddingTop: getCushyPaddingTop(),
-        backgroundColor: '#F2F2F2',
+        backgroundColor: 'white',
         paddingBottom: '5%',
-        paddingHorizontal: '5%',
     },
-    form: {
-        flex: 3,
+    formContainer: {
+        flex: 1,
         paddingVertical: '10%',
     },
+    paddedContainer: {
+        display:"flex",
+        flex:1,
+        paddingHorizontal: '5%',
+    },
+
     buttonContainer: {
         marginBottom: '4%',
+        flex:2,
+        justifyContent: 'flex-end',
     },
 });
 
