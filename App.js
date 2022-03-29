@@ -70,6 +70,11 @@ export default function App() {
       }
 
 
+    if(coffeeShopObj!==null){
+        console.log("coffee shop obj:"+ coffeeShopObj.Name);
+    }
+
+
   //Creates the stack over which the pages are laid; enables navigation.
   const Stack = createNativeStackNavigator();
 

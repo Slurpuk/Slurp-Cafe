@@ -65,7 +65,7 @@ const SignUpPageTwo = ({navigation}) => {
         }
         else if (shopIntro.length>150 || shopIntro.length<20) {
             validity = false;
-            Alert.alert('Description length', 'The shop description must be between 20 and 100 characters long.');
+            Alert.alert('Description length', 'The shop description must be between 20 and 150 characters long.');
         }
 
         return validity;
