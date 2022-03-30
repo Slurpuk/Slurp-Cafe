@@ -13,7 +13,7 @@ const SignUpPageOne = ({navigation}) => {
     const signUpContext = useContext(SignUpContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState();
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const emailRegex = new RegExp(
         '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
@@ -32,7 +32,7 @@ const SignUpPageOne = ({navigation}) => {
 
     /**
      * Checks for simple form requirements
-     * @return boolean Expressing the valididty of the email and password front-end wise
+     * @return boolean Expressing the validity of the email and password front-end wise
      */
     function processErrorsFrontEnd() {
         let validity = true;
@@ -58,7 +58,7 @@ const SignUpPageOne = ({navigation}) => {
 
     return (
             <View style={styles.wrapper}>
-                <View  style={styles.topBar}>
+                <View style={styles.topBar}>
                     <StatusBar translucent={true} backgroundColor="transparent" />
                     <Text style={textStyles.formTitle}>Sign Up</Text>
                 </View>
@@ -84,7 +84,7 @@ const SignUpPageOne = ({navigation}) => {
                             value={passwordConfirmation}
                         />
                         <Text
-                            style={[ textStyles.hyperlink]}
+                            style={[textStyles.hyperlink]}
                             onPress={() => navigation.navigate('Log In Page')}
                         >Already have an account? Log in
                         </Text>
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
         paddingBottom: '5%',
     },
     formContainer: {
-        flex: 1,
         paddingVertical: '10%',
     },
     paddedContainer: {
