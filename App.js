@@ -5,11 +5,15 @@ import auth from '@react-native-firebase/auth';
 import firebase from "@react-native-firebase/app";
 import firestore from "@react-native-firebase/firestore";
 import OrdersPage from "./src/screens/OrdersPage";
-import AuthenticationPage from "./src/screens/AuthenticationPage";
 import AccountManagementPage from "./src/screens/AccountManagementPage";
 import {Alerts} from "./src/static-data";
+import LogInPage from "./src/screens/LogInPage";
+import SignUpPage from "./src/screens/SignUpPageOne";
+import SignUpPageOne from "./src/screens/SignUpPageOne";
+import SignUpPageTwo from "./src/screens/SignUpPageTwo";
 
 export const GlobalContext = React.createContext();
+export const SignUpContext = React.createContext();
 
 /**
  * Root app component initially rendered when the app boots.
@@ -85,7 +89,19 @@ export default function App() {
                   <Stack.Screen name="Account Management" component={AccountManagementPage} />
               </Stack.Navigator>
           ) : (
-              <AuthenticationPage/>
+              <SignUpContext.Provider
+                  value={{
+                      email:'',
+                      password:'',
+                      shopName:'',
+                      shopDescription:'',
+                  }}>
+                  <Stack.Navigator screenOptions={{headerShown: false}}>
+                  <Stack.Screen name="Sign Up Page One" component={SignUpPageOne} />
+                  <Stack.Screen name="Sign Up Page Two" component={SignUpPageTwo} />
+                  <Stack.Screen name="Log In Page" component={LogInPage} />
+                  </Stack.Navigator>
+                  </SignUpContext.Provider>
           )}
         </NavigationContainer>
       </GlobalContext.Provider>

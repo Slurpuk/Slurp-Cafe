@@ -1,4 +1,4 @@
-import {Platform, StyleSheet, PixelRatio, Dimensions} from "react-native";
+import {Platform, StyleSheet, PixelRatio, Dimensions} from 'react-native';
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const scale = SCREEN_WIDTH / 300;
 
@@ -8,51 +8,53 @@ const scale = SCREEN_WIDTH / 300;
  * @returns {number} the new, scaled size
  */
 function normalize(size) {
-    const newSize = size * scale;
-    if (Platform.OS === 'ios') {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize));
-    } else {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
-    }
+  const newSize = size * scale;
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
 }
 
 export const styles = StyleSheet.create({
-    tabContainer: {
-        justifyContent: 'flex-start',
-        marginTop: '5%',
-        marginLeft: '5%',
-    },
+  tabContainer: {
+    justifyContent: 'flex-start',
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%',
+  },
 
-    tab: {
-        flex: 0,
-        paddingHorizontal: '2%',
-        borderRadius: 20,
-        borderWidth: 0,
-        marginRight: '1%',
-        backgroundColor: '#E1E1E1',
-        alignSelf: 'baseline',
-        alignItems: 'baseline',
-    },
+  tab: {
+    flex: 1,
+    paddingHorizontal: '2%',
+    borderRadius: 20,
+    borderWidth: 0,
+    marginRight: '1%',
+    backgroundColor: '#E1E1E1',
+    alignSelf: 'baseline',
+    alignItems: 'center',
+  },
 
-    tabText: {
-        color: 'black',
-        fontSize: normalize(7),
-        fontFamily: 'Montserrat-Bold',
-    },
+  tabText: {
+    color: 'black',
+    fontSize: normalize(8.4),
+    fontFamily: 'Montserrat-Bold',
+  },
 
-    activeTab: {
-        backgroundColor: '#65ADA9',
-    },
+  activeTab: {
+    backgroundColor: '#65ADA9',
+  },
 
-    badgeNumber:{
-        fontSize: 15,
-    },
 
-    badgeContainer:{
-        backgroundColor: 'red',
-        minWidth: 20,
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+  badgeNumber: {
+    fontSize: 15,
+  },
+
+  badgeContainer: {
+    backgroundColor: 'red',
+    minWidth: 20,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

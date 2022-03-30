@@ -1,3 +1,3 @@
-import {setOrderStatus, removeOrder, updateFinishedTime} from "./queries";
+import {setOrderStatus, removeOrder, updateFinishedTime} from './queries';
 
 export {setOrderStatus, updateFinishedTime, removeOrder};
