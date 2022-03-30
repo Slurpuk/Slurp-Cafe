@@ -34,7 +34,8 @@ const ReducedOrder = () => {
           style={[
             Reduced.total_price,
             animatedContext.isExpanded ? Reduced.invisible : null,
-          ]}>
+          ]}
+        >
           £{order.data.Total.toFixed(2)}
         </Text>
       </View>

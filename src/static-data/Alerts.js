@@ -10,35 +10,41 @@ export const Alerts = {
   },
   tooManyRequestsAlert: () => {
     Alert.alert(
-        AlertMessage.MANY_REQUESTS.title,
-        AlertMessage.MANY_REQUESTS.message,
+      AlertMessage.MANY_REQUESTS.title,
+      AlertMessage.MANY_REQUESTS.message,
     );
   },
   wrongCredentialsAlert: () => {
     Alert.alert(
-        AlertMessage.WRONG_CREDENTIALS.title,
-        AlertMessage.WRONG_CREDENTIALS.message,
+      AlertMessage.WRONG_CREDENTIALS.title,
+      AlertMessage.WRONG_CREDENTIALS.message,
     );
   },
   badEmailAlert: () => {
     Alert.alert(AlertMessage.BAD_EMAIL.title, AlertMessage.BAD_EMAIL.message);
   },
   emailInUseAlert: () => {
-    Alert.alert(AlertMessage.EMAIL_IN_USE.title, AlertMessage.EMAIL_IN_USE.message);
+    Alert.alert(
+      AlertMessage.EMAIL_IN_USE.title,
+      AlertMessage.EMAIL_IN_USE.message,
+    );
   },
   weakPasswordAlert: () => {
-    Alert.alert(AlertMessage.WEAK_PASSWORD.title, AlertMessage.WEAK_PASSWORD.message);
+    Alert.alert(
+      AlertMessage.WEAK_PASSWORD.title,
+      AlertMessage.WEAK_PASSWORD.message,
+    );
   },
   wrongPasswordAlert: () => {
     Alert.alert(
-        AlertMessage.WRONG_PASSWORD.title,
-        AlertMessage.WRONG_PASSWORD.message,
+      AlertMessage.WRONG_PASSWORD.title,
+      AlertMessage.WRONG_PASSWORD.message,
     );
   },
   resetPasswordAlert: () => {
     Alert.alert(
-        AlertMessage.RESET_PASSWORD.title,
-        AlertMessage.RESET_PASSWORD.message,
+      AlertMessage.RESET_PASSWORD.title,
+      AlertMessage.RESET_PASSWORD.message,
     );
   },
   elseAlert: () => {

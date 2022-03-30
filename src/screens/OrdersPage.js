@@ -12,7 +12,7 @@ import {OrdersContext} from '../components/OrderManagement/contexts';
 import EmptyListText from '../sub-components/EmptyListText';
 import {emptyCurrentOrdersText, OrderStatuses} from '../static-data';
 import {getFormattedOrders} from '../firebase/queries';
-import textStyles from "../stylesheets/textStyles";
+import textStyles from '../stylesheets/textStyles';
 
 /**
  * Scales the size to the size of the screen

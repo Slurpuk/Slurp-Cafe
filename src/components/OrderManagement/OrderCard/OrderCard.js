@@ -21,7 +21,8 @@ const OrderCard = ({order}) => {
           currStatus: currStatus,
           setCurrStatus: setCurrStatus,
         },
-      }}>
+      }}
+    >
       <AnimatedCard
         collapsableContent={<ReducedOrder />}
         hidableContent={<ExpandedOrder />}
