@@ -13,6 +13,7 @@ const globalContextMock = {
 };
 
 
+
 describe('Account Management Page', function () {
     const spyAlert = jest
         .spyOn(Alert, 'alert')
