@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* ICSClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ICSClientTests.m */; };
+		00E356F31AD99517003FC87E /* SlurpCafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SlurpCafeTests.m */; };
 		05B6A368F09E4F38855E5EF5 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6E6474075264097AA414FAB /* Montserrat-SemiBoldItalic.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1C1AFE32B67B4A9D853F0761 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB2DD69942F475C95207744 /* Roboto-MediumItalic.ttf */; };
 		1C9D9CEF699B454DBBDF8AC4 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54E07214A0641358CD0E9FA /* Montserrat-Bold.ttf */; };
-		1E2511DC27BE54F000BB8B2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E2511DB27BE54F000BB8B2D /* GoogleService-Info.plist */; };
+		1E0E1E1927F519AB00C6ACA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0E1E1827F519AB00C6ACA4 /* GoogleService-Info.plist */; };
 		21221711679543379AEEF323 /* Montserrat-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ABF55151C914BDCA4603810 /* Montserrat-ExtraLightItalic.ttf */; };
 		22D339ACBF774290B0092A9F /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4781A349CC74DE69F66A1D9 /* Montserrat-Medium.ttf */; };
-		26F8F70B542C67731F197E1A /* libPods-ICSClient-ICSClientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A218330071EB10DE3F9D62 /* libPods-ICSClient-ICSClientTests.a */; };
+		26F8F70B542C67731F197E1A /* libPods-SlurpCafe-SlurpCafeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A218330071EB10DE3F9D62 /* libPods-SlurpCafe-SlurpCafeTests.a */; };
 		27C8194FE2EF418E88E4458A /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 712D431E8D894C8AA26C0398 /* Montserrat-MediumItalic.ttf */; };
 		307C3DC74213462EBE40C237 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6F2D52593F49FEB46F2617 /* Roboto-BlackItalic.ttf */; };
 		3560F598862144459FBA27FA /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F284BB2E9BF4A1EB230BE70 /* Montserrat-Italic.ttf */; };
@@ -34,7 +34,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		902C570190834646A6972992 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96D3C996326A43539F4E0FA9 /* Roboto-Black.ttf */; };
 		93951FED4AD64321A1D09809 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 600111E050CF43B7A00A0252 /* Roboto-Italic.ttf */; };
-		A17CC463F4DA7D6820931D8F /* libPods-ICSClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB64633821C7A1105A9AE2C7 /* libPods-ICSClient.a */; };
+		A17CC463F4DA7D6820931D8F /* libPods-SlurpCafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB64633821C7A1105A9AE2C7 /* libPods-SlurpCafe.a */; };
 		B42ED1939A564CE1A0BA2F2F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9AE7A3945914C9F8CBA3BA5 /* Roboto-Regular.ttf */; };
 		B98D5951916346A2AD562C48 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66228FC677D04815840F39D2 /* Montserrat-Light.ttf */; };
 		BEE07D28623847F9BA856302 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5F92D5B34064198BA8285B3 /* Montserrat-BoldItalic.ttf */; };
@@ -53,35 +53,35 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = ICSClient;
+			remoteInfo = SlurpCafe;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00176234BD3D4EF686F99EA4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* ICSClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ICSClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* SlurpCafeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlurpCafeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* ICSClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICSClientTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* SlurpCafeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlurpCafeTests.m; sourceTree = "<group>"; };
 		0360034070E44B1F867AF9C0 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		059E273D64D145F0A00F1177 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		10E452D6EEEC4A28B2B85F58 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		12F0E886A778420489EF5727 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ICSClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ICSClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ICSClient/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ICSClient/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ICSClient/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ICSClient/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ICSClient/main.m; sourceTree = "<group>"; };
-		1E2511DB27BE54F000BB8B2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* SlurpCafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlurpCafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SlurpCafe/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SlurpCafe/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SlurpCafe/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SlurpCafe/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SlurpCafe/main.m; sourceTree = "<group>"; };
+		1E0E1E1827F519AB00C6ACA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F6C14C97ED24CFBB23A9B90 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		228609033A44FD3F01B9259D /* Pods-ICSClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICSClient.release.xcconfig"; path = "Target Support Files/Pods-ICSClient/Pods-ICSClient.release.xcconfig"; sourceTree = "<group>"; };
+		228609033A44FD3F01B9259D /* Pods-SlurpCafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlurpCafe.release.xcconfig"; path = "Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe.release.xcconfig"; sourceTree = "<group>"; };
 		2B3C1C23204646CCAD381677 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		2DB2DD69942F475C95207744 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		3E63D61D1B674A3FA551EFEB /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		483646BC261641A2AF6B716C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		49214667D7034163B4393328 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		505B6C776228FC4F315036C6 /* Pods-ICSClient-ICSClientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICSClient-ICSClientTests.debug.xcconfig"; path = "Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests.debug.xcconfig"; sourceTree = "<group>"; };
-		552B75BC8D4656F46CB7D462 /* Pods-ICSClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICSClient.debug.xcconfig"; path = "Target Support Files/Pods-ICSClient/Pods-ICSClient.debug.xcconfig"; sourceTree = "<group>"; };
+		505B6C776228FC4F315036C6 /* Pods-SlurpCafe-SlurpCafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlurpCafe-SlurpCafeTests.debug.xcconfig"; path = "Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		552B75BC8D4656F46CB7D462 /* Pods-SlurpCafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlurpCafe.debug.xcconfig"; path = "Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe.debug.xcconfig"; sourceTree = "<group>"; };
 		5820A3678E33472896EED1E5 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		5FA3D2D71A994A97BFF47E53 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		600111E050CF43B7A00A0252 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../src/assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
@@ -90,17 +90,17 @@
 		66228FC677D04815840F39D2 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		673F2F1399DE491F89F64C91 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		67DF89365D8349139D0DAC2F /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
-		69A218330071EB10DE3F9D62 /* libPods-ICSClient-ICSClientTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ICSClient-ICSClientTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69A218330071EB10DE3F9D62 /* libPods-SlurpCafe-SlurpCafeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SlurpCafe-SlurpCafeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E02708080C44EC585A18047 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		712D431E8D894C8AA26C0398 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
 		71D06AC9D5CE46749DBDBD11 /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-LightItalic.ttf"; path = "../src/assets/fonts/Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
 		7A15759293804FB7A08C99D6 /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		7E9FA6F7CD2444DABF083F4E /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ICSClient/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SlurpCafe/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859BA5FE7F2E484B97042954 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		956681F36CC44DF3BF6A8C1B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		96D3C996326A43539F4E0FA9 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
-		9A9D6ADB284D484E5EEABF7E /* Pods-ICSClient-ICSClientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICSClient-ICSClientTests.release.xcconfig"; path = "Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests.release.xcconfig"; sourceTree = "<group>"; };
+		9A9D6ADB284D484E5EEABF7E /* Pods-SlurpCafe-SlurpCafeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlurpCafe-SlurpCafeTests.release.xcconfig"; path = "Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests.release.xcconfig"; sourceTree = "<group>"; };
 		9ABF55151C914BDCA4603810 /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		9F16F4F33F224842A3EBE40C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		9F284BB2E9BF4A1EB230BE70 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../src/assets/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		D2BF3034C995486E8019EBDB /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BlackItalic.ttf"; path = "../src/assets/fonts/Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D4781A349CC74DE69F66A1D9 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		DA877264FA6E4E65AF635DAF /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		DB64633821C7A1105A9AE2C7 /* libPods-ICSClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ICSClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB64633821C7A1105A9AE2C7 /* libPods-SlurpCafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SlurpCafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE472F6E106B47A088F1B438 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../src/assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F082DE811B904DC9904079A8 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26F8F70B542C67731F197E1A /* libPods-ICSClient-ICSClientTests.a in Frameworks */,
+				26F8F70B542C67731F197E1A /* libPods-SlurpCafe-SlurpCafeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,20 +137,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A17CC463F4DA7D6820931D8F /* libPods-ICSClient.a in Frameworks */,
+				A17CC463F4DA7D6820931D8F /* libPods-SlurpCafe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* ICSClientTests */ = {
+		00E356EF1AD99517003FC87E /* SlurpCafeTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* ICSClientTests.m */,
+				00E356F21AD99517003FC87E /* SlurpCafeTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = ICSClientTests;
+			path = SlurpCafeTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -161,7 +161,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* ICSClient */ = {
+		13B07FAE1A68108700A75B9A /* SlurpCafe */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -171,15 +171,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = ICSClient;
+			name = SlurpCafe;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DB64633821C7A1105A9AE2C7 /* libPods-ICSClient.a */,
-				69A218330071EB10DE3F9D62 /* libPods-ICSClient-ICSClientTests.a */,
+				DB64633821C7A1105A9AE2C7 /* libPods-SlurpCafe.a */,
+				69A218330071EB10DE3F9D62 /* libPods-SlurpCafe-SlurpCafeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -194,10 +194,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				1E2511DB27BE54F000BB8B2D /* GoogleService-Info.plist */,
-				13B07FAE1A68108700A75B9A /* ICSClient */,
+				1E0E1E1827F519AB00C6ACA4 /* GoogleService-Info.plist */,
+				13B07FAE1A68108700A75B9A /* SlurpCafe */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* ICSClientTests */,
+				00E356EF1AD99517003FC87E /* SlurpCafeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D040017B9FFF3BC17EEACFDA /* Pods */,
@@ -211,8 +211,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ICSClient.app */,
-				00E356EE1AD99517003FC87E /* ICSClientTests.xctest */,
+				13B07F961A680F5B00A75B9A /* SlurpCafe.app */,
+				00E356EE1AD99517003FC87E /* SlurpCafeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,10 +273,10 @@
 		D040017B9FFF3BC17EEACFDA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				552B75BC8D4656F46CB7D462 /* Pods-ICSClient.debug.xcconfig */,
-				228609033A44FD3F01B9259D /* Pods-ICSClient.release.xcconfig */,
-				505B6C776228FC4F315036C6 /* Pods-ICSClient-ICSClientTests.debug.xcconfig */,
-				9A9D6ADB284D484E5EEABF7E /* Pods-ICSClient-ICSClientTests.release.xcconfig */,
+				552B75BC8D4656F46CB7D462 /* Pods-SlurpCafe.debug.xcconfig */,
+				228609033A44FD3F01B9259D /* Pods-SlurpCafe.release.xcconfig */,
+				505B6C776228FC4F315036C6 /* Pods-SlurpCafe-SlurpCafeTests.debug.xcconfig */,
+				9A9D6ADB284D484E5EEABF7E /* Pods-SlurpCafe-SlurpCafeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -284,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* ICSClientTests */ = {
+		00E356ED1AD99517003FC87E /* SlurpCafeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ICSClientTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SlurpCafeTests" */;
 			buildPhases = (
 				C0AC45319D7B762AFEEC0F91 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -300,14 +300,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = ICSClientTests;
-			productName = ICSClientTests;
-			productReference = 00E356EE1AD99517003FC87E /* ICSClientTests.xctest */;
+			name = SlurpCafeTests;
+			productName = SlurpCafeTests;
+			productReference = 00E356EE1AD99517003FC87E /* SlurpCafeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* ICSClient */ = {
+		13B07F861A680F5B00A75B9A /* SlurpCafe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ICSClient" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SlurpCafe" */;
 			buildPhases = (
 				0186563E7D6E08B6ED64C9F4 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -323,9 +323,9 @@
 			);
 			dependencies = (
 			);
-			name = ICSClient;
-			productName = ICSClient;
-			productReference = 13B07F961A680F5B00A75B9A /* ICSClient.app */;
+			name = SlurpCafe;
+			productName = SlurpCafe;
+			productReference = 13B07F961A680F5B00A75B9A /* SlurpCafe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -345,7 +345,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ICSClient" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SlurpCafe" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -358,8 +358,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* ICSClient */,
-				00E356ED1AD99517003FC87E /* ICSClientTests */,
+				13B07F861A680F5B00A75B9A /* SlurpCafe */,
+				00E356ED1AD99517003FC87E /* SlurpCafeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -384,7 +384,6 @@
 				BEE07D28623847F9BA856302 /* Montserrat-BoldItalic.ttf in Resources */,
 				516875CA6BD442B8AF5547D3 /* Montserrat-ExtraBold.ttf in Resources */,
 				7E5CFE04A05D49BDAB6D8485 /* Montserrat-ExtraBoldItalic.ttf in Resources */,
-				1E2511DC27BE54F000BB8B2D /* GoogleService-Info.plist in Resources */,
 				62E1ED8C2C8040F49F84A941 /* Montserrat-ExtraLight.ttf in Resources */,
 				21221711679543379AEEF323 /* Montserrat-ExtraLightItalic.ttf in Resources */,
 				3560F598862144459FBA27FA /* Montserrat-Italic.ttf in Resources */,
@@ -405,6 +404,7 @@
 				EF4D4BFD50274236BC69C3DC /* Roboto-Light.ttf in Resources */,
 				5F49F2E9D59E40AB90BC77FC /* Roboto-LightItalic.ttf in Resources */,
 				7B36A1B06C054715A69EA5ED /* Roboto-Medium.ttf in Resources */,
+				1E0E1E1927F519AB00C6ACA4 /* GoogleService-Info.plist in Resources */,
 				1C1AFE32B67B4A9D853F0761 /* Roboto-MediumItalic.ttf in Resources */,
 				B42ED1939A564CE1A0BA2F2F /* Roboto-Regular.ttf in Resources */,
 				45EF5DF38B70454AB860A7F6 /* Roboto-Thin.ttf in Resources */,
@@ -444,7 +444,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ICSClient-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SlurpCafe-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -457,15 +457,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F0708FB6A5E191ED9F74B02 /* [CP] Copy Pods Resources */ = {
@@ -474,15 +474,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ICSClient/Pods-ICSClient-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe/Pods-SlurpCafe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		920DB5A518CFCDC803D8B38D /* [CP-User] [RNFB] Core Configuration */ = {
@@ -504,15 +504,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9B9C93CE16699009B73C2016 /* [CP] Embed Pods Frameworks */ = {
@@ -521,15 +521,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ICSClient-ICSClientTests/Pods-ICSClient-ICSClientTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SlurpCafe-SlurpCafeTests/Pods-SlurpCafe-SlurpCafeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C0AC45319D7B762AFEEC0F91 /* [CP] Check Pods Manifest.lock */ = {
@@ -547,7 +547,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ICSClient-ICSClientTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SlurpCafe-SlurpCafeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -580,7 +580,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* ICSClientTests.m in Sources */,
+				00E356F31AD99517003FC87E /* SlurpCafeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,7 +598,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* ICSClient */;
+			target = 13B07F861A680F5B00A75B9A /* SlurpCafe */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -606,14 +606,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 505B6C776228FC4F315036C6 /* Pods-ICSClient-ICSClientTests.debug.xcconfig */;
+			baseConfigurationReference = 505B6C776228FC4F315036C6 /* Pods-SlurpCafe-SlurpCafeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ICSClientTests/Info.plist;
+				INFOPLIST_FILE = SlurpCafeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -627,17 +627,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ICSClient.app/ICSClient";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlurpCafe.app/SlurpCafe";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A9D6ADB284D484E5EEABF7E /* Pods-ICSClient-ICSClientTests.release.xcconfig */;
+			baseConfigurationReference = 9A9D6ADB284D484E5EEABF7E /* Pods-SlurpCafe-SlurpCafeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = ICSClientTests/Info.plist;
+				INFOPLIST_FILE = SlurpCafeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -651,19 +651,19 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ICSClient.app/ICSClient";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SlurpCafe.app/SlurpCafe";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 552B75BC8D4656F46CB7D462 /* Pods-ICSClient.debug.xcconfig */;
+			baseConfigurationReference = 552B75BC8D4656F46CB7D462 /* Pods-SlurpCafe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = YES;
-				INFOPLIST_FILE = ICSClient/Info.plist;
+				INFOPLIST_FILE = SlurpCafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -674,7 +674,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ICSClient;
+				PRODUCT_NAME = SlurpCafe;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -684,13 +684,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 228609033A44FD3F01B9259D /* Pods-ICSClient.release.xcconfig */;
+			baseConfigurationReference = 228609033A44FD3F01B9259D /* Pods-SlurpCafe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = ICSClient/Info.plist;
+				INFOPLIST_FILE = SlurpCafe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -701,7 +701,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ICSClient;
+				PRODUCT_NAME = SlurpCafe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -834,7 +834,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ICSClientTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SlurpCafeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -843,7 +843,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ICSClient" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SlurpCafe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -852,7 +852,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ICSClient" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SlurpCafe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
