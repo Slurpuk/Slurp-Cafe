@@ -24,7 +24,7 @@ describe('Top Bar Component', function () {
             expect(acceptingOrdersYes).toBeTruthy();
             const mySwitch=getByTestId('switch')
             expect(mySwitch).toBeTruthy();
-            expect(mySwitch.props. thumbTintColor).toBe('#218F89');
+            expect(mySwitch.props.thumbColor).toBe('#218F89');
         });
         it('Correctly displays when NOT Accepting Orders', async function () {
             const globalContextMock1 = {
@@ -40,7 +40,7 @@ describe('Top Bar Component', function () {
             expect(acceptingOrdersYes).toBeTruthy();
             const mySwitch=getByTestId('switch')
             expect(mySwitch).toBeTruthy();
-            expect(mySwitch.props. thumbTintColor).toBe('#BE1753');
+            expect(mySwitch.props.thumbColor).toBe('#BE1753');
         });
 
     });
