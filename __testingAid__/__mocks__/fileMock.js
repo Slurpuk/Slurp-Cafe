@@ -22,12 +22,8 @@ export const Switch = props => {
     );
 };
 
-let newRN = Object.defineProperty(ReactNative, 'Platform', {
-    get: function() {
-        return Platform;
-    },
-});
-newRN = Object.defineProperty(ReactNative, 'Switch', {
+
+let newRN = Object.defineProperty(ReactNative, 'Switch', {
     get: function() {
         return Switch;
     },
