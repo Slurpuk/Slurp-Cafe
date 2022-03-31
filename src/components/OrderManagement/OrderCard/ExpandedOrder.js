@@ -17,7 +17,9 @@ const ExpandedOrder = () => {
   return (
     <View style={[animatedContext.isExpanded ? Expanded.elevate : null]}>
       <View style={Expanded.left_side}>
-        <View style={Expanded.list_of_orders}>
+        <View
+            testID={'viewListOrders'}
+            style={Expanded.list_of_orders}>
           <FlatList
             data={order.data.Items}
             renderItem={({item}) => (
