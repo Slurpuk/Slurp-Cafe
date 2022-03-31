@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import {StatusBar, StyleSheet, Switch, Text, View} from 'react-native';
 import {GlobalContext} from '../../../App';
 import {setIsOpen} from '../../firebase/queries';
-import CustomButton from "../../sub-components/CustomButton";
-import textStyles from "../../stylesheets/textStyles";
+import CustomButton from '../../sub-components/CustomButton';
+import textStyles from '../../stylesheets/textStyles';
 
 /**
  * Top bar for navigating through the app
@@ -58,6 +58,15 @@ const TopBar = ({navigation}) => {
             />
           </View>
         </View>
+        <Switch
+          trackColor={'#E0E0E0'}
+          thumbColor={isEnabled ? '#218F89' : '#BE1753'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+          style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
+        />
+      </View>
     </>
   );
 };

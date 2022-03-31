@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:185382636935:android:d2d3ffe8b8845919f75722",
+        "mobilesdk_app_id": "1:185382636935:android:602cd7ac9b7022acf75722",
         "android_client_info": {
-          "package_name": "com.icsclient"
+          "package_name": "com.slurp"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "185382636935-a8ktiru7iqnt2jqea2h5phe6guttbcq2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.ICSClient"
+                "bundle_id": "org.reactjs.native.example.SlurpCafe"
               }
             }
           ]
@@ -44,9 +44,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:185382636935:android:c253dae135789a67f75722",
+        "mobilesdk_app_id": "1:185382636935:android:6271936527be803cf75722",
         "android_client_info": {
-          "package_name": "com.myproject"
+          "package_name": "com.slurpcafe"
         }
       },
       "oauth_client": [
@@ -71,7 +71,7 @@
               "client_id": "185382636935-a8ktiru7iqnt2jqea2h5phe6guttbcq2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.ICSClient"
+                "bundle_id": "org.reactjs.native.example.SlurpCafe"
               }
             }
           ]

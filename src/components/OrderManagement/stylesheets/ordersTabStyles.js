@@ -45,7 +45,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#65ADA9',
   },
 
-
   badgeNumber: {
     fontSize: 15,
   },
