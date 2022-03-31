@@ -5,7 +5,7 @@ export const FormFieldStyles = StyleSheet.create({
     marginBottom: '2%',
     fontFamily: 'Roboto-Medium',
     fontSize: 27,
-    color:'black',
+    color: 'black',
   },
 
   input: {
@@ -14,6 +14,6 @@ export const FormFieldStyles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: '4.5%',
     fontSize: 17,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
 });

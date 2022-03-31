@@ -23,7 +23,8 @@ const DeleteButton = () => {
   return (
     <Pressable
       onPress={deleteOrder}
-      style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+      style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+    >
       <Icon name={'trash-can'} size={24} color={'#CD5160'} />
       <Text style={[styles.text, {color: '#CD5160'}]}>Remove</Text>
     </Pressable>

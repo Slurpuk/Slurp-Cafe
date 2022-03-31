@@ -47,6 +47,7 @@ export default function App() {
 
     /**
      *  Function to link the authentication entry to the CoffeeShop model via the email.
+     *  @param coffeeShop The new currently logged in coffee shop
      */
       async function setCoffeeShop(coffeeShop) {
           await firestore()
