@@ -47,7 +47,6 @@ const TopBar = ({navigation}) => {
               {isEnabled ? 'Yes' : 'No'}
             </Text>
           </View>
-          <View >
             <Switch
                 testID={'switch'}
                 trackColor={'#E0E0E0'}
@@ -57,17 +56,7 @@ const TopBar = ({navigation}) => {
                 value={isEnabled}
                 style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
             />
-          </View>
         </View>
-        <Switch
-          trackColor={'#E0E0E0'}
-          thumbColor={isEnabled ? '#218F89' : '#BE1753'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
-        />
-      </View>
     </>
   );
 };
