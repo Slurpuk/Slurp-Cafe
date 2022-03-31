@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {AnimatedCardContext, OrderCardContext} from '../../contexts';
 import {OrderStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
-import CustomButton from "../../../../sub-components/CustomButton";
+import CustomButton from '../../../../sub-components/CustomButton';
 
 /**
  * Button for changing the status of an accepted order
@@ -50,11 +50,11 @@ const OrderActionButton = () => {
   }
 
   return (
-  <CustomButton
+    <CustomButton
       color={customStyle}
       text={buttonText}
       onPress={updateStatus}
-  />
+    />
   );
 };
 

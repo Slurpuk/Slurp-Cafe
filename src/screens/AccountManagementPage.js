@@ -13,9 +13,9 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
-import textStyles from "../stylesheets/textStyles";
-import CustomButton from "../sub-components/CustomButton";
-import {Alerts} from "../static-data";
+import textStyles from '../stylesheets/textStyles';
+import CustomButton from '../sub-components/CustomButton';
+import {Alerts} from '../static-data';
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.Name);
@@ -48,20 +48,21 @@ const AccountManagementPage = ({navigation}) => {
       Alert.alert('Description length', 'The shop description must be between 20 and 150 characters long.');
     } else if (location.latitude>90 || location.latitude<-90 || location.longitude>180 || location.longitude<-180) {
       validity = false;
-      Alert.alert('Location is not valid', 'The latitude or longitude values are not valid.');
+      Alert.alert(
+        'Location is not valid',
+        'The latitude or longitude values are not valid.',
+      );
     }
 
     return validity;
   }
-
-
 
   /**
    * Manages the response to database failure and shows
    * errors in the form of alerts to the user
    */
   function processBackEndErrors(errorCode) {
-     if (errorCode === 'auth/network-request-failed') {
+    if (errorCode === 'auth/network-request-failed') {
       Alerts.connectionErrorAlert();
     } else {
       //Anything else
@@ -75,108 +76,116 @@ const AccountManagementPage = ({navigation}) => {
   async function updateDetails() {
     if (processErrorsFrontEnd()) {
       await firestore()
-          .collection('CoffeeShop')
-          .doc(globalContext.coffeeShopRef)
-          .update({
-            Name: name,
-            Intro: intro,
-            Location: new firestore.GeoPoint(location.latitude, location.longitude), //Default location: 10 Downing Street.
-          })
-          .then(r => {
-            Alert.alert('Success', 'Details Updated.');
-            navigation.navigate('Orders Page');
-          })
-          .catch(error => {
-            processBackEndErrors(error.code);
-          });
+        .collection('CoffeeShop')
+        .doc(globalContext.coffeeShopRef)
+        .update({
+          Name: name,
+          Intro: intro,
+          Location: new firestore.GeoPoint(
+            location.latitude,
+            location.longitude,
+          ), //Default location: 10 Downing Street.
+        })
+        .then(r => {
+          Alert.alert('Success', 'Details Updated.');
+          navigation.navigate('Orders Page');
+        })
+        .catch(error => {
+          processBackEndErrors(error.code);
+        });
     }
   }
 
   return (
     <View style={styles.wrapper}>
-      <View  style={styles.topBar}>
+      <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
-        <Text style={[textStyles.formTitle]}>{globalContext.coffeeShopObj.Name}</Text>
+        <Text style={[textStyles.formTitle]}>
+          {globalContext.coffeeShopObj.Name}
+        </Text>
       </View>
       <View style={styles.paddedContainer}>
         <View style={styles.formContainer}>
           <FormField
-              style={styles.element}
-              title={'Shop Name'}
-              setField={setName}
-              type={'name'}
-              value={name}
+            style={styles.element}
+            title={'Shop Name'}
+            setField={setName}
+            type={'name'}
+            value={name}
           />
           <FormField
-              style={styles.element}
-              title={'Shop Description'}
-              setField={setIntro}
-              type={'multiline'}
-              value={intro}
+            style={styles.element}
+            title={'Shop Description'}
+            setField={setIntro}
+            type={'multiline'}
+            value={intro}
           />
           <View style={styles.namesContainer}>
             <FormField
-                style={[styles.subNameContainer, styles.subNameContainerLeft]}
-                title={'Latitude'}
-                setField={value =>
-                    setLocation({
-                      latitude: parseFloat(value),
-                      longitude: location.longitude,
-                    })
-                }
-                value={location.latitude.toString()}
+              style={[styles.subNameContainer, styles.subNameContainerLeft]}
+              title={'Latitude'}
+              setField={value =>
+                setLocation({
+                  latitude: parseFloat(value),
+                  longitude: location.longitude,
+                })
+              }
+              value={location.latitude.toString()}
             />
             <FormField
-                style={[styles.subNameContainer]}
-                title={'Longitude'}
-                setField={value =>
-                    setLocation({
-                      latitude: location.latitude,
-                      longitude: parseFloat(value),
-                    })
-                }
-                value={location.longitude.toString()}
+              style={[styles.subNameContainer]}
+              title={'Longitude'}
+              setField={value =>
+                setLocation({
+                  latitude: location.latitude,
+                  longitude: parseFloat(value),
+                })
+              }
+              value={location.longitude.toString()}
             />
           </View>
           <Pressable
-              onPress={() =>
-                  Linking.openURL(
-                      'http://www.google.com/maps/place/' +
-                      location.latitude +
-                      ',' +
-                      location.longitude,
-                  )
-              }
-              style={[textStyles.hyperlink,{display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',}]}
+            onPress={() =>
+              Linking.openURL(
+                'http://www.google.com/maps/place/' +
+                  location.latitude +
+                  ',' +
+                  location.longitude,
+              )
+            }
+            style={[
+              textStyles.hyperlink,
+              {display: 'flex', flexDirection: 'row', alignItems: 'center'},
+            ]}
           >
             <Icon size={30} color="black" name="map-marker" />
-            <Text style={[textStyles.hyperlink, {color: '#3366BB'}]}> Open in Google Maps</Text>
+            <Text style={[textStyles.hyperlink, {color: '#3366BB'}]}>
+              {' '}
+              Open in Google Maps
+            </Text>
           </Pressable>
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.updateButton}>
             <CustomButton
-                color={'blue'}
-                text={'Save Details'}
-                onPress={updateDetails}
-                widthRatio={0.42}
-                buttonHeight={70}
+              color={'blue'}
+              text={'Save Details'}
+              onPress={updateDetails}
+              widthRatio={0.42}
+              buttonHeight={70}
             />
           </View>
           <View style={styles.logoutButton}>
             <CustomButton
-                color={'red'}
-                text={'Log Out'}
-                onPress={() => logout()}
-                widthRatio={0.42}
-                buttonHeight={70}
+              color={'red'}
+              text={'Log Out'}
+              onPress={() => logout()}
+              widthRatio={0.42}
+              buttonHeight={70}
             />
           </View>
         </View>
-        </View>
-
+      </View>
     </View>
   );
 };
@@ -185,7 +194,7 @@ const styles = StyleSheet.create({
   topBar: {
     height: '12%',
     paddingHorizontal: '5%',
-    width:'100%',
+    width: '100%',
     alignItems: 'center',
     backgroundColor: '#F6F6F6',
     display: 'flex',
@@ -211,8 +220,8 @@ const styles = StyleSheet.create({
     paddingVertical: '10%',
   },
   paddedContainer: {
-    display:"flex",
-    flex:1,
+    display: 'flex',
+    flex: 1,
     paddingHorizontal: '5%',
   },
   element: {
@@ -239,8 +248,7 @@ const styles = StyleSheet.create({
   updateButton: {
     marginRight: '7%',
   },
-  logoutButton: {
-  },
+  logoutButton: {},
 });
 
 export default AccountManagementPage;

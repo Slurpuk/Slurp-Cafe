@@ -4,23 +4,22 @@ export const AlertMessage = {
     message: "That's embarrassing - something went completely wrong...",
   },
   WEAK_PASSWORD: {
-    title: "Weak password",
-    message: "Please enter a more robust password",
+    title: 'Weak password',
+    message: 'Please enter a more robust password',
   },
   CONNECTION: {
     title: 'No connection',
     message:
-        "It seems like you're not connected to the internet. Please check your service",
+      "It seems like you're not connected to the internet. Please check your service",
   },
   MANY_REQUESTS: {
     title: 'Too many requests',
     message:
-        "It looks like you've tried that too many times, you will be able to try again later.",
+      "It looks like you've tried that too many times, you will be able to try again later.",
   },
   EMAIL_IN_USE: {
     title: 'Email in use',
-    message:
-        "Please use a different email to sign up.",
+    message: 'Please use a different email to sign up.',
   },
   WRONG_CREDENTIALS: {
     title: 'Wrong Password',
@@ -37,12 +36,12 @@ export const AlertMessage = {
   RESET_PASSWORD: {
     title: 'Reset Sent',
     message:
-        'If an account exists with that email, you will receive a link to rest you password.',
+      'If an account exists with that email, you will receive a link to rest you password.',
   },
   ELSE: {
     title: 'Rare Error!',
     message:
-        "This is a funky error! We don't really know what went wrong, but something went wrong.",
+      "This is a funky error! We don't really know what went wrong, but something went wrong.",
   },
   CODE_0001: {
     title: 'Registration Error',
