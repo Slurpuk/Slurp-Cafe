@@ -20,10 +20,7 @@ import textStyles from '../stylesheets/textStyles';
  */
 const OrdersPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const shopLocation = {
-    latitude: globalContext.coffeeShopObj.Location._latitude,
-    longitude: globalContext.coffeeShopObj.Location._longitude,
-  };
+  const shopLocation = globalContext.coffeeShopObj.location;
   const orders = useRef([]); // The full list of orders received and required by the shop
   const numIncomingOrders = useRef(0); // The number of pending orders
   const currTabStatus = useRef(TabStatuses.INCOMING); // Status of current tab selected
@@ -36,17 +33,17 @@ const OrdersPage = ({navigation}) => {
    */
   useEffect(() => {
     const subscriber = firestore()
-      .collection('Orders')
-      .where('ShopID', '==', globalContext.coffeeShopRef)
-      .where('IsRequired', '==', true) // Is the order required by the shop (not removed)
+      .collection('orders')
+      .where('shop', '==', globalContext.coffeeShopRef)
+      .where('is_displayed', '==', true) // Is the order required by the shop (not removed)
       .onSnapshot(async querySnapshot => {
         getFormattedOrders(querySnapshot.docs, shopLocation).then(
           formattedOrders => {
             orders.current = formattedOrders;
             numIncomingOrders.current = formattedOrders.filter(
-              order => order.Status === OrderStatuses.INCOMING,
+              order => order.status === OrderStatuses.INCOMING,
             ).length;
-            setTargetUsers(orders.current.map(order => order.user.Email));
+            setTargetUsers(orders.current.map(order => order.user.email));
             updateCurrentOrders(formattedOrders);
           },
         );
@@ -64,19 +61,19 @@ const OrdersPage = ({navigation}) => {
   useEffect(() => {
     let target = targetUsers.length === 0 ? ['empty'] : targetUsers;
     const subscriber = firestore()
-      .collection('Users')
-      .where('Email', 'in', target)
+      .collection('users')
+      .where('email', 'in', target)
       .onSnapshot(querySnapShot => {
         querySnapShot.forEach(doc => {
           let updatedUser = doc.data();
           orders.current = orders.current.map(order =>
-            order.user.Email === updatedUser.Email
+            order.user.email === updatedUser.email
               ? {
                   ...order,
                   user: updatedUser,
                   eta: calculateTime(
-                    updatedUser.latitude,
-                    updatedUser.longitude,
+                    updatedUser.location._latitude,
+                    updatedUser.location._longitude,
                     shopLocation.latitude,
                     shopLocation.longitude,
                   ),
@@ -118,11 +115,11 @@ const OrdersPage = ({navigation}) => {
     if (currTabStatus.current === TabStatuses.ALL) {
       let excluded = mapper(TabStatuses.FINISHED);
       result = ordersList.filter(
-        order => excluded.indexOf(order.Status) === -1,
+        order => excluded.indexOf(order.status) === -1,
       );
     } else {
       let target = mapper(currTabStatus.current);
-      result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
+      result = ordersList.filter(order => target.indexOf(order.status) !== -1);
     }
     sortCurrentOrders(result);
   }

@@ -51,13 +51,16 @@ export default function App() {
      */
       async function setCoffeeShop(coffeeShop) {
           await firestore()
-              .collection('CoffeeShop')
-              .where('Email', '==', coffeeShop.email)
+              .collection('coffee_shops')
+              .where('email', '==', coffeeShop.email)
               .get()
               .then(querySnapshot => {
                 querySnapshot.forEach(documentSnapshot => {
-                    coffeeShopRef.current = documentSnapshot.id;
-                    setCoffeeShopObj(documentSnapshot.data());
+                    coffeeShopRef.current = documentSnapshot.ref;
+                    let coffeeShop = documentSnapshot.data()
+                    setCoffeeShopObj({...coffeeShop, location: {
+                        latitude: coffeeShop.location._latitude,
+                            longitude: coffeeShop.location._longitude}});
                 });
               })
               .catch(error => {

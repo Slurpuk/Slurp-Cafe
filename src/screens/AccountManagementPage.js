@@ -18,12 +18,9 @@ import CustomButton from '../sub-components/CustomButton';
 import {Alerts} from '../static-data';
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const [name, setName] = useState(globalContext.coffeeShopObj.Name);
-  const [intro, setIntro] = useState(globalContext.coffeeShopObj.Intro);
-  const [location, setLocation] = useState({
-    latitude: globalContext.coffeeShopObj.Location.latitude,
-    longitude: globalContext.coffeeShopObj.Location.longitude,
-  });
+  const [name, setName] = useState(globalContext.coffeeShopObj.name);
+  const [intro, setIntro] = useState(globalContext.coffeeShopObj.intro);
+  const [location, setLocation] = useState(globalContext.coffeeShopObj.location);
 
   /**
     Simple function to log out, triggers state changes in App.
@@ -86,12 +83,11 @@ const AccountManagementPage = ({navigation}) => {
   async function updateDetails() {
     if (processErrorsFrontEnd()) {
       await firestore()
-        .collection('CoffeeShop')
-        .doc(globalContext.coffeeShopRef)
+        .doc(globalContext.coffeeShopRef.path)
         .update({
-          Name: name,
-          Intro: intro,
-          Location: new firestore.GeoPoint(
+          name: name,
+          intro: intro,
+          location: new firestore.GeoPoint(
             location.latitude,
             location.longitude,
           ), //Default location: 10 Downing Street.
@@ -111,7 +107,7 @@ const AccountManagementPage = ({navigation}) => {
       <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={[textStyles.formTitle]}>
-          {globalContext.coffeeShopObj.Name}
+          {globalContext.coffeeShopObj.name}
         </Text>
       </View>
       <View style={styles.paddedContainer}>

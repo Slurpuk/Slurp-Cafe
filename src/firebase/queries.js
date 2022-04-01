@@ -9,10 +9,10 @@ import {calculateTime} from '../components/OrderManagement/helpers';
  */
 function setOrderStatus(order, status) {
   firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      Status: status,
+      status: status,
     })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
@@ -30,10 +30,10 @@ function setOrderStatus(order, status) {
  */
 async function updateFinishedTime(order) {
   await firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      FinishedTime: firestore.Timestamp.now(),
+      finished_time: firestore.Timestamp.now(),
     })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
@@ -50,10 +50,10 @@ async function updateFinishedTime(order) {
  */
 function removeOrder(order) {
   firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      IsRequired: false,
+      is_displayed: false,
     })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
@@ -71,10 +71,9 @@ function removeOrder(order) {
  */
 function setIsOpen(isOpen, coffeeShopRef) {
   firestore()
-    .collection('CoffeeShop')
-    .doc(coffeeShopRef)
+    .doc(coffeeShopRef.path)
     .update({
-      IsOpen: isOpen,
+      is_open: isOpen,
     })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
@@ -93,29 +92,63 @@ function setIsOpen(isOpen, coffeeShopRef) {
 async function getFormattedItems(firebaseOrder) {
   let newItems = [];
   await Promise.all(
-    firebaseOrder.Items.map(async item => {
+    firebaseOrder.items.map(async orderItem => {
+      let newItem;
       await firestore()
-        .collection(item.Type + 's')
-        .doc(item.ItemRef)
-        .get()
-        .then(retrievedItem => {
-          let newItem = retrievedItem.data();
-          newItems.push({
-            ...newItem,
-            amount: item.Quantity,
-            options: item.Options,
+          .doc(orderItem.item.path)
+          .get()
+          .then(async doc => {
+            let item = doc.data();
+            newItem = {
+              ...item,
+              key: doc.id,
+              amount: orderItem.quantity,
+            };
+            if (item.has_options) {
+              newItem.options = await Promise.all(
+                  orderItem.options.map(async option => await getOrderOption(option)),
+              );
+            }
+            newItems.push(newItem);
+          })
+          .catch(error => {
+            if (error.code === 'auth/network-request-failed') {
+              Alerts.connectionErrorAlert();
+            } else {
+              Alerts.databaseErrorAlert();
+            }
           });
-        })
-        .catch(error => {
-          if (error.code === 'auth/network-request-failed') {
-            Alerts.connectionErrorAlert(error);
-          } else {
-            Alerts.databaseErrorAlert(error);
-          }
-        });
+
+      return newItem;
     }),
   );
   return newItems;
+}
+
+/**
+ * Async function that retrieves the data of an option reference
+ * @param optionRef The reference to the option
+ * @returns Object The option data
+ */
+async function getOrderOption(optionRef) {
+  let newOption;
+  await firestore()
+      .doc(optionRef.path)
+      .get()
+      .then(doc => {
+        newOption = {
+          ...doc.data(),
+          key: doc.id,
+        };
+      })
+      .catch(error => {
+        if (error.code === 'auth/network-request-failed') {
+          Alerts.connectionErrorAlert();
+        } else {
+          Alerts.databaseErrorAlert();
+        }
+      });
+  return newOption;
 }
 
 /**
@@ -126,12 +159,11 @@ async function getFormattedItems(firebaseOrder) {
 async function getUser(firebaseOrder) {
   let user;
   await firestore()
-    .collection('Users')
-    .doc(firebaseOrder.UserID)
+    .doc(firebaseOrder.user.path)
     .get()
     .then(retrievedUser => {
-      user = retrievedUser.data();
-    })
+            user = retrievedUser.data();
+        })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
         Alerts.connectionErrorAlert(error);
@@ -154,15 +186,15 @@ async function getFormattedOrders(orders, shopLocation) {
     orders.map(async order => {
       const firebaseOrder = order.data();
       getFormattedItems(firebaseOrder).then(async formattedItems => {
-        firebaseOrder.Items = formattedItems;
+        firebaseOrder.items = formattedItems;
         getUser(firebaseOrder)
           .then(user => {
             firebaseOrder.user = user;
             let newOrder = {
               ...firebaseOrder,
               eta: calculateTime(
-                user.latitude,
-                user.longitude,
+                user.location._latitude,
+                user.location._longitude,
                 shopLocation.latitude,
                 shopLocation.longitude,
               ),
@@ -177,6 +209,19 @@ async function getFormattedOrders(orders, shopLocation) {
   return newOrders;
 }
 
+/**
+ * Retrieve and return all the items in the database items model
+ */
+async function getAllItems(){
+  let items = [];
+  await firestore().collection('items').get().then(async query => {
+    await Promise.all(query.docs.map(doc => {
+      items.push(doc.data());
+    }));
+  })
+  return items;
+}
+
 export {
   removeOrder,
   updateFinishedTime,
@@ -185,4 +230,5 @@ export {
   getFormattedItems,
   getUser,
   getFormattedOrders,
+    getAllItems,
 };

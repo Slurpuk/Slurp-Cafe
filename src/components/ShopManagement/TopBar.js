@@ -12,7 +12,7 @@ import textStyles from '../../stylesheets/textStyles';
 const TopBar = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [isEnabled, setIsEnabled] = useState(
-    globalContext.coffeeShopObj.IsOpen,
+    globalContext.coffeeShopObj.is_open,
   );
 
   /**

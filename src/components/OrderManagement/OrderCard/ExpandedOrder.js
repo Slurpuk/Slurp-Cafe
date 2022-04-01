@@ -1,6 +1,6 @@
 import {FlatList, Text, View} from 'react-native';
 import React, {useContext} from 'react';
-import {getOptionsText} from '../helpers';
+import {calculateOrderTotal, getOptionsText} from '../helpers';
 import {Expanded} from '../stylesheets';
 import {AccRejButton} from './ActionButtons';
 import {AnimatedCardContext, OrderCardContext} from '../contexts';
@@ -19,12 +19,12 @@ const ExpandedOrder = () => {
       <View style={Expanded.left_side}>
         <View style={Expanded.list_of_orders}>
           <FlatList
-            data={order.data.Items}
+            data={order.data.items}
             renderItem={({item}) => (
               <View style={[Expanded.order, Expanded.expandedOrder]}>
                 <View style={Expanded.mainItem}>
                   <Text style={Expanded.amount}>{item.amount}</Text>
-                  <Text style={Expanded.item_name}> {item.Name}</Text>
+                  <Text style={Expanded.item_name}> {item.name}</Text>
                 </View>
                 <Text style={Expanded.options}>{getOptionsText(item)}</Text>
               </View>
@@ -34,7 +34,7 @@ const ExpandedOrder = () => {
         <View style={Expanded.total}>
           <Text style={Expanded.total_text}>Total</Text>
           <Text style={Expanded.total_price}>
-            £{order.data.Total.toFixed(2)}
+            £{calculateOrderTotal(order.data.items).toFixed(2)}
           </Text>
         </View>
       </View>

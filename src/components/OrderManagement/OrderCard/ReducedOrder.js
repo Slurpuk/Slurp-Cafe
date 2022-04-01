@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {isFinished, getStatusColor, toDateTime} from '../helpers';
+import {isFinished, getStatusColor, toDateTime, calculateOrderTotal} from '../helpers';
 import {Reduced} from '../stylesheets';
 import {AnimatedCardContext, OrderCardContext} from '../contexts';
 import {ChangeStatusButton} from './ActionButtons';
@@ -14,13 +14,15 @@ const ReducedOrder = () => {
   const animatedContext = useContext(AnimatedCardContext);
   const order = orderCard.order;
   const statusColor = getStatusColor(order.data.eta);
-  const finished = isFinished(order.currStatus);
+  const finished = isFinished(order.currStatus)
+
+  console.log(order.data.eta);
 
   return (
     <View style={Reduced.container}>
       <View style={Reduced.left_side}>
         <View style={Reduced.header}>
-          <Text style={Reduced.name}>{order.data.user.FirstName}</Text>
+          <Text style={Reduced.name}>{order.data.user.first_name}</Text>
           <View style={[Reduced.time, finished ? {opacity: 0} : null]}>
             <Icon size={24} color={statusColor} name="clock" />
             <Text style={[Reduced.clock_number, {color: statusColor}]}>
@@ -36,7 +38,7 @@ const ReducedOrder = () => {
             animatedContext.isExpanded ? Reduced.invisible : null,
           ]}
         >
-          £{order.data.Total.toFixed(2)}
+          £{calculateOrderTotal(order.data.items).toFixed(2)}
         </Text>
       </View>
       {!animatedContext.isExpanded ? (
@@ -44,7 +46,7 @@ const ReducedOrder = () => {
           {finished ? (
             <Text style={Reduced.finished}>
               This order was {order.currStatus} on{' '}
-              {toDateTime(order.data.FinishedTime.seconds)}
+              {toDateTime(order.data.finished_time.seconds)}
             </Text>
           ) : (
             <ChangeStatusButton />

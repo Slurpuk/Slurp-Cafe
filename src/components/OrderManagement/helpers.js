@@ -95,18 +95,19 @@ function getStatusColor(eta) {
 }
 
 /**
- * Return formatted options text display for an item's options
- * @param item the item in question
- * @return optionsText the text
+ * Retrieves the optional add-ons for a specific item if any
+ * @param item Order item
+ * @return A string containing the add-ons if any
  */
 function getOptionsText(item) {
-  let optionsText = '';
-  item.options.forEach(option => {
-    optionsText += option.Name + ' ' + option.Type + ', ';
-  });
-  return optionsText !== ''
-    ? optionsText.substring(0, optionsText.length - 2)
-    : optionsText;
+  if (item.has_options) {
+    let text = item.options.reduce(function (acc, option) {
+      return acc + option.name + ' ' + option.type + ', ';
+    }, '');
+    return text.substring(0, text.length - 2);
+  } else {
+    return '';
+  }
 }
 
 /**
@@ -142,6 +143,40 @@ function getInitialHeight() {
   return Dimensions.get('window').height * 0.14;
 }
 
+/**
+ * Calculate and return the total price of the given order.
+ * @return Number The total price of the order
+ * @param items The list of items in the order
+ */
+function calculateOrderTotal(items) {
+  return items.reduce(function (acc, item) {
+    return acc + getItemFullPrice(item);
+  }, 0);
+}
+
+/**
+ * Calculate and return the total price of the options of an item
+ * @param item The target item
+ * @return Number The total price for the item's options
+ */
+function getOptionsPrice(item) {
+  return item.has_options
+      ? item.options.reduce(function (acc, option) {
+        return acc + option.price;
+      }, 0)
+      : 0;
+}
+
+/**
+ * Calculate and return the total price of an item (including options)
+ * @param item The target item
+ * @return Number The total price of the item
+ */
+function getItemFullPrice(item) {;
+  return item.amount * (item.price + getOptionsPrice(item));
+}
+
+
 export {
   isFinished,
   mapper,
@@ -150,4 +185,6 @@ export {
   getOptionsText,
   toDateTime,
   getInitialHeight,
+    calculateOrderTotal,
+
 };

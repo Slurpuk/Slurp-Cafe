@@ -7,6 +7,7 @@ import {Alerts} from '../static-data';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
 import {SignUpContext} from '../../App';
+import {getAllItems} from "../firebase/queries";
 
 /**
  * Renders the second page of the signing up process
@@ -100,16 +101,16 @@ const SignUpPageTwo = ({navigation}) => {
    */
   async function addCoffeeShop() {
     await firestore()
-      .collection('CoffeeShop')
+      .collection('coffee_shops')
       .add({
-        Email: signUpContext.email,
-        Name: signUpContext.shopName,
-        Image:
+        email: signUpContext.email,
+        name: signUpContext.shopName,
+        image:
           'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
-        Intro: signUpContext.shopDescription,
-        IsOpen: false,
-        ItemsOffered: [],
-        Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
+        intro: signUpContext.shopDescription,
+        is_open: false,
+        items: getAllItems(),
+        location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
       })
       .catch(errorCode => {
         if (errorCode === 'auth/network-request-failed') {
