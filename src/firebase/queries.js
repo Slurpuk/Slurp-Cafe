@@ -177,41 +177,6 @@ async function getUser(firebaseOrder) {
 }
 
 /**
- * Async function that returns the formatted version of a given list of orders
- * @param orders The list of orders to format
- * @param shopLocation The location of the current shop
- * @returns {Promise<Array>} The promise containing the list of formatted orders
- */
-async function getFormattedOrders(orders, shopLocation) {
-  let newOrders = [];
-  await Promise.all(
-    orders.map(async order => {
-      const firebaseOrder = order.data();
-      getFormattedItems(firebaseOrder).then(async formattedItems => {
-        firebaseOrder.items = formattedItems;
-        getUser(firebaseOrder)
-          .then(user => {
-            firebaseOrder.user = user;
-            let newOrder = {
-              ...firebaseOrder,
-              eta: calculateTime(
-                user.location._latitude,
-                user.location._longitude,
-                shopLocation.latitude,
-                shopLocation.longitude,
-              ),
-              key: order.id,
-            };
-            newOrders.push(newOrder);
-          })
-          .catch(error => Alerts.databaseErrorAlert(error));
-      });
-    }),
-  );
-  return newOrders;
-}
-
-/**
  * Retrieve and return all the items in the database items model
  */
 async function getAllItems() {
@@ -236,6 +201,5 @@ export {
   setIsOpen,
   getFormattedItems,
   getUser,
-  getFormattedOrders,
   getAllItems,
 };
