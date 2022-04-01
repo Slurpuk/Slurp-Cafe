@@ -12,7 +12,7 @@ import textStyles from '../../stylesheets/textStyles';
 const TopBar = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [isEnabled, setIsEnabled] = useState(
-    globalContext.coffeeShopObj.is_open,
+    globalContext.coffeeShop.is_open,
   );
 
   /**
@@ -20,7 +20,7 @@ const TopBar = ({navigation}) => {
    */
   function toggleSwitch() {
     setIsEnabled(prevState => !prevState);
-    setIsOpen(!isEnabled, globalContext.coffeeShopRef);
+    setIsOpen(!isEnabled, globalContext.coffeeShop.ref);
   }
 
   /**
