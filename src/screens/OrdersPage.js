@@ -23,7 +23,7 @@ import textStyles from '../stylesheets/textStyles';
  */
 const OrdersPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const shopLocation = globalContext.coffeeShopObj.location;
+  const shopLocation = globalContext.coffeeShop.location;
   const orders = useRef([]); // The full list of orders received and required by the shop
   const numIncomingOrders = useRef(0); // The number of pending orders
   const currTabStatus = useRef(TabStatuses.INCOMING); // Status of current tab selected
@@ -37,7 +37,7 @@ const OrdersPage = ({navigation}) => {
   useEffect(() => {
     const subscriber = firestore()
       .collection('orders')
-      .where('shop', '==', globalContext.coffeeShopRef)
+      .where('shop', '==', globalContext.coffeeShop.ref)
       .where('is_displayed', '==', true) // Is the order required by the shop (not removed)
       .onSnapshot(async querySnapshot => {
         let formattedOrders = await getFormattedOrders(
