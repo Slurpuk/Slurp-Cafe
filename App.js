@@ -74,6 +74,7 @@ export default function App() {
       });
   }
 
+
   //Creates the stack over which the pages are laid; enables navigation.
   const Stack = createNativeStackNavigator();
 

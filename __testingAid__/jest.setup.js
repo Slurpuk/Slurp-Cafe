@@ -81,6 +81,14 @@ Mock for NativeEventEmitter library
  */
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
+jest.mock('react-native/Libraries/Components/Switch/Switch', () => {
+  const mockComponent = require('react-native/jest/mockComponent');
+  return {
+    default: mockComponent('react-native/Libraries/Components/Switch/Switch'),
+  };
+});
+
+
 /*
 Mock for Device-Info library
  */

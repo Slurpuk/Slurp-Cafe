@@ -25,6 +25,7 @@ const OrdersPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const shopLocation = globalContext.coffeeShopObj.location;
   const orders = useRef([]); // The full list of orders received and required by the shop
+  console.log(orders);
   const numIncomingOrders = useRef(0); // The number of pending orders
   const currTabStatus = useRef(TabStatuses.INCOMING); // Status of current tab selected
   const [targetUsers, setTargetUsers] = useState([]); // List of users having an order in the shop
