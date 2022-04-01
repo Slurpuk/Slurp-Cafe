@@ -40,35 +40,32 @@ export default function App() {
   }, []);
 
   /**
-   *  Function to link the authentication entry to the CoffeeShop model via the email.
-   *  @param coffeeShop The new currently logged in coffee shop
+   * Side effect that tracks changes in the model instance of the coffee shop in the database and updates the state accordingly
+   * Sets the current coffee shop object accordingly.
    */
-  async function setCoffeeShop(coffeeShop) {
-    await firestore()
-      .collection('coffee_shops')
-      .where('email', '==', coffeeShop.email)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          coffeeShopRef.current = documentSnapshot.ref;
-          let coffeeShop = documentSnapshot.data();
-          setCoffeeShopObj({
-            ...coffeeShop,
-            location: {
-              latitude: coffeeShop.location._latitude,
-              longitude: coffeeShop.location._longitude,
-            },
+  useEffect(() => {
+    if(isLoggedIn && auth().currentUser){
+      const subscriber = firestore()
+          .collection('coffee_shops')
+          .where('email', '==', auth().currentUser.email)
+          .onSnapshot(query =>{
+            console.log('asvsdvsd')
+            const coffeeShopDoc = query.docs[0];
+            const coffeeShop = coffeeShopDoc.data();
+            setCoffeeShopObj({
+              ...coffeeShop,
+              ref: coffeeShopDoc.ref,
+              location: {
+                latitude: coffeeShop.location._latitude,
+                longitude: coffeeShop.location._longitude,},
+            })
           });
-        });
-      })
-      .catch(error => {
-        if (error.code === 'auth/network-request-failed') {
-          Alerts.connectionErrorAlert(error);
-        } else {
-          Alerts.databaseErrorAlert(error);
-        }
-      });
-  }
+
+      // Stop listening for updates when no longer required.
+      return () => subscriber();
+    }
+  }, [isLoggedIn]);
+
 
   //Creates the stack over which the pages are laid; enables navigation.
   const Stack = createNativeStackNavigator();
