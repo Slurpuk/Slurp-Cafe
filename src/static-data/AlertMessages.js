@@ -47,6 +47,10 @@ export const AlertMessage = {
     title: 'Registration Error',
     message: 'This is our bad, contact technical support. Error code #0001',
   },
+  REJECTING_ORDER: {
+    title: 'Rejecting',
+    message: 'You are about to reject this order. This may be impact your rating. Are you sure?',
+  },
 };
 
 /*
