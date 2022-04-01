@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
+import {StyleSheet, View, Text, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
 import {Alerts} from '../static-data';
 import textStyles from '../stylesheets/textStyles';
@@ -37,19 +37,19 @@ const SignUpPageOne = ({navigation}) => {
       let validity = true;
       if (email === '') {
           validity = false;
-          Alert.alert('Empty Email', 'Please enter your email.');
+          Alerts.emptyEmail();
       } else if (!emailRegex.test(email)) {
           validity = false;
           Alerts.badEmailAlert();
       } else if (password === '') {
           validity = false;
-          Alert.alert('Empty Password', 'Please enter your password.');
+          Alerts.emptyPassword();
       } else if (passwordConfirmation === '') {
           validity = false;
-          Alert.alert('Empty Password Confirmation', 'Please enter the password confirmation.');
+          Alerts.emptyPasswordConfirmation();
       } else if (password!==passwordConfirmation) {
           validity = false;
-          Alert.alert('Passwords dont match up', 'Please make sure you password confirmation is the same as you password.');
+          Alerts.passwordsDontMatchUp();
       }
       return validity;
   }

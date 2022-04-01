@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
+import {StyleSheet, View, Text, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -29,7 +29,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Displays a confirmation message to the user in the form of an alert
    */
   const registeredMessage = () => {
-    Alert.alert('Congratulations', 'Registered Successfully');
+    Alerts.successfulRegistration();
   };
 
   /**
@@ -61,16 +61,10 @@ const SignUpPageTwo = ({navigation}) => {
     let validity = true;
     if (shopName === '') {
       validity = false;
-      Alert.alert('Empty Shop Name', 'Please enter your shop name.');
-    } else if (shopIntro === '') {
-      validity = false;
-      Alert.alert('Empty Description', 'Please enter your shop description.');
+      Alerts.emptyShopName();
     } else if (shopIntro.length > 150 || shopIntro.length < 20) {
       validity = false;
-      Alert.alert(
-        'Description length',
-        'The shop description must be between 20 and 100 characters long.',
-      );
+      Alerts.descriptionLength();
     }
     return validity;
   }
@@ -88,7 +82,9 @@ const SignUpPageTwo = ({navigation}) => {
       navigation.navigate('Sign Up Page One');
     } else if (errorCode === 'auth/network-request-failed') {
       Alerts.connectionErrorAlert();
-    } else {
+    } else if (errorCode === 'auth/too-many-requests') {
+      Alerts.tooManyRequestsAlert();
+    }else {
       //Anything else
       Alerts.elseAlert();
     }
