@@ -7,6 +7,34 @@ export const AlertMessage = {
     title: 'Weak password',
     message: 'Please enter a more robust password',
   },
+  EMPTY_EMAIL: {
+    title: 'Empty Email',
+    message: 'Please enter your email.',
+  },
+  EMPTY_PASSWORD: {
+    title: 'Empty Password',
+    message: 'Please enter your password.',
+  },
+  EMPTY_PASSWORD_CONFIRMATION: {
+    title: 'Empty Password Confirmation',
+    message: 'Please enter the password confirmation.',
+  },
+  PASSWORDS_DONT_MATCH_UP: {
+    title: 'Passwords dont match up',
+    message: 'Please make sure you password confirmation is the same as you password.',
+  },
+  SUCCESSFUL_REGISTRATION: {
+    title: 'Congratulations',
+    message: 'Registered Successfully',
+  },
+  EMPTY_SHOP_NAME: {
+    title: 'Empty Shop Name',
+    message: 'Please enter your shop name.',
+  },
+  DESCRIPTION_LENGTH: {
+    title: 'Description length',
+    message: 'The shop description must be between 20 and 100 characters long.',
+  },
   CONNECTION: {
     title: 'No connection',
     message:
@@ -28,10 +56,6 @@ export const AlertMessage = {
   BAD_EMAIL: {
     title: 'Bad Email',
     message: "That doesn't look like a valid email.",
-  },
-  WRONG_PASSWORD: {
-    title: 'Wrong Password',
-    message: "You can reset your password if you can't remember.",
   },
   RESET_PASSWORD: {
     title: 'Reset Sent',

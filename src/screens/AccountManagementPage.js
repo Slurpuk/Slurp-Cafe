@@ -33,22 +33,12 @@ const AccountManagementPage = ({navigation}) => {
     let validity = true;
     if (name === '') {
       validity = false;
-      Alert.alert('Empty Shop name', 'Please enter your shop name.');
-    } else if (intro === '') {
+      Alert.alert('Empty Shop Name', 'Please enter your shop name.');
+    }
+    else if (intro.length>150 || intro.length<20) {
       validity = false;
-      Alert.alert('Empty Description', 'Please enter your shop description.');
-    } else if (intro.length > 200 || intro.length < 20) {
-      validity = false;
-      Alert.alert(
-        'Description length',
-        'The shop description must be between 20 and 200 characters long.',
-      );
-    } else if (
-      location.latitude > 90 ||
-      location.latitude < -90 ||
-      location.longitude > 180 ||
-      location.longitude < -180
-    ) {
+      Alert.alert('Description length', 'The shop description must be between 20 and 150 characters long.');
+    } else if (location.latitude>90 || location.latitude<-90 || location.longitude>180 || location.longitude<-180) {
       validity = false;
       Alert.alert(
         'Location is not valid',

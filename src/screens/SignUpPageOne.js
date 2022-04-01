@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar} from 'react-native';
+import {StyleSheet, View, Text, StatusBar} from 'react-native';
 import FormField from '../sub-components/FormField';
 import {Alerts} from '../static-data';
 import textStyles from '../stylesheets/textStyles';
@@ -63,7 +63,9 @@ const SignUpPageOne = ({navigation}) => {
       );
     }
     return validity;
+
   }
+
 
   return (
     <View style={styles.wrapper}>
