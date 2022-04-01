@@ -25,19 +25,18 @@ export const styles = StyleSheet.create({
   },
 
   tab: {
-    flex: 1,
+    flex: 0,
     paddingHorizontal: '2%',
     borderRadius: 20,
     borderWidth: 0,
     marginRight: '1%',
     backgroundColor: '#E1E1E1',
-    alignSelf: 'baseline',
-    alignItems: 'center',
+    alignItems: 'baseline',
   },
 
   tabText: {
     color: 'black',
-    fontSize: normalize(8.4),
+    fontSize: normalize(8),
     fontFamily: 'Montserrat-Bold',
   },
 
@@ -51,7 +50,7 @@ export const styles = StyleSheet.create({
 
   badgeContainer: {
     backgroundColor: 'red',
-    minWidth: 20,
+    minWidth: 25,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

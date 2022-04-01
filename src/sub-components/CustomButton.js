@@ -4,7 +4,7 @@ import {
   View,
   StyleSheet,
   Animated,
-  TouchableOpacity,
+  Pressable,
   Dimensions,
 } from 'react-native';
 
@@ -18,10 +18,29 @@ export default function CustomButton(props) {
     buttonHeight = 60,
   } = props;
 
+  const animation = new Animated.Value(0);
+  const inputRange = [0, 1];
+  const outputRange = [1, 0.8];
+  const scale = animation.interpolate({inputRange, outputRange});
+
+  const onPressIn = () => {
+    Animated.spring(animation, {
+      toValue: 0.095,
+      speed: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+  const onPressOut = () => {
+    Animated.spring(animation, {
+      toValue: 0,
+      speed: 70,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <View>
-      <Animated.View style={{transform: [{scale}]}}>
-        <TouchableOpacity
+        <Pressable
           style={[
             buttonStyles.outer,
             buttonStyles[color],
@@ -32,6 +51,7 @@ export default function CustomButton(props) {
           onPressOut={onPressOut}
           onPress={onPress}
         >
+          <Animated.View style={{transform: [{scale}]}}>
           <Text style={buttonStyles.buttonText}>{text}</Text>
           {optionalNumber === null ? null : (
             <Text
@@ -43,30 +63,11 @@ export default function CustomButton(props) {
               {optionalNumber}
             </Text>
           )}
-        </TouchableOpacity>
-      </Animated.View>
+          </Animated.View>
+        </Pressable>
     </View>
   );
 }
-const animation = new Animated.Value(0);
-const inputRange = [0, 1];
-const outputRange = [1, 0.8];
-const scale = animation.interpolate({inputRange, outputRange});
-
-const onPressIn = () => {
-  Animated.spring(animation, {
-    toValue: 0.095,
-    speed: 100,
-    useNativeDriver: true,
-  }).start();
-};
-const onPressOut = () => {
-  Animated.spring(animation, {
-    toValue: 0,
-    speed: 70,
-    useNativeDriver: true,
-  }).start();
-};
 
 const screenWidth = Dimensions.get('window').width;
 
