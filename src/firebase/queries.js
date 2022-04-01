@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {Alerts} from '../static-data';
-import {calculateTime} from '../components/OrderManagement/helpers';
+import auth from "@react-native-firebase/auth";
 
 /**
  * Set the status of a given order (in the database)
@@ -14,13 +14,7 @@ function setOrderStatus(order, status) {
     .update({
       status: status,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -35,13 +29,7 @@ async function updateFinishedTime(order) {
     .update({
       finished_time: firestore.Timestamp.now(),
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -55,13 +43,7 @@ function removeOrder(order) {
     .update({
       is_displayed: false,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -75,13 +57,7 @@ function setIsOpen(isOpen, coffeeShopRef) {
     .update({
       is_open: isOpen,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -113,13 +89,7 @@ async function getFormattedItems(firebaseOrder) {
           }
           newItems.push(newItem);
         })
-        .catch(error => {
-          if (error.code === 'auth/network-request-failed') {
-            Alerts.connectionErrorAlert();
-          } else {
-            Alerts.databaseErrorAlert();
-          }
-        });
+          .catch(e => processBackEndErrors(e));
 
       return newItem;
     }),
@@ -143,13 +113,7 @@ async function getOrderOption(optionRef) {
         key: doc.id,
       };
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert();
-      } else {
-        Alerts.databaseErrorAlert();
-      }
-    });
+      .catch(e => processBackEndErrors(e));
   return newOption;
 }
 
@@ -166,18 +130,13 @@ async function getUser(firebaseOrder) {
     .then(retrievedUser => {
       user = retrievedUser.data();
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
   return user;
 }
 
 /**
- * Retrieve and return all the items in the database items model
+ * Retrieve and return the references of all the items in the database items model
+ * @return Array The list of all items
  */
 async function getAllItems() {
   let items = [];
@@ -187,10 +146,11 @@ async function getAllItems() {
     .then(async query => {
       await Promise.all(
         query.docs.map(doc => {
-          items.push(doc.data());
+          items.push(doc.ref);
         }),
       );
-    });
+    })
+      .catch(e => processBackEndErrors(e));
   return items;
 }
 
