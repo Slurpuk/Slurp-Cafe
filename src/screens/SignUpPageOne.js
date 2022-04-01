@@ -17,25 +17,29 @@ const SignUpPageOne = ({navigation}) => {
   const emailRegex = new RegExp(
     '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
   );
+  const passwordRegex =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
 
   /**
    * Navigates to the second page if some front ends checks are valid
    */
   async function navigateNextPage() {
-    if (processErrorsFrontEnd()) {
+    if (handleSignUpErrorsFrontEnd()) {
       navigation.navigate('Sign Up Page Two');
       signUpContext.email = email;
       signUpContext.password = password;
     }
   }
 
+
+
   /**
-   * Checks for simple form requirements
-   * @return boolean Expressing the validity of the email and password front-end wise
+   * Deal with bad or empty inputs before sending request
+   * @returns {boolean} true if it passes basic form validation
    */
-  function processErrorsFrontEnd() {
+  function handleSignUpErrorsFrontEnd() {
     let validity = true;
-    if (email === '') {
+   if (email === '') {
       validity = false;
       Alert.alert('Empty Email', 'Please enter your email.');
     } else if (!emailRegex.test(email)) {
@@ -46,18 +50,20 @@ const SignUpPageOne = ({navigation}) => {
       Alert.alert('Empty Password', 'Please enter your password.');
     } else if (passwordConfirmation === '') {
       validity = false;
-      Alert.alert(
-        'Empty Password Confirmation',
-        'Please enter the password confirmation.',
-      );
-    } else if (password !== passwordConfirmation) {
+      Alert.alert('Empty Password', 'Please enter confirm you password.');
+    } else if (passwordConfirmation !== password) {
       validity = false;
       Alert.alert(
-        'Password dont match up',
-        'Please make sure you password confirmation is the same as you password.',
+          "Passwords don't match",
+          "Make sure you've entered your password correctly.",
+      );
+    } else if (!passwordRegex.test(password)) {
+      validity = false;
+      Alert.alert(
+          'Weak password',
+          'Must have a number, a special character and at 6 to 20 characters.',
       );
     }
-
     return validity;
   }
 
