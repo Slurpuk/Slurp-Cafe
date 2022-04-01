@@ -6,8 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest --updateSnapshot && jest",
-    "testCoverage": "jest --updateSnapshot && jest --coverage",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "lint": "eslint .",
     "refresh": "git pull && npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link"
   },
