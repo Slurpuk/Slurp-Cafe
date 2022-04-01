@@ -22,18 +22,34 @@ const AcceptRejectButton = ({accept}) => {
    * Updates the status of the order accordingly
    */
   function updateStatus() {
+      accept ? acceptOrder(): Alerts.rejectingOrderAlert(rejectOrder);
+  }
+
+  /**
+   * Reject the order.
+   */
+  function rejectOrder(){
     animated.setExpanded();
+    // Allow for the animation to finish before removing the order.
     let myTimeout = setTimeout(() => {
-      if (accept) {
-        if (ordersContext.tabStatus === TabStatuses.ALL) {
-          orderCardContext.order.setCurrStatus(OrderStatuses.ACCEPTED);
-        }
-        setOrderStatus(order.data, OrderStatuses.ACCEPTED);
-      } else {
-        updateFinishedTime(order.data).then(() =>
+      updateFinishedTime(order.data).then(() =>
           setOrderStatus(order.data, OrderStatuses.REJECTED),
-        );
+      );
+      clearTimeout(myTimeout);
+    }, 500);
+  }
+
+  /**
+   * Accept the order.
+   */
+  function acceptOrder(){
+    animated.setExpanded();
+    // Allow for the animation to finish before removing the order.
+    let myTimeout = setTimeout(() => {
+      if (ordersContext.tabStatus === TabStatuses.ALL) {
+        orderCardContext.order.setCurrStatus(OrderStatuses.ACCEPTED);
       }
+      setOrderStatus(order.data, OrderStatuses.ACCEPTED);
       clearTimeout(myTimeout);
     }, 500);
   }
