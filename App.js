@@ -49,7 +49,6 @@ export default function App() {
           .collection('coffee_shops')
           .where('email', '==', auth().currentUser.email)
           .onSnapshot(query =>{
-            console.log('asvsdvsd')
             const coffeeShopDoc = query.docs[0];
             const coffeeShop = coffeeShopDoc.data();
             setCoffeeShopObj({
