@@ -21,8 +21,6 @@ const ReducedOrder = () => {
   const statusColor = getStatusColor(order.data.eta);
   const finished = isFinished(order.currStatus);
 
-  console.log(order.data.eta);
-
   return (
     <View style={Reduced.container}>
       <View style={Reduced.left_side}>
