@@ -21,9 +21,9 @@ const SignUpPageTwo = ({navigation}) => {
    * Navigates to the first page and update global context values
    */
   async function navigatePreviousPage() {
-    navigation.navigate('Sign Up Page One');
     signUpContext.shopName = shopName;
     signUpContext.shopDescription = shopIntro;
+    navigation.navigate('Sign Up Page One');
   }
 
   /**
@@ -100,16 +100,17 @@ const SignUpPageTwo = ({navigation}) => {
    * Adds all the form field values to a newly create coffee shop
    */
   async function addCoffeeShop() {
+    let allItems = await getAllItems();
     await firestore()
       .collection('coffee_shops')
       .add({
         email: signUpContext.email,
-        name: signUpContext.shopName,
+        name: shopName,
         image:
           'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
-        intro: signUpContext.shopDescription,
+        intro: shopIntro,
         is_open: false,
-        items: getAllItems(),
+        items: allItems,
         location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
       })
       .catch(errorCode => {
