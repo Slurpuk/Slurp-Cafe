@@ -1,5 +1,9 @@
 import React, {useContext} from 'react';
-import {AnimatedCardContext, OrderCardContext, OrdersContext} from '../../contexts';
+import {
+  AnimatedCardContext,
+  OrderCardContext,
+  OrdersContext,
+} from '../../contexts';
 import {Alerts, OrderStatuses, TabStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
 import CustomButton from '../../../../sub-components/CustomButton';
@@ -21,13 +25,13 @@ const AcceptRejectButton = ({accept}) => {
     animated.setExpanded();
     let myTimeout = setTimeout(() => {
       if (accept) {
-        if(ordersContext.tabStatus === TabStatuses.ALL){
+        if (ordersContext.tabStatus === TabStatuses.ALL) {
           orderCardContext.order.setCurrStatus(OrderStatuses.ACCEPTED);
         }
         setOrderStatus(order.data, OrderStatuses.ACCEPTED);
       } else {
         updateFinishedTime(order.data).then(() =>
-            setOrderStatus(order.data, OrderStatuses.REJECTED),
+          setOrderStatus(order.data, OrderStatuses.REJECTED),
         );
       }
       clearTimeout(myTimeout);

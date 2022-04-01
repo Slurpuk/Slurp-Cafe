@@ -7,7 +7,11 @@ import TabStatuses from '../static-data/TabStatuses';
 import TopBar from '../components/ShopManagement/TopBar';
 import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
-import {calculateTime, getFormattedOrders, mapper} from '../components/OrderManagement/helpers';
+import {
+  calculateTime,
+  getFormattedOrders,
+  mapper,
+} from '../components/OrderManagement/helpers';
 import {OrdersContext} from '../components/OrderManagement/contexts';
 import EmptyListText from '../sub-components/EmptyListText';
 import {emptyCurrentOrdersText, OrderStatuses} from '../static-data';
@@ -36,15 +40,17 @@ const OrdersPage = ({navigation}) => {
       .where('shop', '==', globalContext.coffeeShopRef)
       .where('is_displayed', '==', true) // Is the order required by the shop (not removed)
       .onSnapshot(async querySnapshot => {
-              let formattedOrders = await getFormattedOrders(querySnapshot.docs, shopLocation)
-              orders.current = formattedOrders;
-              numIncomingOrders.current = formattedOrders.filter(
-                  order => order.status === OrderStatuses.INCOMING,
-              ).length;
-              setTargetUsers(orders.current.map(order => order.user.email));
-              updateCurrentOrders(formattedOrders);
-          }
-        )
+        let formattedOrders = await getFormattedOrders(
+          querySnapshot.docs,
+          shopLocation,
+        );
+        orders.current = formattedOrders;
+        numIncomingOrders.current = formattedOrders.filter(
+          order => order.status === OrderStatuses.INCOMING,
+        ).length;
+        setTargetUsers(orders.current.map(order => order.user.email));
+        updateCurrentOrders(formattedOrders);
+      });
 
     // Unsubscribe from events when no longer in use
     return () => subscriber();
@@ -126,7 +132,7 @@ const OrdersPage = ({navigation}) => {
       value={{
         orders: orders.current,
         numIncomingOrders: numIncomingOrders.current,
-          tabStatus: currTabStatus.current,
+        tabStatus: currTabStatus.current,
       }}
     >
       <View style={styles.ordersContainer}>

@@ -40,18 +40,18 @@ export default function CustomButton(props) {
 
   return (
     <View>
-        <Pressable
-          style={[
-            buttonStyles.outer,
-            buttonStyles[color],
-            {width: screenWidth * widthRatio, height: buttonHeight},
-          ]}
-          activeOpacity={1}
-          onPressIn={onPressIn}
-          onPressOut={onPressOut}
-          onPress={onPress}
-        >
-          <Animated.View style={{transform: [{scale}]}}>
+      <Pressable
+        style={[
+          buttonStyles.outer,
+          buttonStyles[color],
+          {width: screenWidth * widthRatio, height: buttonHeight},
+        ]}
+        activeOpacity={1}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        onPress={onPress}
+      >
+        <Animated.View style={{transform: [{scale}]}}>
           <Text style={buttonStyles.buttonText}>{text}</Text>
           {optionalNumber === null ? null : (
             <Text
@@ -63,8 +63,8 @@ export default function CustomButton(props) {
               {optionalNumber}
             </Text>
           )}
-          </Animated.View>
-        </Pressable>
+        </Animated.View>
+      </Pressable>
     </View>
   );
 }

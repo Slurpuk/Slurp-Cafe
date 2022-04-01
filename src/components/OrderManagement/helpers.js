@@ -2,7 +2,7 @@ import TabStatuses from '../../static-data/TabStatuses';
 import OrderStatuses from '../../static-data/OrderStatuses';
 import {Dimensions} from 'react-native';
 import {months} from '../../static-data';
-import {getFormattedItems, getUser} from "../../firebase/queries";
+import {getFormattedItems, getUser} from '../../firebase/queries';
 
 /**
  * Maps the tab status with the corresponding order status(es)
@@ -186,23 +186,23 @@ function getItemFullPrice(item) {
 async function getFormattedOrders(orders, shopLocation) {
   let newOrders = [];
   await Promise.all(
-      orders.map(async order => {
-        const firebaseOrder = order.data();
-        firebaseOrder.items = await getFormattedItems(firebaseOrder);
-        let user = await getUser(firebaseOrder);
-        firebaseOrder.user = user;
-        let newOrder = {
-          ...firebaseOrder,
-          eta: calculateTime(
-              user.location._latitude,
-              user.location._longitude,
-              shopLocation.latitude,
-              shopLocation.longitude,
-          ),
-          key: order.id,
-        };
-        newOrders.push(newOrder);
-      }),
+    orders.map(async order => {
+      const firebaseOrder = order.data();
+      firebaseOrder.items = await getFormattedItems(firebaseOrder);
+      let user = await getUser(firebaseOrder);
+      firebaseOrder.user = user;
+      let newOrder = {
+        ...firebaseOrder,
+        eta: calculateTime(
+          user.location._latitude,
+          user.location._longitude,
+          shopLocation.latitude,
+          shopLocation.longitude,
+        ),
+        key: order.id,
+      };
+      newOrders.push(newOrder);
+    }),
   );
   return newOrders;
 }
@@ -216,5 +216,5 @@ export {
   toDateTime,
   getInitialHeight,
   calculateOrderTotal,
-    getFormattedOrders,
+  getFormattedOrders,
 };
