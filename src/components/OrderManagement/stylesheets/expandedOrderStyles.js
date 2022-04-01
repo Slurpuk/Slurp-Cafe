@@ -46,6 +46,7 @@ const expandedOrderStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: '6%',
+    marginBottom: '6%',
   },
   amount: {
     fontFamily: 'Roboto',
