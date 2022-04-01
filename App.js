@@ -1,15 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
-import firestore from '@react-native-firebase/firestore';
 import OrdersPage from './src/screens/OrdersPage';
 import AccountManagementPage from './src/screens/AccountManagementPage';
-import {Alerts} from './src/static-data';
 import LogInPage from './src/screens/LogInPage';
 import SignUpPageOne from './src/screens/SignUpPageOne';
 import SignUpPageTwo from './src/screens/SignUpPageTwo';
+import {setCoffeeShop} from "./src/firebase/queries";
+import firestore from "@react-native-firebase/firestore";
 
 export const GlobalContext = React.createContext();
 export const SignUpContext = React.createContext();
@@ -19,8 +19,6 @@ export const SignUpContext = React.createContext();
  */
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentShop, setCurrentShop] = useState(auth().currentUser);
-  const coffeeShopRef = useRef(null);
   const [coffeeShopObj, setCoffeeShopObj] = useState(null);
 
   /**
@@ -29,13 +27,11 @@ export default function App() {
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(coffeeShop => {
       if (coffeeShop) {
-        setCurrentShop(coffeeShop);
-        setCoffeeShop(coffeeShop).then(() => {
+        setCoffeeShop(coffeeShop, setCoffeeShopObj).then(() => {
           setIsLoggedIn(true);
         });
       } else {
         setIsLoggedIn(false);
-        setCurrentShop(null);
       }
     });
 
@@ -80,9 +76,8 @@ export default function App() {
   return (
     <GlobalContext.Provider
       value={{
-        currentUser: currentShop, // Returns the authentication object
-        coffeeShopRef: coffeeShopRef.current,
-        coffeeShopObj: coffeeShopObj, // Returns the model object
+        currentUser: auth().currentUser, // Returns the authentication object
+        coffeeShop: coffeeShopObj, // Returns the model object
       }}
     >
       <NavigationContainer>
