@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {OrderCardContext} from '../../contexts';
-import {OrderStatuses} from '../../../../static-data';
+import {AnimatedCardContext, OrderCardContext, OrdersContext} from '../../contexts';
+import {Alerts, OrderStatuses, TabStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
 import CustomButton from '../../../../sub-components/CustomButton';
 
@@ -10,19 +10,28 @@ import CustomButton from '../../../../sub-components/CustomButton';
  */
 const AcceptRejectButton = ({accept}) => {
   const orderCardContext = useContext(OrderCardContext);
+  const ordersContext = useContext(OrdersContext);
+  const animated = useContext(AnimatedCardContext);
   const order = orderCardContext.order;
 
   /**
    * Updates the status of the order accordingly
    */
   function updateStatus() {
-    if (accept) {
-      setOrderStatus(order.data, OrderStatuses.ACCEPTED);
-    } else {
-      updateFinishedTime(order.data).then(() =>
-        setOrderStatus(order.data, OrderStatuses.REJECTED),
-      );
-    }
+    animated.setExpanded();
+    let myTimeout = setTimeout(() => {
+      if (accept) {
+        if(ordersContext.tabStatus === TabStatuses.ALL){
+          orderCardContext.order.setCurrStatus(OrderStatuses.ACCEPTED);
+        }
+        setOrderStatus(order.data, OrderStatuses.ACCEPTED);
+      } else {
+        updateFinishedTime(order.data).then(() =>
+            setOrderStatus(order.data, OrderStatuses.REJECTED),
+        );
+      }
+      clearTimeout(myTimeout);
+    }, 500);
   }
 
   return (
