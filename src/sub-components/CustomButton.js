@@ -8,6 +8,10 @@ import {
   Dimensions,
 } from 'react-native';
 
+/**
+ * Reusable and customisable button for versatile use throughout the app.
+ * @param props The props for the component
+ */
 export default function CustomButton(props) {
   const {
     color,
@@ -23,6 +27,9 @@ export default function CustomButton(props) {
   const outputRange = [1, 0.8];
   const scale = animation.interpolate({inputRange, outputRange});
 
+  /**
+   * Button animation on press in
+   */
   const onPressIn = () => {
     Animated.spring(animation, {
       toValue: 0.095,
@@ -30,6 +37,10 @@ export default function CustomButton(props) {
       useNativeDriver: true,
     }).start();
   };
+
+  /**
+   * Button animation on press out
+   */
   const onPressOut = () => {
     Animated.spring(animation, {
       toValue: 0,
