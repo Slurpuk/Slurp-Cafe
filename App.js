@@ -8,8 +8,8 @@ import AccountManagementPage from './src/screens/AccountManagementPage';
 import LogInPage from './src/screens/LogInPage';
 import SignUpPageOne from './src/screens/SignUpPageOne';
 import SignUpPageTwo from './src/screens/SignUpPageTwo';
-import {setCoffeeShop} from "./src/firebase/queries";
-import firestore from "@react-native-firebase/firestore";
+import {setCoffeeShop} from './src/firebase/queries';
+import firestore from '@react-native-firebase/firestore';
 
 export const GlobalContext = React.createContext();
 export const SignUpContext = React.createContext();
@@ -44,27 +44,27 @@ export default function App() {
    * Sets the current coffee shop object accordingly.
    */
   useEffect(() => {
-    if(isLoggedIn && auth().currentUser){
+    if (isLoggedIn && auth().currentUser) {
       const subscriber = firestore()
-          .collection('coffee_shops')
-          .where('email', '==', auth().currentUser.email)
-          .onSnapshot(query =>{
-            const coffeeShopDoc = query.docs[0];
-            const coffeeShop = coffeeShopDoc.data();
-            setCoffeeShopObj({
-              ...coffeeShop,
-              ref: coffeeShopDoc.ref,
-              location: {
-                latitude: coffeeShop.location._latitude,
-                longitude: coffeeShop.location._longitude,},
-            })
+        .collection('coffee_shops')
+        .where('email', '==', auth().currentUser.email)
+        .onSnapshot(query => {
+          const coffeeShopDoc = query.docs[0];
+          const coffeeShop = coffeeShopDoc.data();
+          setCoffeeShopObj({
+            ...coffeeShop,
+            ref: coffeeShopDoc.ref,
+            location: {
+              latitude: coffeeShop.location._latitude,
+              longitude: coffeeShop.location._longitude,
+            },
           });
+        });
 
       // Stop listening for updates when no longer required.
       return () => subscriber();
     }
   }, [isLoggedIn]);
-
 
   //Creates the stack over which the pages are laid; enables navigation.
   const Stack = createNativeStackNavigator();

@@ -49,7 +49,8 @@ export const AlertMessage = {
   },
   REJECTING_ORDER: {
     title: 'Rejecting',
-    message: 'You are about to reject this order. This may be impact your rating. Are you sure?',
+    message:
+      'You are about to reject this order. This may be impact your rating. Are you sure?',
   },
 };
 

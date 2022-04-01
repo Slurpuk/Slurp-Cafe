@@ -51,15 +51,19 @@ export const Alerts = {
     Alert.alert(AlertMessage.ELSE.title, AlertMessage.ELSE.message);
   },
   rejectingOrderAlert: reject => {
-    Alert.alert(AlertMessage.REJECTING_ORDER.title, AlertMessage.REJECTING_ORDER.message, [
-      {
-        text: 'Yes',
-        onPress: () => reject(),
-      },
-      {
-        text: 'No',
-        style: 'cancel',
-      },
-    ]);
-  }
+    Alert.alert(
+      AlertMessage.REJECTING_ORDER.title,
+      AlertMessage.REJECTING_ORDER.message,
+      [
+        {
+          text: 'Yes',
+          onPress: () => reject(),
+        },
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+      ],
+    );
+  },
 };

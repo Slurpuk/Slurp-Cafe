@@ -13,7 +13,7 @@ import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
-import {logout, updateCoffeeShop} from "../firebase/queries";
+import {logout, updateCoffeeShop} from '../firebase/queries';
 
 /**
  * Account page for managing
@@ -23,9 +23,7 @@ const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShop.name);
   const [intro, setIntro] = useState(globalContext.coffeeShop.intro);
-  const [location, setLocation] = useState(
-    globalContext.coffeeShop.location,
-  );
+  const [location, setLocation] = useState(globalContext.coffeeShop.location);
 
   /**
    * Checks for simple form requirements
@@ -66,7 +64,12 @@ const AccountManagementPage = ({navigation}) => {
      */
   async function updateDetails() {
     if (processErrorsFrontEnd()) {
-      await updateCoffeeShop(globalContext.coffeeShop.ref, name, intro, location);
+      await updateCoffeeShop(
+        globalContext.coffeeShop.ref,
+        name,
+        intro,
+        location,
+      );
       navigation.navigate('Orders Page');
     }
   }

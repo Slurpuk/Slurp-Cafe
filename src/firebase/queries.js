@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {Alerts} from '../static-data';
-import auth from "@react-native-firebase/auth";
+import auth from '@react-native-firebase/auth';
 
 /**
  * Set the status of a given order (in the database)
@@ -14,7 +14,7 @@ function setOrderStatus(order, status) {
     .update({
       status: status,
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -29,7 +29,7 @@ async function updateFinishedTime(order) {
     .update({
       finished_time: firestore.Timestamp.now(),
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -43,7 +43,7 @@ function removeOrder(order) {
     .update({
       is_displayed: false,
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -57,7 +57,7 @@ function setIsOpen(isOpen, coffeeShopRef) {
     .update({
       is_open: isOpen,
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -89,7 +89,7 @@ async function getFormattedItems(firebaseOrder) {
           }
           newItems.push(newItem);
         })
-          .catch(e => processBackEndErrors(e));
+        .catch(e => processBackEndErrors(e));
 
       return newItem;
     }),
@@ -113,7 +113,7 @@ async function getOrderOption(optionRef) {
         key: doc.id,
       };
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
   return newOption;
 }
 
@@ -130,7 +130,7 @@ async function getUser(firebaseOrder) {
     .then(retrievedUser => {
       user = retrievedUser.data();
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
   return user;
 }
 
@@ -150,7 +150,7 @@ async function getAllItems() {
         }),
       );
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
   return items;
 }
 
@@ -161,27 +161,24 @@ async function getAllItems() {
  * @param intro The new intro text for the coffee shop
  * @param location The new location  for the coffee shop
  */
-async function updateCoffeeShop(coffeeShopRef, name, intro, location){
-    await firestore()
-        .doc(coffeeShopRef.path)
-        .update({
-            name: name,
-            intro: intro,
-            location: new firestore.GeoPoint(
-                location.latitude,
-                location.longitude,
-            ), //Default location: 10 Downing Street.
-        })
-        .catch(e => processBackEndErrors(e));
+async function updateCoffeeShop(coffeeShopRef, name, intro, location) {
+  await firestore()
+    .doc(coffeeShopRef.path)
+    .update({
+      name: name,
+      intro: intro,
+      location: new firestore.GeoPoint(location.latitude, location.longitude), //Default location: 10 Downing Street.
+    })
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
  Simple function to log out, triggers state changes in App.
  */
 async function logout() {
-    await auth()
-        .signOut()
-        .catch(e => processBackEndErrors(e));
+  await auth()
+    .signOut()
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -189,12 +186,12 @@ async function logout() {
  * errors in the form of alerts to the user
  */
 function processBackEndErrors(errorCode) {
-    if (errorCode === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert();
-    } else {
-        //Anything else
-        Alerts.elseAlert();
-    }
+  if (errorCode === 'auth/network-request-failed') {
+    Alerts.connectionErrorAlert();
+  } else {
+    //Anything else
+    Alerts.elseAlert();
+  }
 }
 
 /**
@@ -203,30 +200,30 @@ function processBackEndErrors(errorCode) {
  * @param setCoffeeShop
  */
 async function setCoffeeShop(coffeeShopAccount, setCoffeeShop) {
-    await firestore()
-        .collection('coffee_shops')
-        .where('email', '==', coffeeShopAccount.email)
-        .get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-                let coffeeShop = documentSnapshot.data();
-                setCoffeeShop({
-                    ...coffeeShop,
-                    ref: documentSnapshot.ref,
-                    location: {
-                        latitude: coffeeShop.location._latitude,
-                        longitude: coffeeShop.location._longitude,
-                    },
-                });
-            });
-        })
-        .catch(error => {
-            if (error.code === 'auth/network-request-failed') {
-                Alerts.connectionErrorAlert(error);
-            } else {
-                Alerts.databaseErrorAlert(error);
-            }
+  await firestore()
+    .collection('coffee_shops')
+    .where('email', '==', coffeeShopAccount.email)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        let coffeeShop = documentSnapshot.data();
+        setCoffeeShop({
+          ...coffeeShop,
+          ref: documentSnapshot.ref,
+          location: {
+            latitude: coffeeShop.location._latitude,
+            longitude: coffeeShop.location._longitude,
+          },
         });
+      });
+    })
+    .catch(error => {
+      if (error.code === 'auth/network-request-failed') {
+        Alerts.connectionErrorAlert(error);
+      } else {
+        Alerts.databaseErrorAlert(error);
+      }
+    });
 }
 
 export {
@@ -237,9 +234,7 @@ export {
   getFormattedItems,
   getUser,
   getAllItems,
-    updateCoffeeShop,
-    logout,
-    setCoffeeShop,
-
-
+  updateCoffeeShop,
+  logout,
+  setCoffeeShop,
 };
