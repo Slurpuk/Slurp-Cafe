@@ -95,6 +95,8 @@ export default function App() {
                       password:'',
                       shopName:'',
                       shopDescription:'',
+                      shopImageUri:'',
+                      shopImageName:'',
                   }}>
                   <Stack.Navigator screenOptions={{headerShown: false}}>
                   <Stack.Screen name="Sign Up Page One" component={SignUpPageOne} />
