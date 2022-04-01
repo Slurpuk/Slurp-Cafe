@@ -59,13 +59,13 @@ const LogInPage = ({navigation}) => {
     let validity = true;
     if (email === '') {
       validity = false;
-      Alert.alert('Empty Email', 'Please enter your email.');
+      Alerts.emptyEmail();
     } else if (!emailRegex.test(email)) {
       validity = false;
       Alerts.badEmailAlert();
     } else if (password === '') {
       validity = false;
-      Alert.alert('Empty Password', 'Please enter your password.');
+      Alerts.emptyPassword();
     }
     return validity;
   }

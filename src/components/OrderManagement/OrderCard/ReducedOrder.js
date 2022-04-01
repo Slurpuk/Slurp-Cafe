@@ -20,10 +20,16 @@ const ReducedOrder = () => {
     <View style={Reduced.container}>
       <View style={Reduced.left_side}>
         <View style={Reduced.header}>
-          <Text style={Reduced.name}>{order.data.user.FirstName}</Text>
+          <Text
+              testID={'userName'}
+              style={Reduced.name}>
+            {order.data.user.FirstName}
+          </Text>
           <View style={[Reduced.time, finished ? {opacity: 0} : null]}>
             <Icon size={24} color={statusColor} name="clock" />
-            <Text style={[Reduced.clock_number, {color: statusColor}]}>
+            <Text
+                testID={'eta'}
+                style={[Reduced.clock_number, {color: statusColor}]}>
               {' '}
               {order.data.eta} min
             </Text>
@@ -31,6 +37,7 @@ const ReducedOrder = () => {
         </View>
         <Text style={Reduced.order_number}>#{order.data.key}</Text>
         <Text
+          testID={'totalPrice'}
           style={[
             Reduced.total_price,
             animatedContext.isExpanded ? Reduced.invisible : null,
@@ -42,7 +49,9 @@ const ReducedOrder = () => {
       {!animatedContext.isExpanded ? (
         <View style={Reduced.right_side}>
           {finished ? (
-            <Text style={Reduced.finished}>
+            <Text
+                testID={'finishTime'}
+                style={Reduced.finished}>
               This order was {order.currStatus} on{' '}
               {toDateTime(order.data.FinishedTime.seconds)}
             </Text>

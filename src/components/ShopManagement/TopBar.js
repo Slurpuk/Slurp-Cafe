@@ -31,31 +31,32 @@ const TopBar = ({navigation}) => {
   }
 
   return (
-    <>
-      <StatusBar translucent={true} backgroundColor="transparent" />
-      <View style={styles.container}>
-        <CustomButton
-          color={'green'}
-          text={'Manage Shop'}
-          onPress={goToAccountManagement}
-          widthRatio={0.3}
-          buttonHeight={75}
-        />
-        <View style={styles.manageOrdersHeadline}>
-          <Text style={textStyles.genericBlackText}>Accepting Orders: </Text>
-          <Text style={[textStyles.genericBoldBlackText]}>
-            {isEnabled ? 'Yes' : 'No'}
-          </Text>
+      <>
+        <StatusBar translucent={true} backgroundColor="transparent" />
+        <View style={styles.container}>
+          <CustomButton
+              color={'green'}
+              text={'Manage Shop'}
+              onPress={goToAccountManagement}
+              widthRatio={0.30}
+              buttonHeight={75}
+          />
+          <View style={styles.manageOrdersHeadline}>
+            <Text style={textStyles.genericBlackText}>Accepting Orders: </Text>
+            <Text style={[textStyles.genericBoldBlackText]}>
+              {isEnabled ? 'Yes' : 'No'}
+            </Text>
+          </View>
+            <Switch
+                testID={'switch'}
+                trackColor={'#E0E0E0'}
+                thumbColor={isEnabled ? '#218F89' : '#BE1753'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+                style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
+            />
         </View>
-        <Switch
-          trackColor={'#E0E0E0'}
-          thumbColor={isEnabled ? '#218F89' : '#BE1753'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
-        />
-      </View>
     </>
   );
 };
