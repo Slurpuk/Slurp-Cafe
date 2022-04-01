@@ -161,10 +161,10 @@ function calculateOrderTotal(items) {
  */
 function getOptionsPrice(item) {
   return item.has_options
-      ? item.options.reduce(function (acc, option) {
+    ? item.options.reduce(function (acc, option) {
         return acc + option.price;
       }, 0)
-      : 0;
+    : 0;
 }
 
 /**
@@ -172,10 +172,9 @@ function getOptionsPrice(item) {
  * @param item The target item
  * @return Number The total price of the item
  */
-function getItemFullPrice(item) {;
+function getItemFullPrice(item) {
   return item.amount * (item.price + getOptionsPrice(item));
 }
-
 
 export {
   isFinished,
@@ -185,6 +184,5 @@ export {
   getOptionsText,
   toDateTime,
   getInitialHeight,
-    calculateOrderTotal,
-
+  calculateOrderTotal,
 };

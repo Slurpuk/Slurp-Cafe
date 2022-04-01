@@ -1,7 +1,12 @@
 import React, {useContext} from 'react';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {isFinished, getStatusColor, toDateTime, calculateOrderTotal} from '../helpers';
+import {
+  isFinished,
+  getStatusColor,
+  toDateTime,
+  calculateOrderTotal,
+} from '../helpers';
 import {Reduced} from '../stylesheets';
 import {AnimatedCardContext, OrderCardContext} from '../contexts';
 import {ChangeStatusButton} from './ActionButtons';
@@ -14,7 +19,7 @@ const ReducedOrder = () => {
   const animatedContext = useContext(AnimatedCardContext);
   const order = orderCard.order;
   const statusColor = getStatusColor(order.data.eta);
-  const finished = isFinished(order.currStatus)
+  const finished = isFinished(order.currStatus);
 
   console.log(order.data.eta);
 

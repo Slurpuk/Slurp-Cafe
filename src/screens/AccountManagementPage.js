@@ -20,7 +20,9 @@ const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
   const [name, setName] = useState(globalContext.coffeeShopObj.name);
   const [intro, setIntro] = useState(globalContext.coffeeShopObj.intro);
-  const [location, setLocation] = useState(globalContext.coffeeShopObj.location);
+  const [location, setLocation] = useState(
+    globalContext.coffeeShopObj.location,
+  );
 
   /**
     Simple function to log out, triggers state changes in App.

@@ -7,7 +7,7 @@ import {Alerts} from '../static-data';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
 import {SignUpContext} from '../../App';
-import {getAllItems} from "../firebase/queries";
+import {getAllItems} from '../firebase/queries';
 
 /**
  * Renders the second page of the signing up process
