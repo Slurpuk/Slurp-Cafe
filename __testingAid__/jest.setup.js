@@ -70,15 +70,6 @@ jest.doMock('react-native', () => {
   );
 });
 
-jest.doMock('@react-native-firebase/auth', () => {
-  return () => ({
-    signInWithEmailAndPassword: jest.fn(),
-    createUserWithEmailAndPassword: jest.fn(),
-    signOut: jest.fn(),
-    sendPasswordResetEmail: jest.fn(),
-  });
-});
-
 jest.doMock('@react-native-firebase/firestore', () => {
   return () => ({
     collection: jest.fn(),
@@ -90,15 +81,24 @@ Mock for NativeEventEmitter library
  */
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
+jest.mock('react-native/Libraries/Components/Switch/Switch', () => {
+  const mockComponent = require('react-native/jest/mockComponent');
+  return {
+    default: mockComponent('react-native/Libraries/Components/Switch/Switch'),
+  };
+});
+
+
 /*
-Mock for RNNavigation
+Mock for Device-Info library
  */
-import 'react-native-gesture-handler/jestSetup';
+import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
+jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
-
-
-// Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+/*
+Mock for RNReanimated
+ */
+global.__reanimatedWorkletInit = jest.fn();
 
 /*
 Simulates timers used for animations etc.

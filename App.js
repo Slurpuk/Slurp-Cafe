@@ -47,6 +47,7 @@ export default function App() {
 
     /**
      *  Function to link the authentication entry to the CoffeeShop model via the email.
+     *  @param coffeeShop The new currently logged in coffee shop
      */
       async function setCoffeeShop(coffeeShop) {
           await firestore()
@@ -68,6 +69,7 @@ export default function App() {
                   }
               })
       }
+
 
 
   //Creates the stack over which the pages are laid; enables navigation.
@@ -93,8 +95,6 @@ export default function App() {
                       email:'',
                       password:'',
                       shopName:'',
-                      shopImageName:'',
-                      shopImageUri:'',
                       shopDescription:'',
                   }}>
                   <Stack.Navigator screenOptions={{headerShown: false}}>

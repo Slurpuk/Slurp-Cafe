@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {OrderCardContext} from '../../contexts';
 import {OrderStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
-import CustomButton from "../../../../sub-components/CustomButton";
+import CustomButton from '../../../../sub-components/CustomButton';
 
 /**
  * Button for either accepting or rejecting orders
@@ -27,9 +27,9 @@ const AcceptRejectButton = ({accept}) => {
 
   return (
     <CustomButton
-        color={accept ? 'blue' : 'red'}
-        text={accept ? 'Accept order' : 'Reject order'}
-        onPress={updateStatus}
+      color={accept ? 'blue' : 'red'}
+      text={accept ? 'Accept order' : 'Reject order'}
+      onPress={updateStatus}
     />
   );
 };

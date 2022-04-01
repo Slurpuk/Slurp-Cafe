@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image, Platform} from 'react-native';
+import {StyleSheet, View, Text, Alert, StatusBar, ImageBackground, Image} from 'react-native';
 import FormField from '../sub-components/FormField';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -12,133 +12,112 @@ import {SignUpContext} from "../../App";
 import storage from '@react-native-firebase/storage';
 import firebase from "@react-native-firebase/app";
 
+/**
+ * Renders the second page of the signing up process
+ */
 const SignUpPageTwo = ({navigation}) => {
     const signUpContext = useContext(SignUpContext);
     const [imageUriGallery, setImageUriGallery] = useState(signUpContext.shopImageUri);
     const[imageName,setImageName]=useState(signUpContext.shopImageName);
     const [shopName, setShopName] = useState(signUpContext.shopName);
     const [shopIntro, setShopIntro] = useState(signUpContext.shopDescription);
-    const uploadUri = Platform.OS === 'ios' ? imageUriGallery.replace('file://', '') : imageUriGallery;
 
-    function uploadImageToStorage() {
-        firebase
-            .storage()
-            .ref('CoffeeShops')
-            .putFile(uploadUri)
-            .then((snapshot) => {
-                //You can check the image is now uploaded in the storage bucket
-                console.log(`Image has been successfully uploaded.`);
-            })
-            .catch((e) => console.log('uploading image error => ', e));
+  /**
+   * Navigates to the first page and update global context values
+   */
+  async function navigatePreviousPage() {
+    navigation.navigate('Sign Up Page One');
+    signUpContext.shopName = shopName;
+    signUpContext.shopDescription = shopIntro;
+  }
+
+  /**
+   * Displays a confirmation message to the user in the form of an alert
+   */
+  const registeredMessage = () => {
+    Alerts.successfulRegistration();
+  };
+
+  /**
+   * Registers user to the database after checking for front end form requirements
+   */
+  async function registerCoffeeShop() {
+    if (processErrorsFrontEnd()) {
+      await auth()
+        .createUserWithEmailAndPassword(
+          signUpContext.email,
+          signUpContext.password,
+        )
+        .then(() => {
+          let newCoffeeShop = auth().currentUser;
+          addCoffeeShop(newCoffeeShop);
+          registeredMessage();
+        })
+        .catch(error => {
+          processBackEndErrors(error.code);
+        });
     }
+  }
 
-
-    useEffect(() => {
-        signUpContext.shopImageName=imageName;
-        signUpContext.shopName=shopName;
-        signUpContext.shopDescription=shopIntro;
-        signUpContext.shopImageUri=imageUriGallery;
-    }, [imageName,shopName,shopIntro,imageUriGallery]);
-
-
-    // Display a confirmation message to the user
-    const registeredMessage = () => {
-        Alert.alert('Congratulations', 'Registered Successfully', [
-            {
-                text: 'OK',
-            },
-        ]);
-    };
-
-
-    // Register the user to the database after checking their credentials
-    async function registerCoffeeShop() {
-        if (processErrorsFrontEnd()) {
-            await auth()
-                .createUserWithEmailAndPassword(signUpContext.email, signUpContext.password)
-                .then(() => {
-                    let newCoffeeShop = auth().currentUser;
-                    addCoffeeShop(newCoffeeShop);
-                    registeredMessage();
-                })
-                .catch(error => {
-                    processBackEndErrors(error.code);
-                });
-        }
+  /**
+   * Checks for simple form requirements
+   * @return boolean Expressing the validity of the email and password front-end wise
+   */
+  function processErrorsFrontEnd() {
+    let validity = true;
+    if (shopName === '') {
+      validity = false;
+      Alerts.emptyShopName();
+    } else if (shopIntro.length > 150 || shopIntro.length < 20) {
+      validity = false;
+      Alerts.descriptionLength();
     }
-    /*
- Deal with bad or empty inputs before sending request
-  */
-    function processErrorsFrontEnd() {
-        let validity = true;
-        if (shopName === '') {
-            validity = false;
-            Alert.alert('Empty ShopName', 'Please enter your shop name.');
-        }
-        else if (shopIntro === '') {
-            validity = false;
-            Alert.alert('Empty Description', 'Please enter your shop description.');
-        }
-        else if (shopIntro.length>100) {
-            validity = false;
-            Alert.alert('Long description', 'Please dont write more than 100 characters for the shop description.');
-        }
-        else if (imageName==='') {
-            validity = false;
-            Alert.alert('Empty Image', 'Please choose and image for your coffee shop.');
-        }
+    return validity;
+  }
 
-        return validity;
+  /**
+   * Manages the response to database failure and shows
+   * errors in the form of alerts to the user
+   */
+  function processBackEndErrors(errorCode) {
+    if (errorCode === 'auth/weak-password') {
+      Alerts.weakPasswordAlert();
+      navigation.navigate('Sign Up Page One');
+    } else if (errorCode === 'auth/invalid-email') {
+      Alerts.badEmailAlert();
+      navigation.navigate('Sign Up Page One');
+    } else if (errorCode === 'auth/network-request-failed') {
+      Alerts.connectionErrorAlert();
+    } else if (errorCode === 'auth/too-many-requests') {
+      Alerts.tooManyRequestsAlert();
+    }else {
+      //Anything else
+      Alerts.elseAlert();
     }
+  }
 
-
-
-    /*
-        Manage response to database failure
-         */
-    function processBackEndErrors(errorCode) {
-        if (
-            errorCode === 'auth/wrong-password' ||
-            errorCode === 'auth/user-not-found'
-        ) {
-            Alerts.wrongCredentialsAlert();
-        } else if (errorCode === 'auth/invalid-email') {
-            Alerts.badEmailAlert();
-        } else if (errorCode === 'auth/network-request-failed') {
-            Alerts.connectionErrorAlert();
-        } else {
-            console.log(errorCode);
-            //Anything else
-            Alerts.elseAlert();
+  /**
+   * Adds all the form field values to a newly create coffee shop
+   */
+  async function addCoffeeShop() {
+    await firestore()
+      .collection('CoffeeShop')
+      .add({
+        Email: signUpContext.email,
+        Name: signUpContext.shopName,
+        Image:
+          'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
+        Intro: signUpContext.shopDescription,
+        IsOpen: false,
+        ItemsOffered: [],
+        Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
+      })
+      .catch(errorCode => {
+        if (errorCode === 'auth/network-request-failed') {
+          Alerts.connectionErrorAlert();
         }
-    }
-    /*
-      We have already created the authentication entry but now we need to imput the values for the Coffee Shop model.
-      Some of these are default, others are defined by the user input.
-      WARNING: email and name must be checked to not be undefined before calling.
-       */
-    async function addCoffeeShop() {
-        uploadImageToStorage();
-        await firestore()
-            .collection('CoffeeShop')
-            .add({
-                Email: signUpContext.email,
-                Name: shopName,
-                //will be an actual image
-                Image :imageUriGallery,
-/*                Image:
-                    'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',*/
-                Intro: shopIntro,
-                IsOpen: false,
-                ItemsOffered: [],
-                Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
-                Likeness: 69,
-                Queue: 42,
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+      });
+  }
 
     const openGallery = () => {
         const options = {
@@ -166,11 +145,10 @@ const SignUpPageTwo = ({navigation}) => {
         });
     };
 
-
     return (
         <View style={styles.wrapper}>
             <View  style={styles.topBar}>
-                <StatusBar translucent={true} backgroundColor="white" />
+                <StatusBar translucent={true} backgroundColor="transparent" />
                 <Text style={textStyles.formTitle}>Sign Up</Text>
             </View>
             <View style={styles.paddedContainer}>
@@ -199,7 +177,7 @@ const SignUpPageTwo = ({navigation}) => {
                     <FormField
                         title={'Shop Description'}
                         setField={setShopIntro}
-                        placeholder={'100 chars describing the qualities of your coffee shop'}
+                        placeholder={'150 chars describing the qualities of your coffee shop'}
                         type={'multiline'}
                         value={shopIntro}
                     />
@@ -209,21 +187,21 @@ const SignUpPageTwo = ({navigation}) => {
                     >Already have an account? Log in
                     </Text>
                 </View>
-                <View style={styles.horizontalContainer}>
+                <View style={styles.buttonContainer}>
                     <CustomButton
-                        style={[styles.subButtonContainerLeft]}
+                        style={[styles.leftButton]}
                         color={'blue'}
                         text={'Go Back'}
-                        onPress={()=>navigation.navigate('Sign Up Page One')}
-                        widthRatio={0.45}
+                        onPress={navigatePreviousPage}
+                        widthRatio={0.42}
                         buttonHeight={70}
                     />
                     <CustomButton
-                        style={styles.subButtonContainer}
+                        style={styles.rightButton}
                         color={'green'}
                         text={'Register'}
                         onPress={registerCoffeeShop}
-                        widthRatio={0.45}
+                        widthRatio={0.42}
                         buttonHeight={70}
                     />
                 </View>
@@ -233,40 +211,51 @@ const SignUpPageTwo = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    topBar: {
-        height: '12%',
-        paddingHorizontal: '5%',
-        width:'100%',
-        alignItems: 'center',
-        backgroundColor: '#F6F6F6',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        elevation: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
+  topBar: {
+    height: '12%',
+    paddingHorizontal: '5%',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: '#F6F6F6',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
     },
-    wrapper: {
-        display: 'flex',
-        flex: 1,
-        backgroundColor: 'white',
-        paddingTop: getCushyPaddingTop(),
-        paddingBottom: '5%',
-    },
-    formContainer: {
-        flex: 1,
-        paddingVertical: '10%',
-    },
-    paddedContainer: {
-        display:"flex",
-        flex:1,
-        paddingHorizontal: '5%',
-    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+  },
+  wrapper: {
+    display: 'flex',
+    flex: 1,
+    backgroundColor: 'white',
+    paddingBottom: '5%',
+  },
+  formContainer: {
+    flex: 1,
+    paddingVertical: '10%',
+  },
+  paddedContainer: {
+    display: 'flex',
+    flex: 1,
+    paddingHorizontal: '5%',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: '4%',
+    justifyContent: 'space-between',
+  },
+  leftButton: {
+    flexGrow: 0,
+  },
+  rightButton: {
+    flexGrow: 0,
+  },
     picture: {
         borderRadius: 5,
         width: 95,
@@ -299,13 +288,6 @@ const styles = StyleSheet.create({
     },
     subImageContainerLeft: {
         marginRight: '3%',
-        flex:1,
-    },
-    subButtonContainer: {
-        flex:1,
-    },
-    subButtonContainerLeft: {
-        marginRight: '30%',
         flex:1,
     },
 });
