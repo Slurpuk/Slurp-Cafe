@@ -1,0 +1,21 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "skipLegacyWorkersInjection": true,
+  "configurations": {
+    "android": {
+      "binaryPath": "android/app/build/outputs/apk/release/app-debug.apk",
+      "build": "cd android && ./gradlew app:assembleRelease assembleAndroidTest -DtestBuildType=debug && cd ..",
+      "type": "android.emulator",
+      "device": {
+        "avdName": "876dcc08"
+      }
+    },
+    "ios": {
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Slurp.app",
+      "build": "xcodebuild -workspace ios/SlurpCafe.xcworkspace -configuration Debug -scheme SlurpCafe -sdk iphonesimulator -derivedDataPath ios/build -destination id=CA867E2E-AF9F-4AAE-9713-005A654B9EC8",
+      "type": "ios.simulator",
+      "name": "iPad Pro (11-inch) (3rd generation)"
+    }
+  }
+}
