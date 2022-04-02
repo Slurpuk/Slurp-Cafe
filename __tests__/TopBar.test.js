@@ -4,8 +4,8 @@ import TopBar from '../src/components/ShopManagement/TopBar';
 import {GlobalContext} from '../App';
 
 const globalContextMock = {
-  coffeeShopObj: {
-    IsOpen: true,
+  coffeeShop: {
+    is_open:true,
   },
 };
 
@@ -26,8 +26,8 @@ describe('Top Bar Component', function () {
     });
     it('Correctly displays when NOT Accepting Orders', async function () {
       const globalContextMock1 = {
-        coffeeShopObj: {
-          IsOpen: false,
+        coffeeShop: {
+          is_open: false,
         },
       };
       const {getByText, getByTestId} = render(

@@ -6,7 +6,7 @@ import {SignUpContext} from '../App';
 
 const signUpContextMock = {
   email: 'pmerita@gmail.com',
-  password: 'MyPassword123',
+  password: 'MyPassword123*',
   shopName: '',
   shopDescription: '',
 };
@@ -42,7 +42,7 @@ describe('Sign Up Two Page', function () {
       );
       const shopName = getByPlaceholderText('');
       expect(shopName).toBeTruthy();
-      fireEvent.changeText(shopName, 'MyCoffeeSHop');
+      fireEvent.changeText(shopName, 'MyCoffeeShop');
       const description = getByPlaceholderText(
         '150 characters describing the qualities of your coffee shop',
       );

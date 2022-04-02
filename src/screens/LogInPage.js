@@ -6,6 +6,10 @@ import textStyles from '../stylesheets/textStyles';
 import firebase from '@react-native-firebase/app';
 import {Alerts} from '../static-data';
 
+/**
+ * Page allowing coffee shops to log in the app.
+ * @param navigation The navigation object
+ */
 const LogInPage = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

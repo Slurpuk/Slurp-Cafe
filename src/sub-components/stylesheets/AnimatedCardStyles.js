@@ -31,6 +31,7 @@ export const AnimatedCardStyles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     padding: '3%',
+    borderRadius: 13,
   },
 
   hidable: {

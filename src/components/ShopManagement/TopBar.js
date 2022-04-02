@@ -11,16 +11,14 @@ import textStyles from '../../stylesheets/textStyles';
  */
 const TopBar = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const [isEnabled, setIsEnabled] = useState(
-    globalContext.coffeeShopObj.IsOpen,
-  );
+  const [isEnabled, setIsEnabled] = useState(globalContext.coffeeShop.is_open);
 
   /**
    * Toggles the switch and opens/closes shop accordingly
    */
   function toggleSwitch() {
     setIsEnabled(prevState => !prevState);
-    setIsOpen(!isEnabled, globalContext.coffeeShopRef);
+    setIsOpen(!isEnabled, globalContext.coffeeShop.ref);
   }
 
   /**

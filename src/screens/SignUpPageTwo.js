@@ -7,6 +7,7 @@ import {Alerts} from '../static-data';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
 import {SignUpContext} from '../../App';
+import {getAllItems} from '../firebase/queries';
 
 /**
  * Renders the second page of the signing up process
@@ -20,9 +21,9 @@ const SignUpPageTwo = ({navigation}) => {
    * Navigates to the first page and update global context values
    */
   async function navigatePreviousPage() {
-    navigation.navigate('Sign Up Page One');
     signUpContext.shopName = shopName;
     signUpContext.shopDescription = shopIntro;
+    navigation.navigate('Sign Up Page One');
   }
 
   /**
@@ -36,7 +37,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Registers user to the database after checking for front end form requirements
    */
   async function registerCoffeeShop() {
-    if (processErrorsFrontEnd()) {
+    if (handleErrorsFrontEnd()) {
       await auth()
         .createUserWithEmailAndPassword(
           signUpContext.email,
@@ -48,7 +49,7 @@ const SignUpPageTwo = ({navigation}) => {
           registeredMessage();
         })
         .catch(error => {
-          processBackEndErrors(error.code);
+          handleBackEndErrors(error.code);
         });
     }
   }
@@ -57,7 +58,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Checks for simple form requirements
    * @return boolean Expressing the validity of the email and password front-end wise
    */
-  function processErrorsFrontEnd() {
+  function handleErrorsFrontEnd() {
     let validity = true;
     if (shopName === '') {
       validity = false;
@@ -73,7 +74,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Manages the response to database failure and shows
    * errors in the form of alerts to the user
    */
-  function processBackEndErrors(errorCode) {
+  function handleBackEndErrors(errorCode) {
     if (errorCode === 'auth/weak-password') {
       Alerts.weakPasswordAlert();
       navigation.navigate('Sign Up Page One');
@@ -94,17 +95,18 @@ const SignUpPageTwo = ({navigation}) => {
    * Adds all the form field values to a newly create coffee shop
    */
   async function addCoffeeShop() {
+    let allItems = await getAllItems();
     await firestore()
-      .collection('CoffeeShop')
+      .collection('coffee_shops')
       .add({
-        Email: signUpContext.email,
-        Name: signUpContext.shopName,
-        Image:
+        email: signUpContext.email,
+        name: shopName,
+        image:
           'https://firebasestorage.googleapis.com/v0/b/independentcoffeeshops.appspot.com/o/CoffeeShops%2FDefaultICS.jpeg?alt=media&token=f76c477f-b60a-4c0d-ac15-e83c0e179a18',
-        Intro: signUpContext.shopDescription,
-        IsOpen: false,
-        ItemsOffered: [],
-        Location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
+        intro: shopIntro,
+        is_open: false,
+        items: allItems,
+        location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
       })
       .catch(errorCode => {
         if (errorCode === 'auth/network-request-failed') {

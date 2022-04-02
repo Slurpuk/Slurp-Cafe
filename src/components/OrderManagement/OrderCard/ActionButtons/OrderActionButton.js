@@ -1,6 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {AnimatedCardContext, OrderCardContext} from '../../contexts';
-import {OrderStatuses} from '../../../../static-data';
+import {
+  AnimatedCardContext,
+  OrderCardContext,
+  OrdersContext,
+} from '../../contexts';
+import {OrderStatuses, TabStatuses} from '../../../../static-data';
 import {setOrderStatus, updateFinishedTime} from '../../../../firebase';
 import CustomButton from '../../../../sub-components/CustomButton';
 
@@ -9,6 +13,7 @@ import CustomButton from '../../../../sub-components/CustomButton';
  */
 const OrderActionButton = () => {
   const orderCardContext = useContext(OrderCardContext);
+  const ordersContext = useContext(OrdersContext);
   const order = orderCardContext.order;
   const animatedCardContext = useContext(AnimatedCardContext);
   const [customStyle, setStyle] = useState('yellow');
@@ -39,6 +44,9 @@ const OrderActionButton = () => {
         animatedCardContext.setExpanded(true);
         break;
       case OrderStatuses.ACCEPTED:
+        if (ordersContext.tabStatus === TabStatuses.ALL) {
+          orderCardContext.order.setCurrStatus(OrderStatuses.READY);
+        }
         setOrderStatus(order.data, OrderStatuses.READY);
         break;
       case OrderStatuses.READY:

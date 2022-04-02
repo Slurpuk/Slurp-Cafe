@@ -11,7 +11,7 @@ import {DeleteButton} from './ActionButtons';
  * @param order The order to display
  */
 const OrderCard = ({order}) => {
-  const [currStatus, setCurrStatus] = useState(order.Status); // Dynamic frontend status of the order card
+  const [currStatus, setCurrStatus] = useState(order.status); // Dynamic frontend status of the order card
 
   return (
     <OrderCardContext.Provider

@@ -9,30 +9,22 @@ import {
   Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
 import FormField from '../sub-components/FormField';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
-import {Alerts} from '../static-data';
+import {logout, updateCoffeeShop} from '../firebase/queries';
+
+/**
+ * Account page for managing
+ * @param navigation The navigation object
+ */
 const AccountManagementPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const [name, setName] = useState(globalContext.coffeeShopObj.Name);
-  const [intro, setIntro] = useState(globalContext.coffeeShopObj.Intro);
-  const [location, setLocation] = useState({
-    latitude: globalContext.coffeeShopObj.Location.latitude,
-    longitude: globalContext.coffeeShopObj.Location.longitude,
-  });
+  const [name, setName] = useState(globalContext.coffeeShop.name);
+  const [intro, setIntro] = useState(globalContext.coffeeShop.intro);
+  const [location, setLocation] = useState(globalContext.coffeeShop.location);
 
-  /**
-    Simple function to log out, triggers state changes in App.
-     */
-  async function logout() {
-    await auth()
-      .signOut()
-      .catch(e => processBackEndErrors(e));
-  }
   /**
    * Checks for simple form requirements
    * @return boolean Expressing the validity of the fields front-end wise
@@ -58,41 +50,17 @@ const AccountManagementPage = ({navigation}) => {
   }
 
   /**
-   * Manages the response to database failure and shows
-   * errors in the form of alerts to the user
-   */
-  function processBackEndErrors(errorCode) {
-    if (errorCode === 'auth/network-request-failed') {
-      Alerts.connectionErrorAlert();
-    } else {
-      //Anything else
-      Alerts.elseAlert();
-    }
-  }
-
-  /**
-    Function to change details of a CoffeeShop model in the database. Recomputes de location with the new coordinates.
+    Function to change details of a CoffeeShop model in the database.
      */
   async function updateDetails() {
     if (processErrorsFrontEnd()) {
-      await firestore()
-        .collection('CoffeeShop')
-        .doc(globalContext.coffeeShopRef)
-        .update({
-          Name: name,
-          Intro: intro,
-          Location: new firestore.GeoPoint(
-            location.latitude,
-            location.longitude,
-          ), //Default location: 10 Downing Street.
-        })
-        .then(r => {
-          Alert.alert('Success', 'Details Updated.');
-          navigation.navigate('Orders Page');
-        })
-        .catch(error => {
-          processBackEndErrors(error.code);
-        });
+      await updateCoffeeShop(
+        globalContext.coffeeShop.ref,
+        name,
+        intro,
+        location,
+      );
+      navigation.navigate('Orders Page');
     }
   }
 
@@ -101,7 +69,7 @@ const AccountManagementPage = ({navigation}) => {
       <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={[textStyles.formTitle]}>
-          {globalContext.coffeeShopObj.Name}
+          {globalContext.coffeeShop.name}
         </Text>
       </View>
       <View style={styles.paddedContainer}>

@@ -9,73 +9,37 @@ import AnimatedCard from '../src/sub-components/AnimatedCard';
 import {Dimensions} from 'react-native';
 
 let testItems = [
-  {
-    key: 1,
-    ItemRef: 'Americano',
-    Quantity: 1,
-    Price: 2.5,
-    Type: 'Coffee',
-    options: [{Name: 'Dairy', Type: 'Milk', key: 1}],
-    Bean: 'Kenyan Single Origin',
-  },
-  {
-    key: 1,
-    ItemRef: 'Espresso',
-    Quantity: 2,
-    Price: 1.7,
-    Type: 'Coffee',
-    options: [{Name: 'Oat', Type: 'Milk', key: 1}],
-    Bean: 'Ethiopian Single Origin',
-  },
-  {
-    key: 1,
-    ItemRef: 'Latte',
-    Quantity: 3,
-    Price: 1.7,
-    Type: 'Coffee',
-    options: [{Name: 'Soy', Type: 'Milk', key: 1}],
-    Bean: 'Kenyan Blend',
-  },
-  {
-    key: 1,
-    ItemRef: 'Latte',
-    Quantity: 1,
-    Price: 2.4,
-    Type: 'Coffee',
-    options: [{Name: 'Coconut', Type: 'Milk', key: 1}],
-    Bean: 'Yucky Nescafe',
-  },
-  {
-    key: 1,
-    ItemRef: 'Latte',
-    Quantity: 1,
-    Price: 2.4,
-    Type: 'Coffee',
-    options: [
-      {Name: 'Coconut', Type: 'Milk', key: 1},
-      {Name: 'Caramel', Type: 'Syrup', key: 2},
-    ],
-    Bean: 'Yucky Nescafe',
-  },
-  {key: 1, ItemRef: 'Croissant', Quantity: 1, Price: 3.5, Type: 'Snack'},
+    {
+        name: 'Americano',
+        price: 2.5,
+        type: 'Coffee',
+        has_options:false,
+        amount:1,
+    },
+    {
+        name: 'Latte',
+        price: 1.7,
+        type: 'Coffee',
+        has_options: false,
+        amount:2,
+
+    },
 ];
 
 const orderCardContextMock = {
-  order: {
-    key: 1,
-    data: {
-      Items: {testItems},
-      Total: 5,
-      user: {
-        FirstName: 'Pascual',
-      },
-      eta: 8,
-      FinishedTime: {
-        seconds: 30,
-      },
+    order: {
+        data: {
+            items: testItems,
+            user: {
+                first_name: 'Pascual',
+            },
+            eta: 8,
+            finished_time: {
+                seconds: 30,
+            },
+        },
+        currStatus: 'collected',
     },
-    currStatus: 'collected',
-  },
 };
 
 const animatedCardContextMock = {

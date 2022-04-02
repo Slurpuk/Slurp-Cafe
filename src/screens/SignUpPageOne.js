@@ -17,12 +17,14 @@ const SignUpPageOne = ({navigation}) => {
   const emailRegex = new RegExp(
     '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
   );
+  const passwordRegex =
+    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
 
   /**
    * Navigates to the second page if some front ends checks are valid
    */
   async function navigateNextPage() {
-    if (processErrorsFrontEnd()) {
+    if (handleSignUpErrorsFrontEnd()) {
       navigation.navigate('Sign Up Page Two');
       signUpContext.email = email;
       signUpContext.password = password;
@@ -30,28 +32,32 @@ const SignUpPageOne = ({navigation}) => {
   }
 
   /**
-   * Checks for simple form requirements
-   * @return boolean Expressing the valididty of the email and password front-end wise
+   * Deal with bad or empty inputs before sending request
+   * @returns {boolean} true if it passes basic form validation
    */
-  function processErrorsFrontEnd() {
-      let validity = true;
-      if (email === '') {
-          validity = false;
-          Alerts.emptyEmail();
-      } else if (!emailRegex.test(email)) {
-          validity = false;
-          Alerts.badEmailAlert();
-      } else if (password === '') {
-          validity = false;
-          Alerts.emptyPassword();
-      } else if (passwordConfirmation === '') {
-          validity = false;
-          Alerts.emptyPasswordConfirmation();
-      } else if (password!==passwordConfirmation) {
-          validity = false;
-          Alerts.passwordsDontMatchUp();
-      }
-      return validity;
+  function handleSignUpErrorsFrontEnd() {
+    let validity = true;
+    if (email === '') {
+      validity = false;
+      Alerts.emptyEmail();
+    } else if (!emailRegex.test(email)) {
+      validity = false;
+      Alerts.badEmailAlert();
+    } else if (password === '') {
+      validity = false;
+      Alerts.emptyPassword();
+    } else if (passwordConfirmation === '') {
+      validity = false;
+      Alerts.emptyPasswordConfirmation();
+    } else if (password!==passwordConfirmation) {
+      validity = false;
+      Alerts.passwordsDontMatchUp();
+    } else if (!passwordRegex.test(password)) {
+      validity = false;
+      Alerts.weakPasswordAlert();
+    }
+    return validity;
+
   }
 
 

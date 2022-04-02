@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {Alerts} from '../static-data';
-import {calculateTime} from '../components/OrderManagement/helpers';
+import auth from '@react-native-firebase/auth';
 
 /**
  * Set the status of a given order (in the database)
@@ -9,18 +9,12 @@ import {calculateTime} from '../components/OrderManagement/helpers';
  */
 function setOrderStatus(order, status) {
   firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      Status: status,
+      status: status,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -30,18 +24,12 @@ function setOrderStatus(order, status) {
  */
 async function updateFinishedTime(order) {
   await firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      FinishedTime: firestore.Timestamp.now(),
+      finished_time: firestore.Timestamp.now(),
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -50,18 +38,12 @@ async function updateFinishedTime(order) {
  */
 function removeOrder(order) {
   firestore()
-    .collection('Orders')
+    .collection('orders')
     .doc(order.key)
     .update({
-      IsRequired: false,
+      is_displayed: false,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -71,18 +53,11 @@ function removeOrder(order) {
  */
 function setIsOpen(isOpen, coffeeShopRef) {
   firestore()
-    .collection('CoffeeShop')
-    .doc(coffeeShopRef)
+    .doc(coffeeShopRef.path)
     .update({
-      IsOpen: isOpen,
+      is_open: isOpen,
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+    .catch(e => processBackEndErrors(e));
 }
 
 /**
@@ -93,29 +68,53 @@ function setIsOpen(isOpen, coffeeShopRef) {
 async function getFormattedItems(firebaseOrder) {
   let newItems = [];
   await Promise.all(
-    firebaseOrder.Items.map(async item => {
+    firebaseOrder.items.map(async orderItem => {
+      let newItem;
       await firestore()
-        .collection(item.Type + 's')
-        .doc(item.ItemRef)
+        .doc(orderItem.item.path)
         .get()
-        .then(retrievedItem => {
-          let newItem = retrievedItem.data();
-          newItems.push({
-            ...newItem,
-            amount: item.Quantity,
-            options: item.Options,
-          });
-        })
-        .catch(error => {
-          if (error.code === 'auth/network-request-failed') {
-            Alerts.connectionErrorAlert(error);
-          } else {
-            Alerts.databaseErrorAlert(error);
+        .then(async doc => {
+          let item = doc.data();
+          newItem = {
+            ...item,
+            key: doc.id,
+            amount: orderItem.quantity,
+          };
+          if (item.has_options) {
+            newItem.options = await Promise.all(
+              orderItem.options.map(
+                async option => await getOrderOption(option),
+              ),
+            );
           }
-        });
+          newItems.push(newItem);
+        })
+        .catch(e => processBackEndErrors(e));
+
+      return newItem;
     }),
   );
   return newItems;
+}
+
+/**
+ * Async function that retrieves the data of an option reference
+ * @param optionRef The reference to the option
+ * @returns Object The option data
+ */
+async function getOrderOption(optionRef) {
+  let newOption;
+  await firestore()
+    .doc(optionRef.path)
+    .get()
+    .then(doc => {
+      newOption = {
+        ...doc.data(),
+        key: doc.id,
+      };
+    })
+    .catch(e => processBackEndErrors(e));
+  return newOption;
 }
 
 /**
@@ -126,11 +125,97 @@ async function getFormattedItems(firebaseOrder) {
 async function getUser(firebaseOrder) {
   let user;
   await firestore()
-    .collection('Users')
-    .doc(firebaseOrder.UserID)
+    .doc(firebaseOrder.user.path)
     .get()
     .then(retrievedUser => {
       user = retrievedUser.data();
+    })
+    .catch(e => processBackEndErrors(e));
+  return user;
+}
+
+/**
+ * Retrieve and return the references of all the items in the database items model
+ * @return Array The list of all items
+ */
+async function getAllItems() {
+  let items = [];
+  await firestore()
+    .collection('items')
+    .get()
+    .then(async query => {
+      await Promise.all(
+        query.docs.map(doc => {
+          items.push(doc.ref);
+        }),
+      );
+    })
+    .catch(e => processBackEndErrors(e));
+  return items;
+}
+
+/**
+ * Update a coffee shop in the backend with the given parameter values
+ * @param coffeeShopRef The reference to the target coffee shop
+ * @param name The new name for the coffee shop
+ * @param intro The new intro text for the coffee shop
+ * @param location The new location  for the coffee shop
+ */
+async function updateCoffeeShop(coffeeShopRef, name, intro, location) {
+  await firestore()
+    .doc(coffeeShopRef.path)
+    .update({
+      name: name,
+      intro: intro,
+      location: new firestore.GeoPoint(location.latitude, location.longitude), //Default location: 10 Downing Street.
+    })
+    .catch(e => processBackEndErrors(e));
+}
+
+/**
+ Simple function to log out, triggers state changes in App.
+ */
+async function logout() {
+  await auth()
+    .signOut()
+    .catch(e => processBackEndErrors(e));
+}
+
+/**
+ * Manages the response to database failure and shows
+ * errors in the form of alerts to the user
+ */
+function processBackEndErrors(errorCode) {
+  if (errorCode === 'auth/network-request-failed') {
+    Alerts.connectionErrorAlert();
+  } else {
+    //Anything else
+    Alerts.elseAlert();
+  }
+}
+
+/**
+ *  Function to link the authentication entry to the CoffeeShop model via the email.
+ * @param coffeeShopAccount
+ * @param setCoffeeShop
+ */
+async function setCoffeeShop(coffeeShopAccount, setCoffeeShop) {
+  await firestore()
+    .collection('coffee_shops')
+    .where('email', '==', coffeeShopAccount.email)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        let coffeeShop = documentSnapshot.data();
+        setCoffeeShop({
+          ...coffeeShop,
+          ref: documentSnapshot.ref,
+          location: {
+            latitude: coffeeShop.location._latitude,
+            longitude: coffeeShop.location._longitude,
+          },
+        });
+      });
     })
     .catch(error => {
       if (error.code === 'auth/network-request-failed') {
@@ -139,42 +224,6 @@ async function getUser(firebaseOrder) {
         Alerts.databaseErrorAlert(error);
       }
     });
-  return user;
-}
-
-/**
- * Async function that returns the formatted version of a given list of orders
- * @param orders The list of orders to format
- * @param shopLocation The location of the current shop
- * @returns {Promise<Array>} The promise containing the list of formatted orders
- */
-async function getFormattedOrders(orders, shopLocation) {
-  let newOrders = [];
-  await Promise.all(
-    orders.map(async order => {
-      const firebaseOrder = order.data();
-      getFormattedItems(firebaseOrder).then(async formattedItems => {
-        firebaseOrder.Items = formattedItems;
-        getUser(firebaseOrder)
-          .then(user => {
-            firebaseOrder.user = user;
-            let newOrder = {
-              ...firebaseOrder,
-              eta: calculateTime(
-                user.latitude,
-                user.longitude,
-                shopLocation.latitude,
-                shopLocation.longitude,
-              ),
-              key: order.id,
-            };
-            newOrders.push(newOrder);
-          })
-          .catch(error => Alerts.databaseErrorAlert(error));
-      });
-    }),
-  );
-  return newOrders;
 }
 
 export {
@@ -184,5 +233,8 @@ export {
   setIsOpen,
   getFormattedItems,
   getUser,
-  getFormattedOrders,
+  getAllItems,
+  updateCoffeeShop,
+  logout,
+  setCoffeeShop,
 };

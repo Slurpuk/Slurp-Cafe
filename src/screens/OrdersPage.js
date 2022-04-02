@@ -7,11 +7,14 @@ import TabStatuses from '../static-data/TabStatuses';
 import TopBar from '../components/ShopManagement/TopBar';
 import firestore from '@react-native-firebase/firestore';
 import {GlobalContext} from '../../App';
-import {calculateTime, mapper} from '../components/OrderManagement/helpers';
+import {
+  calculateTime,
+  getFormattedOrders,
+  mapper,
+} from '../components/OrderManagement/helpers';
 import {OrdersContext} from '../components/OrderManagement/contexts';
 import EmptyListText from '../sub-components/EmptyListText';
 import {emptyCurrentOrdersText, OrderStatuses} from '../static-data';
-import {getFormattedOrders} from '../firebase/queries';
 import textStyles from '../stylesheets/textStyles';
 
 /**
@@ -20,10 +23,7 @@ import textStyles from '../stylesheets/textStyles';
  */
 const OrdersPage = ({navigation}) => {
   const globalContext = useContext(GlobalContext);
-  const shopLocation = {
-    latitude: globalContext.coffeeShopObj.Location._latitude,
-    longitude: globalContext.coffeeShopObj.Location._longitude,
-  };
+  const shopLocation = globalContext.coffeeShop.location;
   const orders = useRef([]); // The full list of orders received and required by the shop
   console.log(orders);
   const numIncomingOrders = useRef(0); // The number of pending orders
@@ -37,20 +37,20 @@ const OrdersPage = ({navigation}) => {
    */
   useEffect(() => {
     const subscriber = firestore()
-      .collection('Orders')
-      .where('ShopID', '==', globalContext.coffeeShopRef)
-      .where('IsRequired', '==', true) // Is the order required by the shop (not removed)
+      .collection('orders')
+      .where('shop', '==', globalContext.coffeeShop.ref)
+      .where('is_displayed', '==', true) // Is the order required by the shop (not removed)
       .onSnapshot(async querySnapshot => {
-        getFormattedOrders(querySnapshot.docs, shopLocation).then(
-          formattedOrders => {
-            orders.current = formattedOrders;
-            numIncomingOrders.current = formattedOrders.filter(
-              order => order.Status === OrderStatuses.INCOMING,
-            ).length;
-            setTargetUsers(orders.current.map(order => order.user.Email));
-            updateCurrentOrders(formattedOrders);
-          },
+        let formattedOrders = await getFormattedOrders(
+          querySnapshot.docs,
+          shopLocation,
         );
+        orders.current = formattedOrders;
+        numIncomingOrders.current = formattedOrders.filter(
+          order => order.status === OrderStatuses.INCOMING,
+        ).length;
+        setTargetUsers(orders.current.map(order => order.user.email));
+        updateCurrentOrders(formattedOrders);
       });
 
     // Unsubscribe from events when no longer in use
@@ -65,19 +65,19 @@ const OrdersPage = ({navigation}) => {
   useEffect(() => {
     let target = targetUsers.length === 0 ? ['empty'] : targetUsers;
     const subscriber = firestore()
-      .collection('Users')
-      .where('Email', 'in', target)
+      .collection('users')
+      .where('email', 'in', target)
       .onSnapshot(querySnapShot => {
         querySnapShot.forEach(doc => {
           let updatedUser = doc.data();
           orders.current = orders.current.map(order =>
-            order.user.Email === updatedUser.Email
+            order.user.email === updatedUser.email
               ? {
                   ...order,
                   user: updatedUser,
                   eta: calculateTime(
-                    updatedUser.latitude,
-                    updatedUser.longitude,
+                    updatedUser.location._latitude,
+                    updatedUser.location._longitude,
                     shopLocation.latitude,
                     shopLocation.longitude,
                   ),
@@ -119,11 +119,11 @@ const OrdersPage = ({navigation}) => {
     if (currTabStatus.current === TabStatuses.ALL) {
       let excluded = mapper(TabStatuses.FINISHED);
       result = ordersList.filter(
-        order => excluded.indexOf(order.Status) === -1,
+        order => excluded.indexOf(order.status) === -1,
       );
     } else {
       let target = mapper(currTabStatus.current);
-      result = ordersList.filter(order => target.indexOf(order.Status) !== -1);
+      result = ordersList.filter(order => target.indexOf(order.status) !== -1);
     }
     sortCurrentOrders(result);
   }
@@ -133,6 +133,7 @@ const OrdersPage = ({navigation}) => {
       value={{
         orders: orders.current,
         numIncomingOrders: numIncomingOrders.current,
+        tabStatus: currTabStatus.current,
       }}
     >
       <View style={styles.ordersContainer}>

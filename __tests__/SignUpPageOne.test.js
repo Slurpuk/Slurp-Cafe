@@ -131,8 +131,8 @@ describe('Sign Up One Page', function () {
       expect(inputs[1]).toBeTruthy();
       expect(inputs[2]).toBeTruthy();
       fireEvent.changeText(inputs[0], 'janedoe@gmail.com');
-      fireEvent.changeText(inputs[1], 'Password123');
-      fireEvent.changeText(inputs[2], 'Password123');
+      fireEvent.changeText(inputs[1], 'Password123*');
+      fireEvent.changeText(inputs[2], 'Password123*');
 
       fireEvent(getByText('Next'), 'press');
 
