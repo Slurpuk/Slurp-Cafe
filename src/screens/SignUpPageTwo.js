@@ -37,7 +37,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Registers user to the database after checking for front end form requirements
    */
   async function registerCoffeeShop() {
-    if (processErrorsFrontEnd()) {
+    if (handleErrorsFrontEnd()) {
       await auth()
         .createUserWithEmailAndPassword(
           signUpContext.email,
@@ -49,7 +49,7 @@ const SignUpPageTwo = ({navigation}) => {
           registeredMessage();
         })
         .catch(error => {
-          processBackEndErrors(error.code);
+          handleBackEndErrors(error.code);
         });
     }
   }
@@ -58,7 +58,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Checks for simple form requirements
    * @return boolean Expressing the validity of the email and password front-end wise
    */
-  function processErrorsFrontEnd() {
+  function handleErrorsFrontEnd() {
     let validity = true;
     if (shopName === '') {
       validity = false;
@@ -74,7 +74,7 @@ const SignUpPageTwo = ({navigation}) => {
    * Manages the response to database failure and shows
    * errors in the form of alerts to the user
    */
-  function processBackEndErrors(errorCode) {
+  function handleBackEndErrors(errorCode) {
     if (errorCode === 'auth/weak-password') {
       Alerts.weakPasswordAlert();
       navigation.navigate('Sign Up Page One');

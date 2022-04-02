@@ -39,28 +39,22 @@ const SignUpPageOne = ({navigation}) => {
     let validity = true;
     if (email === '') {
       validity = false;
-      Alert.alert('Empty Email', 'Please enter your email.');
+      Alerts.emptyEmail();
     } else if (!emailRegex.test(email)) {
       validity = false;
       Alerts.badEmailAlert();
     } else if (password === '') {
       validity = false;
-      Alert.alert('Empty Password', 'Please enter your password.');
+      Alerts.emptyPassword();
     } else if (passwordConfirmation === '') {
       validity = false;
-      Alert.alert('Empty Password', 'Please enter confirm you password.');
-    } else if (passwordConfirmation !== password) {
+      Alerts.emptyPasswordConfirmation();
+    } else if (password!==passwordConfirmation) {
       validity = false;
-      Alert.alert(
-        "Passwords don't match",
-        "Make sure you've entered your password correctly.",
-      );
+      Alerts.passwordsDontMatchUp();
     } else if (!passwordRegex.test(password)) {
       validity = false;
-      Alert.alert(
-        'Weak password',
-        'Must have a number, a special character and at 6 to 20 characters.',
-      );
+      Alerts.weakPasswordAlert();
     }
     return validity;
 

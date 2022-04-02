@@ -5,10 +5,10 @@ import {Alert} from 'react-native';
 import {GlobalContext} from '../App';
 
 const globalContextMock = {
-  coffeeShopObj: {
-    Name: 'Kaffeine',
-    Intro: 'a'.repeat(80),
-    Location: {latitude: '50', longitude: '0'},
+  coffeeShop: {
+    name: 'Kaffeine',
+    intro: 'a'.repeat(80),
+    location: {latitude: '50', longitude: '0'},
   },
 };
 
