@@ -49,7 +49,7 @@ const SignUpPageOne = ({navigation}) => {
     } else if (passwordConfirmation === '') {
       validity = false;
       Alerts.emptyPasswordConfirmation();
-    } else if (password!==passwordConfirmation) {
+    } else if (password !== passwordConfirmation) {
       validity = false;
       Alerts.passwordsDontMatchUp();
     } else if (!passwordRegex.test(password)) {
@@ -57,9 +57,7 @@ const SignUpPageOne = ({navigation}) => {
       Alerts.weakPasswordAlert();
     }
     return validity;
-
   }
-
 
   return (
     <View style={styles.wrapper} testID={'signup_page1'}>

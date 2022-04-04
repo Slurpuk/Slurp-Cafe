@@ -2,7 +2,7 @@ import {
     initialiseAuth,
     initialiseFirebase,
     initialiseFirestore,
-} from './firebaseSetUp';
+} from '../firebaseSetUp';
 import {addDoc, collection, GeoPoint} from 'firebase/firestore';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 
@@ -11,14 +11,18 @@ let auth;
 const existingEmail = 'existing@gmail.com';
 const password = 'Password123!'
 
+/**
+ * This set of tests intends to test the two pages of the signup process.
+ * No network errors are untestable
+ * As in many other cases, there are untested catch or else alerts that should
+ * never be raised but exist as safety and therefore cannot be tested.
+ */
 describe('Sign up', () => {
     beforeAll(async () => {
         const app = initialiseFirebase();
         db = initialiseFirestore(app);
         auth = initialiseAuth(app);
-
-
-        await device.launchApp(); // deletes async storage on launch ensuring welcome pages are displayed
+        await device.launchApp();
     });
 
 

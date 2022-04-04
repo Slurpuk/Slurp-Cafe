@@ -2,24 +2,14 @@ import {
   initialiseAuth,
   initialiseFirebase,
   initialiseFirestore,
-} from './firebaseSetUp';
+} from '../firebaseSetUp';
 import {addDoc, collection, GeoPoint} from 'firebase/firestore';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {writeCloseClean} from "../helpers";
 
 let db;
 let auth;
 
-async function writeCloseClean(email){
-  await element(by.id('log_in_page_email')).typeText(email);
-  await element(by.text('Forgot your password?')).tap();
-  await expect(element(by.text('Reset Sent'))).toBeVisible();
-  await expect(
-      element(by.type('_UIAlertControllerActionView')),
-  ).toBeVisible(); // Check raises alert
-  await element(by.type('_UIAlertControllerActionView')).tap();
-  await expect(element(by.id('log_in_page'))).toBeVisible();
-  await element(by.id('log_in_page_email')).clearText();
-}
 
 /**
  * This set of tests intends to test the login and forgot password features.
@@ -27,7 +17,7 @@ async function writeCloseClean(email){
  * untestable for obvious reasons.
  * No network errors are untestable (see signUp.e2e.js doc for more info)
  * As in many other cases, there are untested catch or else alerts that should
- * never be raised but exist a safety and therefore cannot be tested.
+ * never be raised but exist as safety and therefore cannot be tested.
  */
 describe('Log in', () => {
   beforeAll(async () => {
@@ -41,6 +31,9 @@ describe('Log in', () => {
   afterAll(async () => {
     await element(by.text('Manage Shop')).tap();
     await element(by.text('Log Out')).tap();
+    await element(
+        by.label('Yes').and(by.type('_UIAlertControllerActionView')),
+    ).tap();
   });
 
   it('should raise confirmatory alert if forgot password with existing email', async () => {

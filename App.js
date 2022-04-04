@@ -9,7 +9,7 @@ import LogInPage from './src/screens/LogInPage';
 import SignUpPageOne from './src/screens/SignUpPageOne';
 import SignUpPageTwo from './src/screens/SignUpPageTwo';
 import firestore from '@react-native-firebase/firestore';
-import {getCoffeeShop} from "./src/firebase/queries";
+import {getCoffeeShop} from './src/firebase/queries';
 
 export const GlobalContext = React.createContext();
 export const SignUpContext = React.createContext();
@@ -63,7 +63,6 @@ export default function App() {
       return () => subscriber();
     }
   }, [coffeeShopObj]);
-
 
   //Creates the stack over which the pages are laid; enables navigation.
   const Stack = createNativeStackNavigator();

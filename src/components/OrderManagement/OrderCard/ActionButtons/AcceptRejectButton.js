@@ -55,11 +55,11 @@ const AcceptRejectButton = ({accept}) => {
   }
 
   return (
-        <CustomButton
-            color={accept ? 'blue' : 'red'}
-            text={accept ? 'Accept order' : 'Reject order'}
-            onPress={updateStatus}
-        />
+    <CustomButton
+      color={accept ? 'blue' : 'red'}
+      text={accept ? 'Accept order' : 'Reject order'}
+      onPress={updateStatus}
+    />
   );
 };
 

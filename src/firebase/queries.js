@@ -199,7 +199,7 @@ function processBackEndErrors(errorCode) {
  * @param coffeeShopAccount
  */
 async function getCoffeeShop(coffeeShopAccount) {
-    let coffeeShopObj = null;
+  let coffeeShopObj = null;
   await firestore()
     .collection('coffee_shops')
     .where('email', '==', coffeeShopAccount.email)
@@ -217,7 +217,7 @@ async function getCoffeeShop(coffeeShopAccount) {
         };
       });
     })
-      .catch(e => processBackEndErrors(e));
+    .catch(e => processBackEndErrors(e));
   return coffeeShopObj;
 }
 

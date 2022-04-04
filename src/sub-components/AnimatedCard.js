@@ -53,8 +53,9 @@ const AnimatedCard = ({
           }}
         >
           <AnimatedPressable
-              testID={'animatedPressable'}
-              onPress={toggleHeight}>
+            testID={'animatedPressable'}
+            onPress={toggleHeight}
+          >
             <View
               testID={'collapsableContent'}
               onLayout={event => {
@@ -85,9 +86,7 @@ const AnimatedCard = ({
               <Icon size={30} color="black" name="chevron-down" />
             </View>
           </AnimatedPressable>
-          <View
-              testID={'bottomFixed'}
-              style={animatedCard.absoluteBottomRight}>
+          <View testID={'bottomFixed'} style={animatedCard.absoluteBottomRight}>
             {bottomFixed}
           </View>
         </Animated.View>

@@ -25,12 +25,15 @@ const ReducedOrder = () => {
     <View style={Reduced.container}>
       <View style={Reduced.left_side}>
         <View style={Reduced.header}>
-          <Text testID={'userName'} style={Reduced.name}>{order.data.user.first_name}</Text>
+          <Text testID={'userName'} style={Reduced.name}>
+            {order.data.user.first_name}
+          </Text>
           <View style={[Reduced.time, finished ? {opacity: 0} : null]}>
             <Icon size={24} color={statusColor} name="clock" />
             <Text
-                testID={'eta'}
-                style={[Reduced.clock_number, {color: statusColor}]}>
+              testID={'eta'}
+              style={[Reduced.clock_number, {color: statusColor}]}
+            >
               {' '}
               {order.data.eta} min
             </Text>
@@ -50,9 +53,7 @@ const ReducedOrder = () => {
       {!animatedContext.isExpanded ? (
         <View style={Reduced.right_side}>
           {finished ? (
-            <Text
-                testID={'finishTime'}
-                style={Reduced.finished}>
+            <Text testID={'finishTime'} style={Reduced.finished}>
               This order was {order.currStatus} on{' '}
               {toDateTime(order.data.finished_time.seconds)}
             </Text>
