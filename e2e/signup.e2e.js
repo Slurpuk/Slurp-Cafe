@@ -11,6 +11,12 @@ let auth;
 const existingEmail = 'existing@gmail.com';
 const password = 'Password123!'
 
+/**
+ * This set of tests intends to test the two pages of the signup process.
+ * No network errors are untestable (see signUp.e2e.js doc for more info)
+ * As in many other cases, there are untested catch or else alerts that should
+ * never be raised but exist as safety and therefore cannot be tested.
+ */
 describe('Sign up', () => {
     beforeAll(async () => {
         const app = initialiseFirebase();
