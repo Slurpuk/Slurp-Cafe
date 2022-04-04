@@ -12,6 +12,7 @@ const FormField = ({
   setField,
   value = '',
   type = '',
+                     testID,
 }) => {
   let secureTextEntry = false;
   let autoCapitalize = 'none';
@@ -54,6 +55,8 @@ const FormField = ({
         maxLength={maxLength}
         multiline={multiline}
         value={value}
+        testID={testID}
+        textContentType={'oneTimeCode'}
       />
     </View>
   );

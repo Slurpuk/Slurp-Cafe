@@ -62,7 +62,7 @@ const SignUpPageOne = ({navigation}) => {
 
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} testID={'signup_page1'}>
       <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={textStyles.formTitle}>Sign Up</Text>
@@ -82,18 +82,21 @@ const SignUpPageOne = ({navigation}) => {
             setField={setEmail}
             type={'email'}
             value={email}
+            testID={'signup_email'}
           />
           <FormField
             title={'Password'}
             setField={setPassword}
             type={'password'}
             value={password}
+            testID={'signup_password'}
           />
           <FormField
             title={'Confirm Password'}
             setField={setPasswordConfirmation}
             type={'password'}
             value={passwordConfirmation}
+            testID={'signup_password_confirmation'}
           />
           <Text
             style={[textStyles.hyperlink]}
