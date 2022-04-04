@@ -12,7 +12,7 @@ const FormField = ({
   setField,
   value = '',
   type = '',
-                     testID,
+  testID,
 }) => {
   let secureTextEntry = false;
   let autoCapitalize = 'none';

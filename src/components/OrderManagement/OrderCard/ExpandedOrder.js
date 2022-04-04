@@ -17,9 +17,7 @@ const ExpandedOrder = () => {
   return (
     <View style={[animatedContext.isExpanded ? Expanded.elevate : null]}>
       <View style={Expanded.left_side}>
-        <View
-            testID={'viewListOrders'}
-            style={Expanded.list_of_orders}>
+        <View testID={'viewListOrders'} style={Expanded.list_of_orders}>
           <FlatList
             data={order.data.items}
             renderItem={({item}) => (
@@ -41,9 +39,7 @@ const ExpandedOrder = () => {
         </View>
       </View>
       {order.currStatus === OrderStatuses.INCOMING ? (
-        <View
-            testID={'buttons'}
-            style={Expanded.bottomButtons}>
+        <View testID={'buttons'} style={Expanded.bottomButtons}>
           <AccRejButton accept={true} />
           <AccRejButton accept={false} />
         </View>

@@ -71,7 +71,7 @@ const SignUpPageTwo = ({navigation}) => {
       Alerts.connectionErrorAlert();
     } else if (errorCode === 'auth/too-many-requests') {
       Alerts.tooManyRequestsAlert();
-    }else {
+    } else {
       //Anything else
       Alerts.elseAlert();
     }
@@ -94,7 +94,7 @@ const SignUpPageTwo = ({navigation}) => {
         items: allItems,
         location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
       })
-        .catch(() => Alerts.databaseErrorAlert());
+      .catch(() => Alerts.databaseErrorAlert());
   }
 
   return (

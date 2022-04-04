@@ -21,7 +21,8 @@ export const AlertMessage = {
   },
   PASSWORDS_DONT_MATCH_UP: {
     title: 'Passwords dont match up',
-    message: 'Please make sure you password confirmation is the same as you password.',
+    message:
+      'Please make sure you password confirmation is the same as you password.',
   },
   SUCCESSFUL_REGISTRATION: {
     title: 'Congratulations',

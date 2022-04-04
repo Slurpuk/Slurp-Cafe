@@ -14,7 +14,7 @@ import FormField from '../sub-components/FormField';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
 import {logout, updateCoffeeShop} from '../firebase/queries';
-import {Alerts} from "../static-data";
+import {Alerts} from '../static-data';
 
 /**
  * Account page for managing
@@ -35,11 +35,18 @@ const AccountManagementPage = ({navigation}) => {
     if (name === '') {
       validity = false;
       Alert.alert('Empty Shop Name', 'Please enter your shop name.');
-    }
-    else if (intro.length>150 || intro.length<20) {
+    } else if (intro.length > 150 || intro.length < 20) {
       validity = false;
-      Alert.alert('Description length', 'The shop description must be between 20 and 150 characters long.');
-    } else if (location.latitude>90 || location.latitude<-90 || location.longitude>180 || location.longitude<-180) {
+      Alert.alert(
+        'Description length',
+        'The shop description must be between 20 and 150 characters long.',
+      );
+    } else if (
+      location.latitude > 90 ||
+      location.latitude < -90 ||
+      location.longitude > 180 ||
+      location.longitude < -180
+    ) {
       validity = false;
       Alert.alert(
         'Location is not valid',
@@ -68,7 +75,7 @@ const AccountManagementPage = ({navigation}) => {
   /**
    Function to prompt the user before logging out.
    */
-  function logoutPrompt(){
+  function logoutPrompt() {
     Alerts.logoutAlert(logout);
   }
 

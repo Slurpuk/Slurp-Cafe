@@ -153,7 +153,6 @@ function calculateOrderTotal(items) {
   return items.reduce(function (acc, item) {
     return acc + getItemFullPrice(item);
   }, 0);
-
 }
 
 /**

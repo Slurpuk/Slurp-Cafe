@@ -6,25 +6,46 @@ export const Alerts = {
     Alert.alert(AlertMessage.DATABASE.title, AlertMessage.DATABASE.message);
   },
   emptyEmail: () => {
-    Alert.alert(AlertMessage.EMPTY_EMAIL.title, AlertMessage.EMPTY_EMAIL.message);
+    Alert.alert(
+      AlertMessage.EMPTY_EMAIL.title,
+      AlertMessage.EMPTY_EMAIL.message,
+    );
   },
   emptyPassword: () => {
-    Alert.alert(AlertMessage.EMPTY_PASSWORD.title, AlertMessage.EMPTY_PASSWORD.message);
+    Alert.alert(
+      AlertMessage.EMPTY_PASSWORD.title,
+      AlertMessage.EMPTY_PASSWORD.message,
+    );
   },
   emptyPasswordConfirmation: () => {
-    Alert.alert(AlertMessage.EMPTY_PASSWORD_CONFIRMATION.title, AlertMessage.EMPTY_PASSWORD_CONFIRMATION.message);
+    Alert.alert(
+      AlertMessage.EMPTY_PASSWORD_CONFIRMATION.title,
+      AlertMessage.EMPTY_PASSWORD_CONFIRMATION.message,
+    );
   },
   passwordsDontMatchUp: () => {
-    Alert.alert(AlertMessage.PASSWORDS_DONT_MATCH_UP.title, AlertMessage.PASSWORDS_DONT_MATCH_UP.message);
+    Alert.alert(
+      AlertMessage.PASSWORDS_DONT_MATCH_UP.title,
+      AlertMessage.PASSWORDS_DONT_MATCH_UP.message,
+    );
   },
   successfulRegistration: () => {
-    Alert.alert(AlertMessage.SUCCESSFUL_REGISTRATION.title, AlertMessage.SUCCESSFUL_REGISTRATION.message);
+    Alert.alert(
+      AlertMessage.SUCCESSFUL_REGISTRATION.title,
+      AlertMessage.SUCCESSFUL_REGISTRATION.message,
+    );
   },
   emptyShopName: () => {
-    Alert.alert(AlertMessage.EMPTY_SHOP_NAME.title, AlertMessage.EMPTY_SHOP_NAME.message);
+    Alert.alert(
+      AlertMessage.EMPTY_SHOP_NAME.title,
+      AlertMessage.EMPTY_SHOP_NAME.message,
+    );
   },
   descriptionLength: () => {
-    Alert.alert(AlertMessage.DESCRIPTION_LENGTH.title, AlertMessage.DESCRIPTION_LENGTH.message);
+    Alert.alert(
+      AlertMessage.DESCRIPTION_LENGTH.title,
+      AlertMessage.DESCRIPTION_LENGTH.message,
+    );
   },
   connectionErrorAlert: () => {
     Alert.alert(AlertMessage.CONNECTION.title, AlertMessage.CONNECTION.message);
