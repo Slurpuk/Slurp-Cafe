@@ -2,8 +2,8 @@ import {
     initialiseAuth,
     initialiseFirebase,
     initialiseFirestore,
-} from './firebaseSetUp';
-import {addDoc, collection, GeoPoint, updateDoc, getDoc} from 'firebase/firestore';
+} from '../firebaseSetUp';
+import {addDoc, collection, GeoPoint, getDoc} from 'firebase/firestore';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 
 let db;
@@ -11,8 +11,6 @@ let auth;
 let shopRef;
 const newName = 'coolName';
 const newIntro = 'An other very excruciatingly terribly impossibly long intro';
-const newLatitude = 51.5140310233705;
-const newLongitude = -0.1164075624320158;
 const latitudeString = '51.5140310233705';
 const longitudeString = '-0.1164075624320158';
 
