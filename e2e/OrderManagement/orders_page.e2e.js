@@ -2,11 +2,11 @@ import {
     initialiseAuth,
     initialiseFirebase,
     initialiseFirestore,
-} from './firebaseSetUp';
+} from '../firebaseSetUp';
 import {addDoc, collection, GeoPoint, getDoc, Timestamp} from 'firebase/firestore';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {OrderStatuses, TabStatuses} from "../src/static-data";
-import {checkCorrectStatus, checkRendersInCorrectTabs} from "./helpers";
+import {OrderStatuses, TabStatuses} from "../../src/static-data";
+import {checkCorrectStatus, checkRendersInCorrectTabs} from "../helpers";
 
 let db;
 let auth;
