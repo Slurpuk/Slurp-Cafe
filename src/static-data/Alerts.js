@@ -81,4 +81,14 @@ export const Alerts = {
       ],
     );
   },
+
+  logoutAlert: logout => {
+    Alert.alert(AlertMessage.LOGOUT.title, AlertMessage.LOGOUT.message, [
+      {text: 'Yes', onPress: () => logout()},
+      {
+        text: 'No',
+        style: 'cancel',
+      },
+    ]);
+  },
 };

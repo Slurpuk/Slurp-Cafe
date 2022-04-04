@@ -20,6 +20,7 @@ export default function CustomButton(props) {
     widthRatio = 0.36,
     onPress,
     buttonHeight = 60,
+    testID,
   } = props;
 
   const animation = new Animated.Value(0);
@@ -61,6 +62,7 @@ export default function CustomButton(props) {
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onPress={onPress}
+        testID={testID}
       >
         <Animated.View style={{transform: [{scale}]}}>
           <Text style={buttonStyles.buttonText}>{text}</Text>

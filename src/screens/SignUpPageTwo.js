@@ -27,27 +27,16 @@ const SignUpPageTwo = ({navigation}) => {
   }
 
   /**
-   * Displays a confirmation message to the user in the form of an alert
-   */
-  const registeredMessage = () => {
-    Alerts.successfulRegistration();
-  };
-
-  /**
    * Registers user to the database after checking for front end form requirements
    */
   async function registerCoffeeShop() {
     if (handleErrorsFrontEnd()) {
+      await addCoffeeShop();
       await auth()
         .createUserWithEmailAndPassword(
           signUpContext.email,
           signUpContext.password,
         )
-        .then(() => {
-          let newCoffeeShop = auth().currentUser;
-          addCoffeeShop(newCoffeeShop);
-          registeredMessage();
-        })
         .catch(error => {
           handleBackEndErrors(error.code);
         });
@@ -75,10 +64,7 @@ const SignUpPageTwo = ({navigation}) => {
    * errors in the form of alerts to the user
    */
   function handleBackEndErrors(errorCode) {
-    if (errorCode === 'auth/weak-password') {
-      Alerts.weakPasswordAlert();
-      navigation.navigate('Sign Up Page One');
-    } else if (errorCode === 'auth/invalid-email') {
+    if (errorCode === 'auth/invalid-email') {
       Alerts.badEmailAlert();
       navigation.navigate('Sign Up Page One');
     } else if (errorCode === 'auth/network-request-failed') {
@@ -108,15 +94,11 @@ const SignUpPageTwo = ({navigation}) => {
         items: allItems,
         location: new firestore.GeoPoint(51.503223, -0.1275), //Default location: 10 Downing Street.
       })
-      .catch(errorCode => {
-        if (errorCode === 'auth/network-request-failed') {
-          Alerts.connectionErrorAlert();
-        }
-      });
+        .catch(() => Alerts.databaseErrorAlert());
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} testID={'signup_page2'}>
       <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={textStyles.formTitle}>Sign Up</Text>
@@ -129,13 +111,14 @@ const SignUpPageTwo = ({navigation}) => {
               {paddingBottom: '5%', fontSize: 28},
             ]}
           >
-            Next,some information about your shop
+            Next, some information about your shop
           </Text>
           <FormField
             title={'Shop Name'}
             setField={setShopName}
             type={'name'}
             value={shopName}
+            testID={'signup_name'}
           />
           <FormField
             title={'Shop Description'}
@@ -145,6 +128,7 @@ const SignUpPageTwo = ({navigation}) => {
             }
             type={'multiline'}
             value={shopIntro}
+            testID={'signup_intro'}
           />
           <Text
             style={[textStyles.hyperlink]}

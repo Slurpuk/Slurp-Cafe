@@ -76,6 +76,10 @@ export const AlertMessage = {
     message:
       'You are about to reject this order. This may be impact your rating. Are you sure?',
   },
+  LOGOUT: {
+    title: 'Logout',
+    message: 'You are about to logout, are you sure?',
+  },
 };
 
 /*

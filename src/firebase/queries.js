@@ -190,16 +190,16 @@ function processBackEndErrors(errorCode) {
     Alerts.connectionErrorAlert();
   } else {
     //Anything else
-    Alerts.elseAlert();
+    Alerts.databaseErrorAlert();
   }
 }
 
 /**
  *  Function to link the authentication entry to the CoffeeShop model via the email.
  * @param coffeeShopAccount
- * @param setCoffeeShop
  */
-async function setCoffeeShop(coffeeShopAccount, setCoffeeShop) {
+async function getCoffeeShop(coffeeShopAccount) {
+    let coffeeShopObj = null;
   await firestore()
     .collection('coffee_shops')
     .where('email', '==', coffeeShopAccount.email)
@@ -207,23 +207,18 @@ async function setCoffeeShop(coffeeShopAccount, setCoffeeShop) {
     .then(querySnapshot => {
       querySnapshot.forEach(documentSnapshot => {
         let coffeeShop = documentSnapshot.data();
-        setCoffeeShop({
+        coffeeShopObj = {
           ...coffeeShop,
           ref: documentSnapshot.ref,
           location: {
             latitude: coffeeShop.location._latitude,
             longitude: coffeeShop.location._longitude,
           },
-        });
+        };
       });
     })
-    .catch(error => {
-      if (error.code === 'auth/network-request-failed') {
-        Alerts.connectionErrorAlert(error);
-      } else {
-        Alerts.databaseErrorAlert(error);
-      }
-    });
+      .catch(e => processBackEndErrors(e));
+  return coffeeShopObj;
 }
 
 export {
@@ -236,5 +231,5 @@ export {
   getAllItems,
   updateCoffeeShop,
   logout,
-  setCoffeeShop,
+  getCoffeeShop,
 };

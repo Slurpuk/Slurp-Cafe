@@ -14,6 +14,7 @@ import FormField from '../sub-components/FormField';
 import textStyles from '../stylesheets/textStyles';
 import CustomButton from '../sub-components/CustomButton';
 import {logout, updateCoffeeShop} from '../firebase/queries';
+import {Alerts} from "../static-data";
 
 /**
  * Account page for managing
@@ -62,6 +63,13 @@ const AccountManagementPage = ({navigation}) => {
       );
       navigation.navigate('Orders Page');
     }
+  }
+
+  /**
+   Function to prompt the user before logging out.
+   */
+  function logoutPrompt(){
+    Alerts.logoutAlert(logout);
   }
 
   return (
@@ -147,7 +155,7 @@ const AccountManagementPage = ({navigation}) => {
             <CustomButton
               color={'red'}
               text={'Log Out'}
-              onPress={() => logout()}
+              onPress={() => logoutPrompt()}
               widthRatio={0.42}
               buttonHeight={70}
             />

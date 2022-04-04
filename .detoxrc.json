@@ -12,8 +12,8 @@
       }
     },
     "ios": {
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Slurp.app",
-      "build": "xcodebuild -workspace ios/SlurpCafe.xcworkspace -configuration Debug -scheme SlurpCafe -sdk iphonesimulator -derivedDataPath ios/build -destination id=CA867E2E-AF9F-4AAE-9713-005A654B9EC8",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SlurpCafe.app",
+      "build": "xcodebuild -workspace ios/SlurpCafe.xcworkspace -configuration Debug -scheme SlurpCafe -sdk iphonesimulator -derivedDataPath ios/build -destination id=84B8290A-2C31-4F3C-A3DF-4191F152A767",
       "type": "ios.simulator",
       "name": "iPad Pro (11-inch) (3rd generation)"
     }

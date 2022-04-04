@@ -107,7 +107,7 @@ const LogInPage = ({navigation}) => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} testID={'log_in_page'}>
       <View style={styles.topBar}>
         <StatusBar translucent={true} backgroundColor="transparent" />
         <Text style={textStyles.formTitle}>Log In</Text>
@@ -120,12 +120,14 @@ const LogInPage = ({navigation}) => {
             setField={setEmail}
             type={'email'}
             value={email}
+            testID={'log_in_page_email'}
           />
           <FormField
             title={'Password'}
             setField={setPassword}
             type={'password'}
             value={password}
+            testID={'log_in_page_password'}
           />
           <Text style={[textStyles.hyperlink]} onPress={forgotPassword}>
             Forgot your password?
@@ -141,6 +143,7 @@ const LogInPage = ({navigation}) => {
           <CustomButton
             color={'green'}
             text={'Log In'}
+            testID={'login_button'}
             onPress={authenticateCoffeeShop}
             widthRatio={0.91}
             buttonHeight={70}
