@@ -34,6 +34,3 @@ All passwords are "Password123!", the following users are seeded with orders. Al
 
 - With the current implementation using firestore, tracking the conection state of logged-in user is impossible. As a workaround, we set a timeout on critical queries that would return a connection alert after expiring.
 
-## Stripe credit card details, used for payments:
-![image](https://user-images.githubusercontent.com/31474291/161755323-f3e05eb6-7a9a-422a-8466-a9fc45e5be80.png)
-
