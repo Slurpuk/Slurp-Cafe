@@ -11,7 +11,7 @@ Significant source code dependencies:
 
 Deployment: Will be deployed to Appetizer by the 15th of April.
 
-Users:
+Shops:
 
 All passwords are "Password123!", the following users are seeded with orders. All coffee shops are seeded with orders and items.
 
