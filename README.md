@@ -1,14 +1,20 @@
-# ICSClient
 
+Project Name: Jumping Potatoes
 
-When pulling from the remote:
+Software Name: Slurp Café
 
-- npm run refresh
+Members: Ardan Kavuklu Jad Sbaï Liam Clark Gutiérrez Meyad Golmakani Sara Latif Sean Stanfield Sonia Koszut Pascual Merita Torres Vicente Sebastião
 
-To update the pods: pod update 
+Significant source code dependencies:
 
-Difference between npm ci and npm install: 
-- https://stackoverflow.com/questions/48524417/should-the-package-lock-json-file-be-added-to-gitignore 
-- https://docs.npmjs.com/cli/v8/commands/npm-ci
+    ReactNative Firebase: https://rnfirebase.io/
 
-Difference between pod install and pod update: https://guides.cocoapods.org/using/pod-install-vs-update.html
+Deployment: Will be deployed to Appetizer by the 15th of April.
+
+Users:
+
+All passwords are "Password123!", the following users are seeded with orders. All coffee shops are seeded with orders and items.
+
+eten@gmail.com
+cafecombi@gmail.com
+arcadecafe@gmail.com
