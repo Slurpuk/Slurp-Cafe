@@ -9,13 +9,15 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint .",
-    "refresh": "git pull && npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link"
+    "refresh": "git pull && npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link",
+    "softRefresh": "npm ci && cd ios && pod install && cd .. && cd android && ./gradlew clean && cd .. && react-native link"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^14.5.0",
-    "@react-native-firebase/auth": "^14.5.0",
-    "@react-native-firebase/firestore": "^14.5.0",
-    "@react-native-firebase/functions": "^14.5.0",
+    "@react-native-firebase/app": "^14.11.0",
+    "@react-native-firebase/auth": "^14.11.0",
+    "@react-native-firebase/database": "^14.11.0",
+    "@react-native-firebase/firestore": "^14.11.0",
+    "@react-native-firebase/functions": "^14.11.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@testing-library/react-native": "^9.0.0",
