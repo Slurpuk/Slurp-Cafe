@@ -50,6 +50,16 @@ All passwords are "Password123!", the following users are seeded with orders. Al
   - Test your code locally and then make sure it passes CI/CD workflows
 - Update the Kanban board when you start/finish/approve a task.
 
+
+### Processes and standards 
+
+- Write DRY, SOLID and commented code.
+- Refactor the whole code base at the end of each sprint.
+- Run code coverage regularly (look into how to do it with Detox)
+- Most of the team members should be involved in reviewing the pull requests 
+- Every team member should test their code on both ios and android (detox) before making a pull request.
+- Branch naming convention: ReleaseVersionTrelloID/branchname
+
 ## Testing
 
   ```npm run test```
